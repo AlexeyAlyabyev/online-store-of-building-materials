@@ -1,0 +1,16 @@
+<div class="popular_categories mb_adapt">
+	<div class="wrapper">
+		<h2 class="block_title">Популярные категории</h2>
+		<div class="body">
+			{% for category in categories %}
+				<a href="{{ category.href }}" class="item">
+					<div class="info">
+						<p class="name">{{ category.name }}</p>
+						<span class="total">{{ category.total }}</span>
+					</div>
+					<img src="{{ category.image }}" alt="{{ category.name }}">
+				</a>
+			{% endfor %}
+		</div>
+	</div>
+</div>

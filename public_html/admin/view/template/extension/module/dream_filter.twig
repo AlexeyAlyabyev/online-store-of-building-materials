@@ -1,0 +1,602 @@
+{{ header }} {{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                {% if apply %}
+                    <button id="apply-button" type="button" data-url="{{ apply }}" data-form="form-rdrf" data-toggle="tooltip" data-loading-text="<i class='fa fa-refresh fa-spin'></i>" title="{{ language['button_apply'] }}"
+                            class="btn btn-success">
+                        <i class="fa fa-check"></i>
+                    </button>
+                {% endif %}
+                <button type="button" onclick="$('#form-rdrf').submit();" data-toggle="tooltip" title="{{ language['button_save'] }}"
+                        class="btn btn-primary">
+                    <i class="fa fa-save"></i>
+                </button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ language['button_cancel'] }}"
+                   class="btn btn-default">
+                    <i class="fa fa-reply"></i>
+                </a>
+            </div>
+            <h1>{{ language['heading_title'] }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div id="module-container" class="container-fluid">
+        {% if errors['warning'] %}
+            <div class="alert alert-danger">
+                <i class="fa fa-exclamation-circle"></i> {{ errors['warning'] }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        {% if note %}
+            <div class="alert alert-info">
+                {{ note }}<button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-pencil"></i> {{ language['text_edit'] }}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-rdrf"
+                      class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-name">
+                            {{ language['entry_name'] }}
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" value="{{ name }}"
+                               placeholder="{{ language['entry_name'] }}" id="input-name" class="form-control"/>
+                                {% if errors['name'] %}
+                                    <div class="text-danger">{{ errors['name'] }}</div>
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-title">
+                            {{ language['entry_title'] }}
+                        </label>
+                        <div class="col-sm-10">
+                            {% for lang in languages %}
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <img src="language/{{ lang.code }}/{{ lang.code }}.png" title="{{ lang.name }}"/>
+                                    </span>
+                                    <input type="text"
+                                           name="title[{{ lang.language_id }}]"
+                                           value="{{ title[lang.language_id] }}"
+                                           placeholder="{{ language.entry_name }}"
+                                           id="input-title{{ lang.language_id }}"
+                                           class="form-control"/>
+                                </div>
+                                {% if errors['title'][lang.language_id] %}
+                                    <div class="text-danger">{{ errors['title'][lang.language_id] }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-status">{{ language['entry_status'] }}</label>
+                        <div class="col-sm-10">
+                            <select name="status" id="input-status" class="form-control">
+                                <option value="1" {% if status == 1 %}selected{% endif %}>{{ language['val_enabled'] }}</option>
+                                <option value="0" {% if status == 0 %}selected{% endif %}>{{ language['val_disabled'] }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#filters" data-toggle="tab">
+                                {{ language['text_filters'] }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#view" data-toggle="tab">
+                                {{ language['text_view'] }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#settings" data-toggle="tab">
+                                {{ language['text_settings'] }}
+                            </a>
+                        </li>
+                        <li {% if settings['mode'] != 'ajax' %}style="display: none"{% endif %}>
+                            <a href="#ajax" data-toggle="tab">
+                                {{ language['text_ajax'] }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#config" data-toggle="tab">
+                                {{ language['text_config'] }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#info" data-toggle="tab">
+                                {{ language['text_info'] }}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="tab-content">
+                        <div class="tab-pane fade in active" id="filters">
+                            {{ filters_tab }}
+                        </div>
+                        <div class="tab-pane fade" id="view">
+                            {{ view_tab }}
+                        </div>
+                        <div class="tab-pane fade" id="settings">
+                            {{ settings_tab }}
+                        </div>
+                        <div class="tab-pane fade" id="ajax">
+                            {{ ajax_tab }}
+                        </div>
+                        <div class="tab-pane fade" id="config">
+                            {{ config_tab }}
+                        </div>
+                        <div class="tab-pane fade" id="info">
+                            {{ info_tab }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ filter_form_new }}
+
+{% set filters_row = 0 %}
+{% for filter_form in filter_forms %}
+    {{ filter_form }}
+    {% set filters_row = filters_row + 1 %}
+{% endfor %}
+
+{{ footer }}
+<script type="text/javascript">
+$(document).on("click", "button.open-toggle", function(e) {
+    if($(this).data("open")) {
+        $(this).attr('title', '{{ language['filter_close'] }}');
+        $(this).find('i').removeClass('fa-bars').addClass('fa-minus');
+        $(this).closest('.list-group-item').find('input[name *= "open"]').val(0);
+        $('#filter-form-' + $(this).closest('.list-group-item').data('id')).find('input[name="open"]').val(0);
+        $(this).data("open", 0);
+    } else {
+        $(this).attr('title', '{{ language['filter_open'] }}');
+        $(this).find('i').removeClass('fa-minus').addClass('fa-bars');
+        $(this).closest('.list-group-item').find('input[name *= "open"]').val(1);
+        $('#filter-form-' + $(this).closest('.list-group-item').data('id')).find('input[name="open"]').val(1);
+        $(this).data("open", 1);
+    }
+});
+$(document).on("click", "#reset-toggle", function(e) {
+    var button = $(this),
+        input = $('#settings-resetbtn');
+
+    if(input.val() == 1) {
+        button.attr('title', '{{ language['text_hide'] }}');
+        button.find('i').removeClass('fa-eye').addClass('fa-eye-slash');
+        input.val(0);
+    } else {
+        button.attr('title', '{{ language['text_show'] }}');
+        button.find('i').removeClass('fa-eye-slash').addClass('fa-eye');
+        input.val(1);
+    }
+});
+$('#settings-categories').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=extension/module/dream_filter/autocomplete&type=category&user_token={{ token }}&filter_name=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['category_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#settings-categories').val('');
+        $('#category' + item['value']).remove();
+        $('#excategory' + item['value']).remove();
+        $('#categories').append('<div id="category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="settings[categories][]" value="' + item['value'] + '" /></div>');
+    }
+});
+$(document).on('click', '#categories .fa-minus-circle', function() {
+    $(this).parent().remove();
+});
+$('#settings-excategories').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=extension/module/dream_filter/autocomplete&type=category&user_token={{ token }}&filter_name=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['category_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#settings-excategories').val('');
+        $('#excategory' + item['value']).remove();
+        $('#category' + item['value']).remove();
+        $('#excategories').append('<div id="excategory' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="settings[excategories][]" value="' + item['value'] + '" /></div>');
+    }
+});
+$(document).on('click', '#excategories .fa-minus-circle', function() {
+    $(this).parent().remove();
+});
+$('.popover-edit').each(function(i) {
+    var button = $(this);
+    button.popover({
+        placement: 'top',
+        html: true,
+        title: '{{ language['filter_edit'] }}',
+        content: '<div class="form-group">' +
+        '<input type="text" class="form-control" value="' + button.closest('.popover-parent').find('.popover-input').val() + '">' +
+        '</div>'
+    });
+});
+
+var filters_row = {{ filters_row }};
+
+$(document).on("click", ".filter-apply", function(e) {
+    e.preventDefault();
+    var button = $(this),
+        form = button.closest('form'),
+        id = form.data('id'),
+        modal = button.closest('.modal'),
+        row = filters_row;
+
+    if(id !== 'new') {
+        row = id;
+    }
+
+    $.ajax({
+        url: form.attr('action'),
+        type: 'post',
+        data: form.serialize() + '&id=' + row,
+        processData: false,
+        dataType: 'json',
+        beforeSend : function() {
+            button.button('loading');
+        },
+        success: function (data) {
+            if(data.errors) {
+                $.each(data.errors, function(key, mess){
+                    var validate = form.find('*[data-validate=\'' + key + '\']');
+                    validate.find('.form-group:not(.has-error)').addClass('has-error');
+                    if(validate.find('.text-danger').length < 1) {
+                        validate.append('<div class="text-danger">' + mess + '</div>');
+                    }
+                });
+            } else {
+
+                form.find('.form-group.has-error .text-danger').remove();
+                form.find('.form-group.has-error').removeClass('has-error');
+
+                var html = '<div id="filter-' + row + '" class="list-group-item" data-id="' + row + '">';
+                html +=     data.name[{{ languages|first.language_id }}];
+                html += '   <input type="hidden" name="filters[' + row + '][filter_by]" value="' + data.filter_by + '"/>';
+                html += '   <input type="hidden" name="filters[' + row + '][type]" value="' + data.type + '"/>';
+                {% for lang in languages %}
+                html += '   <input type="hidden" name="filters[' + row + '][name][{{ lang['language_id'] }}]" value="' + data.name[{{ lang['language_id'] }}] + '"/>';
+                {% endfor %}
+                html += '   <input type="hidden" name="filters[' + row + '][open]" value="' + data.open + '"/>';
+                if(data.item_id) {
+                    html += '   <input type="hidden" name="filters[' + row + '][item_id]" value="' + data.item_id + '"/>';
+                }
+                if(data.item_name) {
+                    html += '   <input type="hidden" name="filters[' + row + '][item_name]" value="' + data.item_name + '"/>';
+                }
+                if(data.sort_order) {
+                    html += '   <input type="hidden" name="filters[' + row + '][sort_order]" value="' + data.sort_order + '"/>';
+                }
+                if(data.add) {
+                    $.each(data.add, function( key, value ) {
+                        html += '   <input type="hidden" name="filters[' + row + '][add][' + key + ']" value="' + value + '"/>';
+                    });
+                }
+                html += '   <div class="btn-group pull-right">';
+                html += '       <button title="{{ language['filter_edit'] }}" type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#filter-modal-' + row + '">';
+                html += '           <i class="fa fa-pencil"></i>';
+                html += '       </button>';
+                html += '       <button title="' + (data.open ? "{{ language['filter_open'] }}" : "{{ language['filter_close'] }}") + '" type="button" class="btn btn-xs btn-info open-toggle">';
+                html += '           <i class="' + (data.open ? "fa fa-bars" : "fa fa-minus") + '"></i>';
+                html += '       </button>';
+                html += '       <button title="{{ language['filter_delete'] }}" type="button" class="btn btn-xs btn-danger delete-filter">';
+                html += '           <i class="fa fa-close"></i>';
+                html += '       </button>';
+                html += '   </div>';
+                html += '</div>';
+
+                if(id == 'new') {
+                    $('#filters-list').append(html);
+                    if(data.modal) {
+                        $('body').append(data.modal);
+                    }
+                    form.find('.from-filter-collapse').html('');
+                    form.find('.form-filter-by').val(0);
+                    filters_row++;
+                } else {
+                    $('#filter-' + row).replaceWith(html);
+                }
+                modal.modal('hide');
+            }
+        },
+        complete : function() {
+            button.button('reset');
+        }
+    });
+});
+$(document).on("change", "#settings-mode", function() {
+    var id = $(this).attr('id');
+    if($(this).val() == 'ajax') {
+        $('a[href="#ajax"]').parent().fadeIn();
+    } else {
+        $('a[href="#ajax"]').parent().fadeOut();
+    }
+});
+$(document).on("change", ".img-select", function() {
+    var id = $(this).attr('id');
+    $('#' + id + '-image').attr('src', '{{ pluginpath }}img/' + id + '/' + $(this).val() + '.png');
+});
+function cleanCache(btn, store_id) {
+    $.ajax({
+        url: '{{ cache_btn }}&store_id=' +  store_id,
+        dataType: 'json',
+        processData: false,
+        beforeSend : function() {
+            btn.button('loading');
+        },
+        success: function (data) {
+            if(data.success) {
+                $('#module-container').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +
+                    data.success +
+                    '<button type="button" class="close" data-dismiss="alert">&times; </button></div>'
+                );
+            }
+            $('#module-container > .alert').each(function(i) {
+                var alert = $(this);
+                setTimeout(function() {
+                    alert.fadeOut(function(){$(this).remove()})
+                }, i*300 + 10000);
+            });
+        },
+        complete : function() {
+            btn.button('reset');
+        }
+    });
+}
+
+function getLicense(btn, store_id) {
+    $.ajax({
+        url: '{{ activate }}&store_id=' +  store_id,
+        type: 'post',
+        data: '',
+        beforeSend: function() {
+            btn.button('loading');
+        },
+        success: function (data) {
+            if(data.errors) {
+                $('#license-status' +  store_id).html('<div class="alert alert-danger"></div>');
+                $.each(data.errors, function(key, error) {
+                    $('#license-status' +  store_id + ' .alert').append(error + '<br/>');
+                });
+            }
+            if(data.result) {
+                $('#license-status' +  store_id).html('<div class="alert alert-success">' + data.result + '</div>');
+            }
+        },
+        error: function () {
+            $('#errors').html('<div class="alert alert-danger">{{ language['error_response'] }}</div>');
+        },
+        complete: function() {
+            btn.button('reset');
+        }
+    });
+}
+
+function resetLicense(btn, store_id) {
+    $.ajax({
+        url: '{{ reset_btn }}&store_id=' +  store_id,
+        dataType: 'json',
+        processData: false,
+        beforeSend : function() {
+            btn.button('loading');
+        },
+        complete : function() {
+            btn.button('reset');
+            window.location.replace('{{ home }}');
+        }
+    });
+}
+</script>
+<script type="text/javascript">
+    $(document).on("change", ".filter-form .form-filter-by", function() {
+        var val = $(this).val(),
+            form = $(this).closest('form'),
+            id = form.data('id'),
+            html = '<hr class="row"/>';
+
+        form.find('.from-filter-collapse').html('');
+        form.find('.form-group.has-error .text-danger').remove();
+        form.find('.form-group.has-error').removeClass('has-error');
+
+        switch(val) {
+        {% for key, item in params %}
+            case "{{ key }}":
+
+                html += '<div class="form-group">';
+                html += '   <label class="col-sm-3 control-label" for="filter_name_' + id + '">{{ language['entry_name'] }}</label>';
+                html += '   <div class="col-sm-9" data-validate="name">';
+                {% for lang in languages %}
+                html += '       <div class="input-group">';
+                html += '           <span class="input-group-addon"><img src="language/{{ lang.code }}/{{ lang.code }}.png" title="{{ lang.name }}"/></span>';
+                html += '           <input id="filter_name_' + id + '_{{ lang.language_id }}" name="name[{{ lang.language_id }}]" value="{{ item['name'] }}" placeholder="{{ language['entry_name'] }}" class="form-control"/>';
+                html += '       </div>';
+                {% endfor %}
+                html += '   </div>';
+                html += '</div>';
+
+            {% if item.autocomplete %}
+                html += '<div class="form-group">';
+                html += '   <label class="col-sm-3 control-label" for="filter_item_' + id + '">{{ item['autocomplete']['label'] }}</label>';
+                html += '   <div class="col-sm-9" data-validate="item_id">';
+                html += '       <input id="filter_item_' + id + '" type="text" name="item_name" placeholder="{{ item['autocomplete']['label'] }}" class="form-control"/>';
+                html += '       <input id="filter_item_' + id + '_id" type="hidden" name="item_id" />';
+                html += '   </div>';
+                html += '</div>';
+            {% endif %}
+
+            {% if item['types'] %}
+                html += '<div class="form-group">';
+                html += '   <label class="col-sm-3 control-label" for="filter_type_' + id + '">{{ language['filter_type'] }}</label>';
+                html += '   <div class="col-sm-9">';
+                html += '       <select id="filter_type_' + id + '" name="type" class="form-control">';
+            {% for val, name in item['types'] %}
+                html += '           <option value="{{ val }}">{{ name }}</option>';
+            {% endfor %}
+                html += '       </select>';
+                html += '   </div>';
+                html += '</div>';
+            {% endif %}
+
+            {% if item['sort_types'] %}
+                html += '<div class="form-group">';
+                html += '   <label class="col-sm-3 control-label" for="filter_sort_' + id + '">{{ language['entry_sorter'] }}</label>';
+                html += '   <div class="col-sm-9">';
+                html += '       <select id="filter_sort_' + id + '" name="sort_order" class="form-control">';
+            {% for val, name in item['sort_types'] %}
+                html += '           <option value="{{ val }}">{{ name }}</option>';
+            {% endfor %}
+                html += '       </select>';
+                html += '   </div>';
+                html += '</div>';
+            {% endif %}
+
+            {% if item['additional'] %}
+            {% for additional in item['additional'] %}
+                html += '<div class="form-group">';
+                html += '   <label class="col-sm-3 control-label" for="filter_{{ additional['name'] }}_' + id + '">{{ additional['label'] }}</label>';
+                html += '   <div class="col-sm-9">';
+                html += '       <input type="{{ additional['type'] }}" id="filter_{{ additional['name'] }}_' + id + '" name="add[{{ additional['name'] }}]" placeholder="{{ additional['label'] }}" value="{{ additional['default'] }}" class="form-control"/>';
+                html += '   </div>';
+                html += '</div>';
+            {% endfor %}
+            {% endif %}
+                form.find('.from-filter-collapse').html(html);
+
+            {% if item['autocomplete'] %}
+                $('#filter_item_' + id).autocomplete({
+                    'source': function(request, response) {
+                        $.ajax({
+                            url: '{{ item['autocomplete']['url'] }}&filter_name=' +  encodeURIComponent(request),
+                            dataType: 'json',
+                            success: function(json) {
+                                response($.map(json, function(item) {
+                                    return {
+                                        {% if item['autocomplete']['category'] %}
+                                        category: item.{{ item['autocomplete']['category'] }},
+                                        {% endif %}
+                                        label: item.name,
+                                        value: item.id
+                                    }
+                                }));
+                            }
+                        });
+                    },
+                    'select': function(item) {
+                        $('#filter_item_' + id).val(item['label']);
+                        $('#filter_item_' + id + '_id').val(item['value']);
+                        {% for lang in languages %}
+                            if($('#filter_name_' + id + '_{{ lang.language_id }}').val() == '') {
+                                $('#filter_name_' + id + '_{{ lang.language_id }}').val(item['label']);
+                            }
+                        {% endfor %}
+                    }
+                });
+            {% endif %}
+                break;
+        {% endfor %}
+        }
+        form.find('.from-filter-collapse').collapse('show');
+    });
+</script>
+<script type="text/javascript">
+    var editor1 = CodeMirror.fromTextArea(document.getElementById("callback-before"), {
+        mode: "javascript",
+        theme: "material",
+        lineNumbers: true,
+        matchBrackets: true,
+        continueComments: "Enter",
+        extraKeys: {"Ctrl-Q": "toggleComment"}
+    });
+
+    var editor2 = CodeMirror.fromTextArea(document.getElementById("callback-after"), {
+        mode: "javascript",
+        theme: "material",
+        lineNumbers: true,
+        matchBrackets: true,
+        continueComments: "Enter",
+        extraKeys: {"Ctrl-Q": "toggleComment"}
+    });
+
+    $(document).on('shown.bs.tab', 'a[href="#ajax"]', function (e) {
+        editor1.refresh();
+        editor2.refresh();
+    });
+
+    $(document).on('click', '#apply-button', function() {
+        editor1.save();
+        editor2.save();
+        var btn = $(this),
+            form = $('#' + btn.data('form'));
+        $.ajax({
+            url: btn.data('url'),
+            type: 'post',
+            data: form.serialize(),
+            dataType: 'json',
+            processData: false,
+            beforeSend : function() {
+                btn.button('loading');
+            },
+            success: function (data) {
+                if(data.errors) {
+                    $.each(data.errors, function(key, val){
+                        $('#module-container').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' +
+                            val +
+                            '<button type="button" class="close" data-dismiss="alert">&times; </button></div>'
+                        );
+                    });
+                }
+                if(data.success) {
+                    $('#module-container').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +
+                        data.success +
+                        '<button type="button" class="close" data-dismiss="alert">&times; </button></div>'
+                    );
+                }
+                $('#module-container > .alert').each(function(i) {
+                    var alert = $(this);
+                    setTimeout(function() {
+                        alert.fadeOut(function(){$(this).remove()})
+                    }, i*300 + 10000);
+                });
+            },
+            complete : function() {
+                btn.button('reset');
+            }
+        });
+    });
+</script>

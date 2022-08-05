@@ -1,0 +1,301 @@
+{{ header }}
+<div class="product_card mb_adapt">
+	<div class="wrapper">
+		<ul class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+				{% if loop.index > 1 %}
+					<span> \ </span>
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% else %}
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+
+		{{ content_top }}
+
+		<div class="product_card_container">
+			<div class="header">
+
+			<div class="product_card_discount">
+				{% if special and (hit == false) %}
+					<span>Скидка</span>
+				{% endif %}
+
+				{% if (special == false) and hit %}
+					<span class="hit">Хит</span>
+				{% endif %}
+
+				{% if special and hit %}
+					<span class="hit">Хит</span>
+				{% endif %}
+			</div>
+
+				<div class="product_images_slider swiper">
+					<div class="swiper-wrapper thumbnails">
+
+            <div class="thumbnail swiper-slide">
+              <img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+            </div>
+
+            {% if images %}
+              {% for image in images %}
+              <div class="thumbnail swiper-slide">
+                <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+              </div>
+              {% endfor %}
+            {% endif %}
+
+            {% if url_video %}
+              <iframe class="thumbnail swiper-slide" src="{{ url_video }}" width="100%" height="45%" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+            {% endif %}
+					</div>
+
+					{% if images or url_video  %}
+						<div class="prev"></div>
+						<div class="next"></div>
+					{% endif %}
+				</div>
+
+        {% if images or url_video %}
+				<div class="product_images_slider_thumbs swiper product_images_slider_thumbs--active">
+					<div class="swiper-wrapper thumbnails">
+						<img class="swiper-slide" src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+						{% if images %}
+							{% for image in images %}
+								<img class="swiper-slide" src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+							{% endfor %}
+						{% endif %}
+            {% if url_video %}
+            <div class="swiper-slide swiper-slide-video">
+              <img class="" width="100%" src="{{ url_video_preview }}" title="Превью видео ролика" alt="Превью видео ролика" />
+            </div>
+						{% endif %}
+					</div>
+					<div class="prev"></div>
+					<div class="next"></div>
+				</div>
+        {% endif %}
+
+
+			</div>
+			<div class="product_card_main_info">
+				<div>
+					<h1>{{ heading_title }}</h1>
+					{% if manufacturer %}
+						<a href="{{ manufacturers }}" class="manufacturer">{{ manufacturer }}</a>
+					{% endif %}
+				</div>
+
+				<div class="info">
+					<div class="attributes">
+          {# Наличие: #}
+						<div class="attribute">
+							<p class="name">{{ text_stock }}</p>
+							<p class="value">{{ stock }}</p>
+						</div>
+            {# Код товара: #}
+						{#<div class="attribute">
+							<p class="name">{{ text_model }}</p>
+							<p class="value">{{ model }}</p>
+						</div> #}
+						{% if attribute_groups %}
+							{% for attribute_group in attribute_groups %}
+								{% for attribute in attribute_group.attribute %}
+									<div class="attribute">
+										<p class="name">{{ attribute.name }}</p>
+										<p class="value">{{ attribute.text }}</p>
+									</div>
+								{% endfor %}
+							{% endfor %}
+						{% endif %}
+					</div>
+
+					{# <div class="product_card_color_list">
+						<span class="product_card_color_radio__text">Цвет</span>
+						<div class="product_card_color-container">
+							<button class="product_card_color__item"></button>
+							<button class="product_card_color__item"></button>
+							<button class="product_card_color__item product_card_color__item--select"></button>
+						</div>
+					</div> #}
+
+					<div class="price_and_controls">
+						{% if price %}
+							<div class="price">
+								{% if not special %}
+									<p>{{ price }}</p>
+								{% else %}
+									<span>{{ price }}</span>
+									<p>{{ special }}</p>
+								{% endif %}
+							</div>
+						{% endif %}
+
+						<div class="quantity_block">
+							<button class="minus">-</button>
+							<input type="text" name="quantity" value="{{ minimum }}" min="{ minimum }}" size="3" id="input-quantity" class="form-control" autocomplete="off" />
+							<button class="plus">+</button>
+						</div>
+
+						<input type="hidden" name="product_id" value="{{ product_id }}" />
+						<div class="order_buttons">
+
+							<button class="order_btn" onclick="showModal()">Заказать</button>
+
+							<button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="cart_btn">
+								{{ button_cart }}
+								<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M3.1345 2.2002L2.94482 1.8H2.50195H1.20195V1.2H3.3245L4.08466 2.80034L4.2745 3.2H4.71695H19.502C19.6676 3.2 19.802 3.33388 19.802 3.5C19.802 3.55499 19.7879 3.60003 19.7692 3.6327L19.7691 3.63266L19.7638 3.64226L16.1915 10.1275C16.1911 10.1282 16.1907 10.1289 16.1903 10.1296C15.9628 10.5334 15.5359 10.8 15.052 10.8H7.60195H7.18773L6.98836 11.1631L6.09525 12.7897C6.01089 12.9403 5.97695 13.1 5.97695 13.25C5.97695 13.7766 6.40035 14.2 6.92695 14.2H17.802V14.8H6.50195C5.78355 14.8 5.20195 14.2184 5.20195 13.5C5.20195 13.2747 5.25888 13.0635 5.36241 12.8685L6.71004 10.4228L6.88297 10.109L6.7295 9.7852L3.1345 2.2002ZM5.21195 18.5C5.21195 17.777 5.78812 17.2 6.50195 17.2C7.22035 17.2 7.80195 17.7816 7.80195 18.5C7.80195 19.2184 7.22035 19.8 6.50195 19.8C5.78812 19.8 5.21195 19.223 5.21195 18.5ZM15.212 18.5C15.212 17.777 15.7881 17.2 16.502 17.2C17.2204 17.2 17.802 17.7816 17.802 18.5C17.802 19.2184 17.2204 19.8 16.502 19.8C15.7881 19.8 15.212 19.223 15.212 18.5Z" stroke="white" stroke-width="1.4"/>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+    <p class="product_card__description">{{ description }}</p>
+
+    {% if products %}
+    <section class="recommended-products">
+
+      <div class="recommended-products-swiper swiper">
+        <h2 class="recommended-products__title">С этим товаром покупают</h2>
+
+        <div class="recommended-products__buttons-container">
+          <div class="recommended-products-swiper-button-prev"></div>
+          <div class="recommended-products-swiper-button-next"></div>
+        </div>
+
+
+        <div class="swiper-wrapper">
+
+          {% for product in products %}
+            <article class="recommended-product swiper-slide">
+              <a href="{{ product.href }}">
+                <img class="recommended-product__img" src="{{ product.thumb }}" title="{{ product.name }}" alt="{{ product.name }}" width="236" height="260" />
+              </a>
+
+              {% if product.special %}
+								<span class="recommended-product__discount-mark">Скидка</span>
+							{% endif %}
+
+              <p class="recommended-product__name">{{ product.name }}</p>
+
+              <div class="recommended-product__price-container">
+                {% if not product.special %}
+                  <p class="recommended-product__new-price">{{ product.price }}</p>
+                {% else %}
+                  <span class="recommended-product__new-price">{{ product.special }}</span>
+                  <span class="recommended-product__price">{{ product.price }}</span>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+        <div class="recommended-products-swiper__pagination"></div>
+      </div>
+		</section>
+    {% endif %}
+	</div>
+</div>
+
+<script type="text/javascript"><!--
+$('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
+	$.ajax({
+		url: 'index.php?route=product/product/getRecurringDescription',
+		type: 'post',
+		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#recurring-description').html('');
+		},
+		success: function(json) {
+			$('.alert-dismissible, .text-danger').remove();
+
+			if (json['success']) {
+				$('#recurring-description').html(json['success']);
+			}
+		}
+	});
+});
+//--></script>
+
+<script type="text/javascript"><!--
+
+// Появление окошка добавления товара в корзину
+function showMessageProductAdded() {
+  $(".product-added").fadeIn(300);
+	setTimeout(function(){
+    $(".product-added").fadeOut(300);
+	}, 1500);
+}
+
+$('.product_card .info .price_and_controls .order_buttons .cart_btn').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/cart/add',
+		type: 'post',
+		data: $('.product_card input[type=\'text\'], .product_card input[type=\'hidden\'], .product_card input[type=\'radio\']:checked, .product_card input[type=\'checkbox\']:checked, .product_card select, .product_card textarea'),
+		dataType: 'json',
+		success: function(json) {
+      showMessageProductAdded();
+			$('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
+
+			if (json['error']) {
+				if (json['error']['option']) {
+					for (i in json['error']['option']) {
+						var element = $('#input-option' + i.replace('_', '-'));
+
+						if (element.parent().hasClass('input-group')) {
+							element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						} else {
+							element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						}
+					}
+				}
+
+				if (json['error']['recurring']) {
+					$('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
+				}
+
+				// Highlight any found errors
+				$('.text-danger').parent().addClass('has-error');
+			}
+
+			if (json['success']) {
+				//$('.breadcrumb').after('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				setTimeout(function () {
+					$(".mobile_menu .navigation .item.cart .quantity").html(json['total_short']);
+					$(".desktop_menu .search_and_cart .cart span").html(json['total_short']);
+				}, 100);
+
+				//$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+
+				//$('html, body').animate({ scrollTop: 0 }, 'slow');
+
+				$('#cart > ul').load('index.php?route=common/cart/info ul li');
+			}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+});
+//--></script>
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+	$('.thumbnails').magnificPopup({
+		type:'image',
+		delegate: 'a',
+		gallery: {
+			enabled: true
+		}
+	});
+});
+//--></script>
+{{ footer }}

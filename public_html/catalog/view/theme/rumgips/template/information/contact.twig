@@ -1,0 +1,631 @@
+{{ header }}
+
+{# Страница контактов #}
+
+<div class="page-wrapper">
+  <section class="contacts-page">
+    <h1 class="contacts-page__title">Контакты</h1>
+    <a class="contacts-page__phone" href="tel:+74950237200">+7 (495) 023-72-00</a>
+
+    <div class="contacts-page__wrapper">
+      <section class="contacts-list contacts-list__container">
+        <h2 class="contacts-list__title">Контакты</h2>
+        <div class="contacts-list__container-out">
+          <div class="contacts-list__container-inner">
+            <ul class="contacts-page__list">
+              <li class="contacts-page__item">
+                <p class="contacts-page__caption contacts-page__caption--phone">Call-центр</p>
+                <p class="contacts-page__text">Ежедневно с 9:00 до 22:00</p>
+              </li>
+              <li class="contacts-page__item">
+                <p class="contacts-page__caption contacts-page__caption--delivery">Доставка заказов</p>
+                <p class="contacts-page__text">Ежедневно с 9:00 до 21:00</p>
+              </li>
+              <li class="contacts-page__item">
+                <p class="contacts-page__caption contacts-page__caption--letter">Пишите нам</p>
+                <a class="contacts-page__text" href="mailto:info@rumgips.ru">info@rumgips.ru</a>
+              </li>
+            </ul>
+            <button class="button-call-back" onclick="showModal()">Обратный звонок</button>
+          </div>
+          <div class="contacts__map">
+
+          <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A46e4facfb3640c1a231c59743ea1241f406e14dbdb59877fb4a06a19f019f68d&amp;source=constructor" width="553" height="431" frameborder="0"></iframe>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="props">
+        <h2 class="props__title">Реквизиты</h2>
+        <span class="props__title-text">ИП МАРКИЯНОВИЧ А.В.</span>
+        <div class="props__container">
+          <div>
+            <p class="props__text props__text--name"><b>Фактический адрес:</b></p>
+            <adress class="props__text props__adress">125040, г. Москва, МКАД 32-й км., вл.4</adress>
+          </div>
+          <div></div>
+            <div>
+              <span class="props__text"><b>ИНН:</b> 775145142989</span>
+              <span class="props__text"><b>ОГРН:</b> 322508100342710</span>
+              <span class="props__text"><b>БИК:</b> 044525974</span>
+            </div>
+
+          <div>
+            {# <p class="props__text props__text--name"><b>Юридический адрес:</b></p>
+            <adress class="props__text props__adress">125040, г. Москва, МКАД 32-й км., вл.4</adress> #}
+            <div>
+              <span class="props__text"><b>Р/с:</b> 40802810500003473441</span>
+              <span class="props__text"><b>К/с:</b> 30101810145250000974</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {# <section class="for-partners">
+        <h2 class="for-partners__title">Клиентам и партнерам</h2>
+        <ul class="for-partners__list">
+          <li class="for-partners__item">
+            <p class="for-partners__item-title">Сервисный отдел</p>
+            <a class="for-partners__email" href="mailto:service@rumgips.ru">service@rumgips.ru</a>
+          </li>
+          <li class="for-partners__item">
+            <p class="for-partners__item-title">Закупки и партнерство</p>
+            <a class="for-partners__email" href="mailto:partner@rumgips.ru">partner@rumgips.ru</a>
+          </li>
+          <li class="for-partners__item">
+            <p class="for-partners__item-title">Бухгалтерия</p>
+            <a class="for-partners__email" href="mailto:buhgalter@rumgips.ru">buhgalter@rumgips.ru</a>
+          </li>
+        </ul>
+      </section> #}
+
+    </div>
+  </section>
+</div>
+
+
+{# РЕКЛАМАЦИЯ НАЧАЛО #}
+	{# <div class="page-wrapper "> <section class="complaint-page">
+		<h1 class="complaint-page__title">Рекламация</h1>
+		<p class="complaint-page__title-text">Мы гарантируем замену товара ненадлежащего качества</p>
+		<form class="complaint-form" action="./form_callback.php" method="POST">
+
+			<div class="navigation-swiper swiper wrapper">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide navigation-slide">
+						<span class="navigation-slide__text">Данные о клиенте</span>
+					</div>
+					<div class="swiper-slide navigation-slide">
+						<span class="navigation-slide__text">Действия по рекламации</span>
+					</div>
+					<div class="swiper-slide navigation-slide">
+						<span class="navigation-slide__text" >Состав претензии</span>
+					</div>
+					<div class="swiper-slide navigation-slide">
+						<span class="navigation-slide__text">Документ отгрузки</span>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="complaint-swiper swiper">
+				<div class="complaint-swiper--wrapper swiper-wrapper"> #}
+
+					{# 1 #}
+					{# <div class="complaint-swiper__slide swiper-slide">
+						<div class="complaint-page__wrapper">
+							<p class="complaint-form__title">Вы являетесь?</p>
+
+							<input type="radio" name="person" id="natural" value="natural" checked>
+							<label class="complaint-form__radio-label" for="natural">Физическое лицо</label>
+
+							<input type="radio" name="person" id="legal" value="legal">
+							<label class="complaint-form__radio-label" for="legal">Юридическое лицо</label>
+
+
+							<div class="complaint-form__natural-container">
+								<label class="complaint-form__label  complaint-form__required" for="full-name">ФИО</label>
+								<input class="complaint-form__input slide-1" id="full-name" minlength="3" maxlength="50" required type="text" name="full-name"/>
+								<div class="complaint-form__label-container">
+									<div>
+										<label class="complaint-form__label complaint-form__required" for="passport-series">Серия паспорта</label>
+										<input class="complaint-form__input slide-1" id="passport-series" pattern="[0-9]{2}\s{1}[0-9]{2}" placeholder="XX XX" required type="text" name="passport-series"/>
+									</div>
+									<div>
+										<label class="complaint-form__label complaint-form__required" for="passport-number">Номер паспорта</label>
+										<input class="complaint-form__input slide-1" id="passport-number" pattern="[0-9]{6}" required type="number" name="passport-number"/>
+									</div>
+									<div class="complaint-form__calendar-container">
+										<label class="complaint-form__label complaint-form__required" for="passport-date">Дата выдачи паспорта</label>
+										<input class="complaint-form__input slide-1 complaint-form__input--date" id="passport-date" required type="date" name="passport-date"/>
+									</div>
+									<div>
+										<label class="complaint-form__label complaint-form__required" for="passport-kode">Код подразделения</label>
+										<input class="complaint-form__input slide-1" id="passport-kode" pattern="^([0-9]{3}[-]{1}[0-9]{3})?$" placeholder="XXX-XXX" required type="text" name="passport-kode"/>
+									</div>
+								</div>
+								<label class="complaint-form__label complaint-form__required" for="passport-who">Кем выдан паспорт</label>
+								<textarea class="complaint-form__textarea slide-1" id="passport-who" maxlength="50" required rows="3" name="passport-who"></textarea>
+
+								<label class="complaint-form__label complaint-form__required" for="email">Ваш E-mail</label>
+								<input class="complaint-form__input slide-1" id="email" required type="email" name="email"/>
+
+								<label class="complaint-form__label complaint-form__required" for="phone">Телефон</label>
+								<input class="complaint-form__input slide-1" id="phone" required type="tel" name="phone"/>
+							</div>
+							<div class="complaint-form__legal-container">
+								<label class="complaint-form__label complaint-form__required" for="inn">ИНН</label>
+								<input class="complaint-form__input slide-1-2" id="inn" required pattern="^(([0-9]{12})|([0-9]{10}))?$" type="number" name="legal-inn"/>
+
+								<label class="complaint-form__label complaint-form__required" for="legal-name">Наименование организации</label>
+								<input class="complaint-form__input slide-1-2" id="legal-name" required type="text" name="legal-name"/>
+
+								<label class="complaint-form__label complaint-form__required" for="passport-kode">КПП</label>
+								<input class="complaint-form__input slide-1-2" id="passport-kode" required pattern="^([0-9]{9})?$" type="number" name="legal-kpp"/>
+
+								<label class="complaint-form__label complaint-form__required" for="passport-kode">БИК</label>
+								<input class="complaint-form__input slide-1-2" id="passport-kode" required type="number" name="legal-bik"/>
+
+								<label class="complaint-form__label complaint-form__required" for="passport-kode">Расчетный счет</label>
+								<input class="complaint-form__input slide-1-2" id="passport-kode" required type="number" name="legal-payment-account"/>
+
+								<label class="complaint-form__label complaint-form__required" for="passport-kode">Корреспондентский счет</label>
+								<input class="complaint-form__input slide-1-2" id="passport-kode" required type="number" name="legal-correspondent-account"/>
+
+								<label class="complaint-form__label complaint-form__required" for="legal-email">E-mail</label>
+								<input class="complaint-form__input slide-1-2" id="legal-email" required type="email" name="legal-email"/>
+							</div>
+
+							<label class="complaint-form__agree">
+								<input type="checkbox" name="agree" value="yes" id="agree">
+								<p class="complaint-form__agree-text">Настоящим подтверждаю, что я ознакомлен и согласен с условиями политики конфиденциальности и даю согласие на обработку персональных данных</p>
+							</label>
+
+							<div class="complaint-form__button-container">
+								<button class="complaint-form__button complaint-swiper__button-prev" type="button">Назад</button>
+								<button class="complaint-form__button complaint-swiper__button-next complaint-form__button--active button-valid-first-slide" onclick="scrollUp();checkValidComplaintSlide1()" type="button">Далее</button>
+							</div>
+
+						</div>
+					</div> #}
+
+					{# 2 #}
+					{# <div class="complaint-swiper__slide swiper-slide">
+						<div class="complaint-page__wrapper">
+							<p class="complaint-form__title">Вы бы хотели товар</p>
+							<div class="complaint-form__radio-container">
+								<input type="radio" name="product-todo" id="product-return" value="return" checked>
+								<label class="complaint-form__radio-text" for="product-return">Вернуть</label>
+								<input type="radio" name="product-todo" id="product-replace" value="replace">
+								<label class="complaint-form__radio-text" for="product-replace">Заменить</label>
+							</div>
+							<p class="complaint-form__title complaint-form__title--decor-line">Качество товара</p>
+							<div class="complaint-form__radio-container">
+								<input type="radio" name="product-quality" id="product-proper" value="proper" checked>
+								<label class="complaint-form__radio-text" for="product-proper">Надлежащее</label>
+								<input type="radio" name="product-quality" id="product-improper" value="improper">
+								<label class="complaint-form__radio-text" for="product-improper">Ненадлежащее</label>
+							</div>
+
+							<p class="complaint-form__title complaint-form__title--required complaint-form__title--decor-line">Причина</p>
+							<label class="complaint-form__agree complaint-form__agree--center">
+								<input class="complaint-form__reason" type="checkbox" name="reason" value="yes" checked>
+								<p class="complaint-form__checkbox-text">Не подошел</p>
+							</label>
+							<label class="complaint-form__agree complaint-form__agree--center">
+								<input class="complaint-form__reason" type="checkbox" name="reason" value="yes">
+								<p class="complaint-form__checkbox-text">Ошибка при загрузке</p>
+							</label>
+							<label class="complaint-form__agree complaint-form__agree--center">
+								<input class="complaint-form__reason" type="checkbox" name="reason" value="yes">
+								<p class="complaint-form__checkbox-text">Пришел не тот товар</p>
+							</label>
+							<label class="complaint-form__agree complaint-form__agree--center">
+								<input class="complaint-form__reason" type="checkbox" name="reason" value="yes">
+								<p class="complaint-form__checkbox-text">Нарушена упаковка</p>
+							</label>
+
+							<label class="complaint-form__label complaint-form__title--decor-line" for="comment">Комментарий</label>
+							<textarea class="complaint-form__textarea" id="comment" rows="9" name="comment"></textarea>
+
+							<div class="complaint-form__button-container">
+								<button class="complaint-form__button complaint-swiper__button-prev" onclick="scrollUp()" type="button">Назад</button>
+								<button class="complaint-form__button complaint-swiper__button-next complaint-form__button--active" onclick="scrollUp();checkValidComplaintSlide2()" type="button">Далее</button>
+
+							</div>
+						</div>
+					</div> #}
+
+
+					{# 3 #}
+					{# <div class="complaint-swiper__slide swiper-slide">
+						<div class="complaint-page__wrapper">
+							<div class="complaint-form__calendar">
+								<div class="complaint-form__calendar-container">
+									<label class="complaint-form__label complaint-form__required" for="date-buy">Дата покупки</label>
+									<input class="complaint-form__input complaint-form__input--date slide-3" id="date-buy" required type="date" name="date-buy"/>
+								</div>
+							</div>
+
+							<div class="complaint-form__article-list">
+								<div class="complaint-form__article-container">
+
+									<label class="complaint-form__label complaint-form__required" for="article">Артикул</label>
+									<input class="complaint-form__input slide-3" id="article" required type="number" name="products[0]['article']"/>
+
+									<label class="complaint-form__label complaint-form__required" for="product-name">Название товара</label>
+									<input class="complaint-form__input slide-3" id="product-name" required type="text" name="product-name"/>
+
+									<div class="complaint-form__cost-container">
+										<label class="complaint-form__label" for="quantity">Количество</label>
+
+                    <div class="quantity_block">
+                      <button class="minus" id="minus" type="button">-</button>
+                      <input type="number" name="quantity" value="1" min="1" size="3" id="input-quantity" class="form-control" autocomplete="off" />
+                      <button class="plus" id="plus"  type="button">+</button>
+                    </div>
+
+										<label class="complaint-form__label complaint-form__required" for="product-cost">Стоимость товаров</label>
+										<input class="complaint-form__input  slide-3" id="product-cost" required type="number" name="product-cost"/>
+									</div>
+								</div>
+							</div>
+
+							<button class="complaint-form__add-product" onclick="addProduct()" type="button">Добавить товар</button>
+
+							<div class="complaint-form__button-container">
+								<button class="complaint-form__button complaint-swiper__button-prev" onclick="scrollUp()" type="button">Назад</button>
+								<button class="complaint-form__button complaint-swiper__button-next complaint-form__button--active" onclick="scrollUp();checkValidComplaintSlide3()" type="button">Далее</button>
+							</div>
+
+						</div>
+					</div> #}
+
+					{# 4 #}
+					{# <div class="complaint-swiper__slide swiper-slide">
+						<div class="complaint-page__wrapper">
+
+							<label class="complaint-form__label complaint-form__required" for="document-number ">Номер подтверждающего документа (чек/ТТН)</label>
+
+							<div class="complaint-form__add-input-container">
+								<input class="complaint-form__input complaint-form__input--document slide-4" id="document-number" required type="text" name="document-number"/>
+								<div class="complaint-form__add-container">
+									<input class="complaint-form__add page__hidden" type="file" id="cheque" name="file-cheque" accept="image/png, image/jpeg">
+									<label class="complaint-form__add-cheque-text" for="cheque">Загрузить чек</label>
+									<button class="complaint-form__delete-button" type="button"></button>
+								</div>
+							</div>
+
+							<label class="complaint-form__label" for="warranty-number">Номер гарантийного талона</label>
+
+              <label>
+			          <input value="{{ antispam }}" type="hidden" name="antispam">
+		          </label>
+
+							<div class="complaint-form__add-input-container">
+								<input class="complaint-form__input complaint-form__input--document slide-4" id="warranty-number" type="text" name="warranty-number"/>
+								<div class="complaint-form__add-container">
+									<input class="complaint-form__add page__hidden" type="file" id="file-warranty" name="file-warranty" accept="image/png, image/jpeg">
+									<label class="complaint-form__add-cheque-text" for="file-warranty">Загрузить фото ГТ</label>
+									<button class="complaint-form__delete-button" type="button"></button>
+								</div>
+							</div>
+							<p class="complaint-form__document-text">Если на товар установлен гарантийный срок, необходимо указать это. В этом случае в течение гарантийного срока возможна только замена товара ненадлежащего качества на аналогичный.</p>
+
+							<div class="complaint-form__button-container complaint-form__button-container--send">
+								<button class="complaint-form__button complaint-swiper__button-prev" onclick="scrollUp()" type="button">Назад</button>
+								<button class="complaint-form__button complaint-swiper__button-next complaint-form__button--active" onclick="checkValidComplaintSlide4()" type="button">Отправить</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</section>
+</div> #}
+
+
+{# модальное окно после успешной отправки формы #}
+{# <div class="complaint-modal">
+	<div class="complaint-modal__body">
+		<button class="complaint-modal__button-close" onclick="closeComplaintModal()"></button>
+		<p class="complaint-modal__title">Ваше обращение принято!</p>
+		<p class="complaint-modal__number">
+			<b>Обращение № 518381</b>
+			успешно оформлено.</p>
+		<p class="complaint-modal__text">При необходимости мы свяжемся с Вами
+						        для уточнения деталей рекламации.</p>
+	</div>
+</div> #}
+
+{# шаблон для добавления нового товара на третьей странице слайдера #}
+{# <template id="product">
+	<div class="complaint-form__article-container">
+		<button class="complaint-form__delete-article-button" type="button">Удалить</button>
+
+		<label class="complaint-form__label complaint-form__required  complaint-form__article-label" for="">Артикул</label>
+		<input class="complaint-form__input slide-3 complaint-form__article-input" id="" required type="number" name=""/>
+
+		<label class="complaint-form__label complaint-form__required complaint-form__product-name-label" for="">Название товара</label>
+		<input class="complaint-form__input slide-3 complaint-form__product-name-input" id="" required type="text" name=""/>
+
+		<div class="complaint-form__cost-container">
+			<label class="complaint-form__label complaint-form__quantity-label" for="">Количество</label>
+			<div class="complaint-form__quantity-container">
+				<button class="complaint-form__button-quantity complaint-form__button-quantity-left" type="button">-</button>
+				<input class="complaint-form__input-quantity slide-3 complaint-form__quantity-input" id="" min="1" value="1" type="number" name=""/>
+				<button class="complaint-form__button-quantity complaint-form__button-quantity-right" type="button">+</button>
+			</div>
+			<label class="complaint-form__label complaint-form__required complaint-form__product-cost-label" for="">Стоимость товаров</label>
+			<input class="complaint-form__input slide-3 complaint-form__product-cost-input" id="" required type="number" name=""/>
+		</div>
+	</div>
+</template> #}
+
+
+{# <div class="page-wrapper">
+  <section class="delivery-page">
+    <h1 class="delivery-page__title">Доставка</h1>
+    <p class="delivery-page__title-text">Следует отметить, что сложившаяся структура организации однозначно определяет каждого участника как способного принимать собственные решения касаемо новых принципов формирования материально-технической и кадровой базы.</p>
+    <p class="delivery-page__time">Ежедневно 10.00 - 21.00</p>
+    <div class="delivery-page__wrapper">
+      <section class="delivery-block">
+        <div class="delivery-block__container">
+          <div>
+            <h2 class="delivery-block__title">Доставка</h2>
+            <span class="delivery__text"><b>По Москве</b></span>
+            <p class="delivery__text">Доставка в пределах МКАД - бесплатно,</br>
+            при сумме заказа от 20 000₽</p>
+          </div>
+          <picture>
+            <source media="(min-width: 992px)" srcset="catalog/view/theme/rumgips/image/delivery-car-desktop@1x.png 1x, catalog/view/theme/rumgips/image/delivery-car-desktop@2x.png 2x">
+            <source media="(min-width: 768px)" srcset="catalog/view/theme/rumgips/image/delivery-car-tablet@1x.png 1x, catalog/view/theme/rumgips/image/delivery-car-tablet@2x.png 2x">
+            <img class="delivery__image" src="catalog/view/theme/rumgips/image/delivery-car.png" srcset="catalog/view/theme/rumgips/image/delivery-car.png 2x" width="375" height="210" alt="Фото грузовика доставки">
+          </picture>
+        </div>
+      </section>
+
+      <section class="delivery-block__other">
+        <div>
+          <span class="delivery__text"><b>Московская область и регионы</b></span>
+          <p class="delivery__text">Стоимость доставки уточняйте по телефону:</p>
+          <a class="delivery__phone" href="tel:+79990002323">+7 (999) 000-23-23</a>
+        </div>
+        <div>
+          <span class="delivery__text"><b>Самовывоз</b></span>
+          <div class="delivery__text-container">
+            <p class="delivery__text">Адрес склада:&nbsp;</p>
+            <p class="delivery__text">МКАД 32-й км., вл.4</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</div> #}
+
+
+{# <div class="page-wrapper">
+  <section class="warranty-page">
+    <h1 class="warranty-page__title">Гарантия</h1>
+    <p class="warranty-page__title-text">Благодаря контролю качества на каждом этапе, мы продаем только качественный продукт
+      и даем гарантию — 24 месяца.</p>
+    <p class="warranty-page__time">24 МЕСЯЦА</p>
+    <div class="delivery-page__wrapper">
+      <section class="warranty">
+
+        <div class="warranty__container">
+          <div class="warranty-label">
+            <span class="warranty-label__count">24</span>
+            <span class="warranty-label__text">месяца</span>
+          </div>
+          <p class="warranty__main-text">Тщательный подбор производителей, поставщиков и служб доставки обеспечивает качество товара и сохранность его при транспортировке и хранении</p>
+        </div>
+        <h2 class="warranty__title">Условия гарантии</h2>
+        <div class="warranty__text-container">
+          <p class="warranty__text">Компания РУМСВЕТ гарантирует качество всех, предлагаемых Вашему вниманию, осветительные приборы уличного и интрьерного освещения. Тщательный подбор производителей, поставщиков и служб доставки обеспечивает качество товара и сохранность его при транспортировке и хранении.</p>
+          <p class="warranty__text">Все осветительные товары РУМСВЕТ имеют Декларации Соответствия и Регистрационные удостоверения РФ. Подлинность наших продуктов можно проверить на официальных сайтах производителей.</p>
+          <p class="warranty__text">Наши сотрудники обучаются на базе компаний-производителей и всегда могут оказать квалифицированную консультацию по их продукции.</p>
+        </div>
+        <p class="warranty__text-bottom">Если у вас возникли какие-либо вопросы по поводу гарантийного обслуживания, обратитесь в сервисный отдел</p>
+        <a class="warranty__call" href="tel:+79990002323">Позвонить</a>
+      </section>
+    </div>
+  </section>
+</div> #}
+
+
+{# <div class="page-wrapper">
+  <section class="exchange-page">
+    <h1 class="exchange-page__title">Обмен и возврат</h1>
+    <p class="exchange-page__title-text">Мы гарантируем замену товара ненадлежащего качества</p>
+    <div class="exchange-page__wrapper">
+      <section class="return">
+        <h2 class="return__title">Условия возврата товара</h2>
+        <div class="return__text-container">
+          <p class="return__text">Если Вы обнаружили несоответствие по заказу после отъезда курьера или недовольны качеством, мы обменяем товар или вернём Вам деньги в течение 24 часов.
+Возврат денежных средств зависит от выбранного способа оплаты заказа (наличным или безналичным расчетом).</p>
+          <p class="return__text">Для возврата товара Вам необходимо связаться с менеджером нашего интернет-магазина в течение 24 часов по телефону или по почте, указать номер заказа и позиции, которые Вас не устроили.
+Все расходы, связанные с возвратом товара, наша компания осуществляет за собственный счет.</p>
+          <p class="return__text">Интернет-магазин вправе отказать в обмене или возврате товара, если сочтет, что обнаруженный существенный недостаток является следствием неправильной эксплуатации товара.</p>
+        </div>
+      </section>
+      <section class="exchange">
+        <h2 class="exchange__title">Порядок обмена и возврата товара ненадлежащего качества</h2>
+        <div class="exchange-swiper swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide exchange-slide"><span class="exchange-swiper__text">Заполните форму рекламации</span></div>
+            <div class="swiper-slide exchange-slide"><span class="exchange-swiper__text">Прием товара на экспертизу</span></div>
+            <div class="swiper-slide exchange-slide"><span class="exchange-swiper__text">Итог экспертизы</span></div>
+          </div>
+        </div>
+        <div class="exchange__text-container">
+          <p class="exchange__text">В течение 3 рабочих дней, принимается решение о приеме товара на экспертизу.</p>
+          <p class="exchange__text">По итогам экспертизы:<br>
+          если изделие признается браком, покупателю обменивают товар на аналогичный или на товар с похожими техническими характеристиками, либо возвращают стоимость товара на момент его приобретения;</p>
+          <p class="exchange__text">если же выявлена неисправность изделия по причине неправильной эксплуатации или выяснено, что неисправность товара возникла путем намеренного или не намеренного механического повреждения, то товар возвращают Покупателю и взимают с него сумму, потраченную на проведение экспертизы.</p>
+        </div>
+        <a class="exchange__link" href="#">Заполнить рекламацию</a>
+      </section>
+    </div>
+  </section>
+</div> #}
+
+
+{# <div class="wrapper">
+  <section class="thank-you">
+    <p class="thank-you__title thank-you__title--check">Мы получили Вашу заявку</p>
+    <p class="thank-you__text">Спасибо за ваше обращение. Мы перезвоним вам в течение 5 минут в рабочее время.</p>
+
+    <p class="thank-you__call-text">Если нет времени ждать, то скорее звоните нам!</p>
+    <p class="thank-you__title thank-you__title--phone">+7 (969) 123-45-68</p>
+    <a class="thank-you__link" href="/">Вернуться на главную</a>
+
+  </section>
+</div> #}
+
+
+{# <div id="information-contact" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <h3>{{ text_location }}</h3>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            {% if image %}
+            <div class="col-sm-3"><img src="{{ image }}" alt="{{ store }}" title="{{ store }}" class="img-thumbnail" /></div>
+            {% endif %}
+            <div class="col-sm-3"><strong>{{ store }}</strong><br />
+              <address>
+              {{ address }}
+              </address>
+              {% if geocode %}
+              <a href="https://maps.google.com/maps?q={{ geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
+              {% endif %}
+            </div>
+            <div class="col-sm-3"><strong>{{ text_telephone }}</strong><br>
+              {{ telephone }}<br />
+              <br />
+              {% if fax %}
+              <strong>{{ text_fax }}</strong><br>
+              {{ fax }}
+              {% endif %}
+            </div>
+            <div class="col-sm-3">
+              {% if open %}
+              <strong>{{ text_open }}</strong><br />
+              {{ open }}<br />
+              <br />
+              {% endif %}
+              {% if comment %}
+              <strong>{{ text_comment }}</strong><br />
+              {{ comment }}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if locations %}
+      <h3>{{ text_store }}</h3>
+      <div class="panel-group" id="accordion">
+        {% for location in locations %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fa fa-caret-down"></i></a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="collapse-location{{ location.location_id }}">
+            <div class="panel-body">
+              <div class="row">
+                {% if location.image %}
+                <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" /></div>
+                {% endif %}
+                <div class="col-sm-3"><strong>{{ location.name }}</strong><br />
+                  <address>
+                  {{ location.address }}
+                  </address>
+                  {% if location.geocode %}
+                  <a href="https://maps.google.com/maps?q={{ location.geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
+                  {% endif %}
+                </div>
+                <div class="col-sm-3"> <strong>{{ text_telephone }}</strong><br>
+                  {{ location.telephone }}<br />
+                  <br />
+                  {% if location.fax %}
+                  <strong>{{ text_fax }}</strong><br>
+                  {{ location.fax }}
+                  {% endif %}
+                </div>
+                <div class="col-sm-3">
+                  {% if location.open %}
+                  <strong>{{ text_open }}</strong><br />
+                  {{ location.open }}<br />
+                  <br />
+                  {% endif %}
+                  {% if location.comment %}
+                  <strong>{{ text_comment }}</strong><br />
+                  {{ location.comment }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <fieldset>
+          <legend>{{ text_contact }}</legend>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" />
+              {% if error_name %}
+              <div class="text-danger">{{ error_name }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" />
+              {% if error_email %}
+              <div class="text-danger">{{ error_email }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-enquiry">{{ entry_enquiry }}</label>
+            <div class="col-sm-10">
+              <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control">{{ enquiry }}</textarea>
+              {% if error_enquiry %}
+              <div class="text-danger">{{ error_enquiry }}</div>
+              {% endif %}
+            </div>
+          </div>
+          {{ captcha }}
+        </fieldset>
+        <div class="buttons">
+          <div class="pull-right">
+            <input class="btn btn-primary" type="submit" value="{{ button_submit }}" />
+          </div>
+        </div>
+      </form>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div> #}
+{{ footer }}

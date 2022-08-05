@@ -1,0 +1,288 @@
+{{ header }}
+
+<div class="wrapper" id="checkout">
+  <section class="order-registration">
+    <h1 class="order-registration__title">{{ heading_title }}</h1>
+    <form class="order-registration__form" method="POST" action="#">
+
+      <div class="registration-swiper__container">
+
+        <div class="registration-swiper swiper">
+          <div class="order-swiper swiper wrapper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide navigation-slide">
+                <span class="navigation-slide__text">Получатель</span>
+              </div>
+              <div class="swiper-slide navigation-slide">
+                <span class="navigation-slide__text" >Способ получения</span>
+              </div>
+              <div class="swiper-slide navigation-slide">
+                <span class="navigation-slide__text">Способ оплаты</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="registration-swiper--wrapper swiper-wrapper">
+
+        {# 1 слайд #}
+          <div class="registration-swiper__slide swiper-slide">
+
+            <label class="order-registration__form-label order-registration__required" for="name">Ваше ФИО</label>
+            <input class="order-registration__form-input slide-1" id="name" minlength="3" maxlength="50" required type="text" name="firstname" placeholder="Иванов Иван"/>
+
+            <label class="order-registration__form-label order-registration__required" for="phone">Ваш телефон</label>
+            <input class="order-registration__form-input slide-1" id="phone" required type="tel" name="telephone"/>
+
+            <label class="order-registration__form-label order-registration__required" for="email">Ваш E-mail</label>
+            <input class="order-registration__form-input slide-1" id="email" required type="email" name="email" placeholder="name@mail.ru"/>
+
+            <label class="complaint-form__agree">
+                <input type="checkbox" name="agree" value="yes" id="agree">
+                <p class="complaint-form__agree-text">Настоящим подтверждаю, что я ознакомлен и согласен с условиями политики конфиденциальности и даю согласие на обработку персональных данных</p>
+            </label>
+
+            <div class="order-registration__button-container">
+                <button class="complaint-form__button registration-swiper__button-prev" type="button" disabled>Назад</button>
+                <button class="complaint-form__button registration-swiper__button-next complaint-form__button--active button-valid-first-slide" onclick="scrollUp()" type="button">Далее</button>
+            </div>
+          </div>
+
+          {# 2 #}
+          <div class="registration-swiper__slide swiper-slide">
+
+            <p class="order-registration__form-text">Способ получения</p>
+
+          {% if shipping_flat_status %}
+            <div class="order-registration__container">
+							{% if totals|first.value >= min_free_cost %}
+								<input type="radio" name="shipping_method" id="сourier" value="{{ shipping_methods.free }}" data-delivery-price="0" data-total="{{ totals|first.value }}" checked>
+							{% else %}
+								<input type="radio" name="shipping_method" id="сourier" value="{{ shipping_methods.flat }}" data-delivery-price="{{shipping_flat_cost}}" data-total="{{ total_cost_with_flat }}" checked>
+							{% endif %}
+              <label class="order-registration__radio-label order-registration__radio-label--сourier" for="сourier">Курьерская доставка</br>(в пределах МКАД)
+              </label>
+
+              <div class="order-registration__сourier-container">
+                <p class="order-registration__сourier-text">Курьер принимает только наличные средства.</br>Пожалуйста, подготовьте сумму без сдачи.
+                </br>Стоимость доставки фиксирована и составляет {{shipping_flat_cost}} ₽.</br>
+                  Доставка в пределах МКАД - бесплатно,
+                  при сумме заказа от {{min_free_cost}} ₽.
+                </p>
+
+                <label class="order-registration__сourier-label order-registration__required" for="address">Адрес</label>
+                <input class="order-registration__form-input" id="address" minlength="3" maxlength="150" required type="text" placeholder="Город, улица, дом, этаж, квартира" name="address_1"/>
+              </div>
+            </div>
+          {% endif %}
+
+            <div class="order-registration__container">
+              <input type="radio" name="shipping_method" id="pickup" value="{{ shipping_methods.pickup }}" data-delivery-price="0" data-total="{{ totals|first.value }}" {% if not shipping_flat_status %} checked {% endif %}>
+              <label class="order-registration__radio-label order-registration__radio-label--pickup" for="pickup">Самовывоз с нашего склада
+              </label>
+              <div class="order-registration__pickup-container">
+                <p class="order-registration__pickup-text">Адрес: МКАД 32-й км., вл.4</p>
+                <a class="order-registration__pickup-button" target="_blank" href="https://yandex.ru/maps/-/CCURE2b3~B">
+                  <p class="order-registration__pickup-button-text">Посмотреть на карте</p>
+                </a>
+              </div>
+            </div>
+
+            <div class="order-registration__info">
+              <span class="order-registration__info-title order-registration__delivery-title">Готовность</span>
+
+              <span class="order-registration__info-title order-registration__info-right">Доставка</span>
+              <span class="order-registration__info-title">Количество</span>
+
+              <span class="order-registration__info-text order-registration__date">Сегодня</span>
+
+              <span class="order-registration__info-text order-registration__info-right order-registration__delivery-cost">Бесплатно</span>
+              <span class="order-registration__info-text">{{ total_products }}</span>
+            </div>
+
+            <div class="order-registration__button-container">
+                <button class="complaint-form__button registration-swiper__button-prev " onclick="scrollUp()" type="button">Назад</button>
+                <button class="complaint-form__button registration-swiper__button-next complaint-form__button--active" onclick="scrollUp()" type="button">Далее</button>
+            </div>
+          </div>
+
+          {# 3 #}
+          <div class="registration-swiper__slide swiper-slide">
+
+            <div class="order-registration__radio-container">
+              <div class="order-registration__payment-container">
+                <input type="radio" name="payment_method" id="cashless" value="{{ payment_methods.bank_transfer }}" checked>
+                <label class="order-registration__cashless-label" for="cashless">Безналичная оплата</label>
+                <p class="order-registration__cashless-text">Перевод по номеру телефона или банковской карте. Реквизиты для оплаты будут высланы на email.<br>Оплата 100% стоимости товаров с учетом доставки.</p>
+              </div>
+
+              <div class="order-registration__payment-container">
+                <input type="radio" name="payment_method" id="cash" value="{{ payment_methods.cod }}">
+                <label class="order-registration__cashless-label" for="cash">Наличными при получении</label>
+                <p class="order-registration__cashless-text">Оплата при получении производится после осмотра товаров. Курьер принимает только наличные средства.</br>Пожалуйста, подготовьте сумму без сдачи.</p>
+              </div>
+            </div>
+
+            <label class="order-registration__form-label" for="comment">Комментарий</label>
+            <textarea class="order-registration__textarea" id="comment" rows="11" name="comment"></textarea>
+
+            <div class="order-registration__button-container">
+                <button class="complaint-form__button registration-swiper__button-prev" onclick="scrollUp()" type="button">Назад</button>
+                {# <button class="complaint-form__button registration-swiper__button-next complaint-form__button--active" onclick="scrollUp()" type="button">Далее</button> #}
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <section class="checkout-cart__total">
+        <h2 class="checkout-cart__total-title">Ваша корзина</h2>
+        <p class="checkout-cart__total-count">{{ total_products }}</p>
+        <div class="checkout-cart__total-container">
+            <p class="checkout-cart__total-text">Сумма заказа</p>
+            <p class="checkout-cart__total-value">{{ totals|first.initial_total_text }} ₽</p>
+        </div>
+        <div class="checkout-cart__total-container checkout-cart__total-container-line">
+            <p class="checkout-cart__total-accent">Скидка</p>
+            <p class="checkout-cart__total-accent">{{ discount}} ₽</p>
+        </div>
+        <div class="checkout-cart__total-container">
+            <p class="checkout-cart__total-text">Общая стоимость</p>
+            <p class="checkout-cart__total-value">{{ totals|first.text}} ₽</p>
+        </div>
+        <div class="checkout-cart__total-container">
+            <p class="checkout-cart__total-text">Доставка</p>
+            <p class="checkout-cart__total-value checkout-cart__delivery"><span></span></p>
+        </div>
+        <div class="checkout-cart__total-container">
+            <p class="checkout-cart__total-text checkout-cart__total-bold">Всего к оплате</p>
+            <p class="checkout-cart__total-value checkout-cart__total-bold"><span></span> ₽</p>
+        </div>
+
+        {# <button class="order-registration__form-submit" type="submit" disabled>Подтвердить</button> #}
+
+        <button class="order-registration__form-submit" type="button">Подтвердить</button>
+
+      </section>
+      </div>
+			<input type="hidden" name="shipping_address" value="1">
+		</form>
+  </section>
+</div>
+
+{# модальное окно после успешной отправки формы #}
+<div class="complaint-modal">
+	<div class="complaint-modal__body">
+		<button class="complaint-modal__button-close" onclick="closeComplaintModal()"></button>
+		<p class="complaint-modal__title">Спасибо за покупку!</p>
+		<p class="complaint-modal__number">
+			<b>Заказ № <span></span></b>
+			успешно оформлен.</p>
+		<p class="complaint-modal__text">При необходимости мы свяжемся с Вами для уточнения деталей заказа.</p>
+	</div>
+</div>
+
+{{ footer }}
+
+
+<script type="text/javascript">
+	$(".order-registration__form-submit").click(function(){
+		if ($("input[name='shipping_method']:checked").val() == 'pickup.pickup')
+			$("#checkout input[name='address_1']").val("Самовывоз");
+
+		$(".order-registration input:required").each(function(index){
+			if ($(this).val() == "") {
+				alert ("Поле \"" + $("label[for='"+this.id+"']").text() + "\" не заполнено!");
+				return false;
+			}
+		})
+
+		$.ajax({
+			url: "/index.php?route=checkout/guest/save",
+			method: "POST",
+			data: $("#checkout input[name='firstname'], #checkout input[name='email'], #checkout input[name='telephone'], #checkout input[name='address_1'], #checkout input[name='shipping_address']"),
+			success: function(data){
+				$.ajax({
+					url: "/index.php?route=checkout/shipping_method",
+					method: "GET",
+					success: function(data){
+						$.ajax({
+							url: "/index.php?route=checkout/shipping_method/save",
+							method: "POST",
+							data: $("input[name='shipping_method']:checked, #checkout textarea[name='comment']"),
+							success: function(data){
+								$.ajax({
+									url: "/index.php?route=checkout/payment_method",
+									method: "GET",
+									success: function(data){
+										$.ajax({
+											url: "/index.php?route=checkout/payment_method/save",
+											method: "POST",
+											data: $("#checkout input[name='payment_method']:checked, #checkout textarea[name='comment'], #checkout input[name='agree']"),
+											success: function(data){
+												$.ajax({
+													url: "/index.php?route=checkout/confirm",
+													method: "GET",
+													success: function(data){
+														$.ajax({
+															url: "/index.php?route=extension/payment/" + $("#checkout input[name='payment_method']:checked").val() + "/confirm",
+															method: "GET",
+															success: function(data){
+																$.ajax({
+																	url: data['redirect'],
+																	method: "POST",
+																	data: {pop_up: true},
+																	success: function(data){
+																		ym(89709163,'reachGoal','cart_order'); // Цель в метрике о заказе через корзину
+																		$(".complaint-modal__number span").html(JSON.parse(data));
+																		showComplaintModal();
+																		setTimeout(function(){
+																			window.location = "/";
+																		}, 10000);
+																	}
+																});
+															}
+														});
+													}
+												});
+											}
+										});
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+		});
+
+	});
+
+// определение времени готовности отправки заказа (курьером или самовывозом)
+  const deliveryInputs = document.querySelectorAll('.order-registration__form input[name="shipping_method"]');
+  const deliveryTitle = document.querySelector('.order-registration__delivery-title');
+  const deliveryDate = document.querySelector('.order-registration__date');
+
+  const getTitle = () => {
+    const deliveryInput = document.querySelector('.order-registration__form input[name="shipping_method"]:checked');
+    if (deliveryInput.value == 'flat.flat') {
+      deliveryTitle.innerHTML = 'Отправление';
+    } else {
+      deliveryTitle.innerHTML = 'Готовность на складе';
+    }
+  }
+
+  getTitle();
+
+  deliveryInputs.forEach(input => input.addEventListener('change', getTitle));
+
+    const monthNames = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня",
+      "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
+
+    const todayDate = new Date();
+    const data1 = todayDate.setDate(new Date(todayDate).getDate() + 1);
+    const data2 = todayDate.setDate(new Date(todayDate).getDate() + 1);
+    todate1 = new Date(data1);
+    todate2 = new Date(data2);
+
+    deliveryDate.innerHTML = (todate1.getUTCDate()) + ' ' + (monthNames[todate1.getMonth()]) + ' - ' + (todate2.getUTCDate()) + ' ' + (monthNames[todate2.getMonth()]);
+</script>

@@ -1,0 +1,171 @@
+<div class="alert alert-info">
+    {{ language['attention_config'] }}
+</div>
+<div class="row">
+    {% set col_class = 'col-md-12' %}
+    {% if stores|length > 1 %}
+        {% set col_class = 'col-md-9' %}
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked" id="config-nav">
+                {% for store_id, store in stores %}
+                    {% set store_class = '' %}
+                    {% if store_id == 1 %}
+                        {% set store_class = 'active' %}
+                    {% endif %}
+                    <li class="{{ store_class }}">
+                        <a href="#tab-store{{ store_id }}" data-toggle="tab" aria-expanded="true">{{ store['name'] }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div class="{{ col_class }}">
+        <div class="tab-content">
+            {% for store_id, store in stores %}
+                {% set config = store['config'] %}
+                {% set store_class = '' %}
+                {% if store_id == 0 %}
+                    {% set store_class = 'in active' %}
+                {% endif %}
+                <div class="tab-pane fade {{ store_class }}" id="tab-store{{ store_id }}">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="config-product-mode{{ store_id }}">
+                            {{ language['entry_product_mode'] }}
+                        </label>
+                        <div class="col-sm-9">
+                            <select id="config-product-mode{{ store_id }}" name="config[{{ store_id }}][rdrf_product_mode]" class="form-control">
+                                <option value="default" {% if config['rdrf_product_mode'] == 'default' %}selected{% endif %}>{{ language['val_default'] }}</option>
+                                <option value="alternately" {% if config['rdrf_product_mode'] == 'alternately' %}selected{% endif %}>{{ language['val_alternately'] }}</option>
+                            </select>
+                            <br/>
+                            <div class="alert alert-info">{{ language['help_product_mode'] }}</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="config-subcategories{{ store_id }}">
+                            {{ language['entry_sub_categories'] }}
+                        </label>
+                        <div class="col-sm-9">
+                            <select id="config-subcategories{{ store_id }}" name="config[{{ store_id }}][rdrf_sub_categories]" class="form-control">
+                                <option value="1" {% if config['rdrf_sub_categories'] == 1 %}selected{% endif %}>{{ language['val_yes'] }}</option>
+                                <option value="0" {% if config['rdrf_sub_categories'] == 0 %}selected{% endif %}>{{ language['val_no'] }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="config-notavailable{{ store_id }}">
+			                {{ language['entry_notavailable'] }}
+                        </label>
+                        <div class="col-sm-9">
+                            <select id="config-notavailable{{ store_id }}" name="config[{{ store_id }}][rdrf_notavailable]" class="form-control">
+                                <option value="none" {% if config['rdrf_notavailable'] == 'none' %}selected{% endif %}>{{ language['val_default'] }}</option>
+                                <option value="end" {% if config['rdrf_notavailable'] == 'end' %}selected{% endif %}>{{ language['val_at_end'] }}</option>
+                                <option value="hide" {% if config['rdrf_notavailable'] == 'hide' %}selected{% endif %}>{{ language['val_hide'] }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="config-option-qty{{ store_id }}">
+                            <span data-toggle="tooltip" title="{{ language['help_option_qty'] }}">{{ language['entry_option_qty'] }}</span>
+                        </label>
+                        <div class="col-sm-9">
+                            <select id="config-option-qty{{ store_id }}" name="config[{{ store_id }}][rdrf_option_qty]" class="form-control">
+                                <option value="1" {% if config['rdrf_option_qty'] == 1 %}selected{% endif %}>{{ language['val_yes'] }}</option>
+                                <option value="0" {% if config['rdrf_option_qty'] == 0 %}selected{% endif %}>{{ language['val_no'] }}</option>
+                            </select>
+                        </div>
+                    </div>
+	                {% if hpm_module %}
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="config-group-hpm-counters{{ store_id }}">{{ language['entry_hpm_counters'] }}</label>
+                            <div class="col-sm-9">
+                                <select id="config-group-hpm-counters{{ store_id }}" name="config[{{ store_id }}][rdrf_group_hpm_counters]" class="form-control">
+                                    <option value="1" {% if config['rdrf_group_hpm_counters'] == 1 %}selected{% endif %}>{{ language['val_yes'] }}</option>
+                                    <option value="0" {% if config['rdrf_group_hpm_counters'] == 0 %}selected{% endif %}>{{ language['val_no'] }}</option>
+                                </select>
+                            </div>
+                        </div>
+	                {% endif %}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="config-ignore-space{{ store_id }}">
+                            <span data-toggle="tooltip" title="{{ language['help_space'] }}">{{ language['entry_ignore_space'] }}</span>
+                        </label>
+                        <div class="col-sm-9">
+                            <select id="config-ignore-space{{ store_id }}" name="config[{{ store_id }}][rdrf_ignore_space]" class="form-control">
+                                <option value="1" {% if config['rdrf_ignore_space'] == 1 %}selected{% endif %}>{{ language['val_yes'] }}</option>
+                                <option value="0" {% if config['rdrf_ignore_space'] == 0 %}selected{% endif %}>{{ language['val_no'] }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="config-cache{{ store_id }}">
+			                {{ language['entry_cache_status'] }}
+                        </label>
+                        <div class="col-sm-9">
+                            <select id="config-cache{{ store_id }}" name="config[{{ store_id }}][rdrf_cachestatus]" class="form-control collapse-select">
+                                <option value="1" {% if config['rdrf_cachestatus'] == 1 %}selected{% endif %}>{{ language['val_yes'] }}</option>
+                                <option value="0" {% if config['rdrf_cachestatus'] == 0 %}selected{% endif %}>{{ language['val_no'] }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="config-cache{{ store_id }}-1" class="collapse config-cache{{ store_id }}-collapse val-1 {% if config['rdrf_cachestatus'] == 1 %}in{% endif %}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="config-cachehours{{ store_id }}">
+				                {{ language['entry_cache_time'] }}
+                            </label>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <input type="number" name="config[{{ store_id }}][rdrf_cachetime]" value="{{ config['rdrf_cachetime'] }}" id="config-cachehours{{ store_id }}" class="form-control"/>
+                                    <span class="input-group-addon">{{ language['text_hours'] }}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" onclick="cleanCache($(this), {{ store_id }})" class="btn btn-primary btn-block">{{ language['text_clean_cache'] }}</button>
+                            </div>
+                        </div>
+                        {% if errors['cache_time'][store_id] %}
+                            <div class="text-danger">{{ errors['cache_time'][store_id] }}</div>
+                        {% endif %}
+                    </div>
+                    <hr class="row"/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+	                        {{ language['text_license'] }}
+                        </label>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div id="license-status{{ store_id }}">
+                                        {% if license['errors'][store_id] %}
+                                            <div class="alert alert-danger">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                                {% for error in license['errors'][store_id] %}
+                                                    {{ error }}<br/>
+                                                {% endfor %}
+                                            </div>
+                                        {% elseif config['rdrf_license']['note'] %}
+                                            <div class="alert alert-success">
+			                                    {{ config['rdrf_license']['note'] }}
+                                            </div>
+                                        {% else %}
+                                            <div class="alert alert-danger">
+                                                <i class="fa fa-exclamation-circle"></i> {{ language['text_no_license'] }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    {% if config['rdrf_license'] %}
+                                        <button type="button" onclick="resetLicense($(this), {{ store_id }})" class="btn btn-danger btn-block">{{ language['text_reset_license'] }}</button>
+                                    {% else %}
+                                        <button type="button" onclick="getLicense($(this), {{ store_id }})" class="btn btn-success btn-block">{{ language['button_license'] }}</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

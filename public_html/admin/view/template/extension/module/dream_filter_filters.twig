@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div id="filters-list" class="list-group">
+            {% for i, filter in filters %}
+                <div id="filter-{{ i }}" class="list-group-item" data-id="{{ i }}">
+                    {{ filter['name']|first }}
+                    <input type="hidden" name="filters[{{ i }}][filter_by]" value="{{ filter['filter_by'] }}"/>
+                    <input type="hidden" name="filters[{{ i }}][type]" value="{{ filter['type'] }}"/>
+                    {% for lang in languages %}
+                        <input type="hidden" name="filters[{{ i }}][name][{{ lang['language_id'] }}]" value="{{ filter['name'][lang['language_id']] }}"/>
+                    {% endfor %}
+                    <input type="hidden" name="filters[{{ i }}][open]" value="{{ filter['open'] }}"/>
+                    {% if filter['item_id'] %}
+                        <input type="hidden" name="filters[{{ i }}][item_id]" value="{{ filter['item_id'] }}"/>
+                    {% endif %}
+                    {% if filter['item_name'] %}
+                        <input type="hidden" name="filters[{{ i }}][item_name]" value="{{ filter['item_name'] }}"/>
+                    {% endif %}
+                    {% if filter['sort_order'] %}
+                        <input type="hidden" name="filters[{{ i }}][sort_order]" value="{{ filter['sort_order'] }}"/>
+                    {% endif %}
+                    {% if filter['add'] %}
+                        {% for key, val in filter['add'] %}
+                            <input type="hidden" name="filters[{{ i }}][add][{{ key }}]" value="{{ val }}"/>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="btn-group pull-right">
+                        <button title="{{ language['filter_edit'] }}" type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#filter-modal-{{ i }}">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        <button title="{% if filter['open'] %}{{ language['filter_open'] }}{% else %}{{ language['filter_close'] }}{% endif %}" type="button" class="btn btn-xs btn-info open-toggle" data-open="{{ filter['open'] }}">
+                            <i class="{% if filter['open'] %}fa fa-bars{% else %}fa fa-minus{% endif %}"></i>
+                        </button>
+                        <button title="{{ language['filter_delete'] }}" type="button" class="btn btn-xs btn-danger delete-filter">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="list-group">
+            <input id="settings-resetbtn" type="hidden" name="settings[reset_btn]" value="{{ settings['reset_btn'] }}">
+            <div class="btn btn-block btn-default">
+                {% set i = 0 %}
+                {% for lang in languages %}
+                <div class="popover-parent clearfix">
+                    <img src="language/{{ lang.code }}/{{ lang.code }}.png" title="{{ lang.name }}"/>
+                    <span class="popover-value">{{ settings['reset_btn_text'][lang['language_id']] }}</span>
+                    <input class="popover-input" type="hidden" name="settings[reset_btn_text][{{ lang.language_id }}]" value="{{ settings['reset_btn_text'][lang['language_id']] }}">
+                    <div class="btn-group pull-right">
+                        {% if i == 0 %}
+                        <button id="reset-toggle" title="{% if settings['reset_btn'] %}{{ language['text_show'] }}{% else %}{{ language['text_hide'] }}{% endif %}" type="button" class="btn btn-xs btn-info">
+                            <i class="{% if settings['reset_btn'] %}fa fa-eye{% else %}fa fa-eye-slash{% endif %}"></i>
+                        </button>
+                        {% endif %}
+                        <button title="{{ language['filter_edit'] }}" type="button" class="btn btn-xs btn-success popover-edit" data-toggle="popover">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                    </div>
+                </div>
+                {% set i = i + 1 %}
+                {% endfor %}
+            </div>
+            <div class="btn btn-block btn-default">
+                {% for lang in languages %}
+                    <div class="popover-parent clearfix">
+                        <img src="language/{{ lang.code }}/{{ lang.code }}.png" title="{{ lang.name }}"/>
+                        <span class="popover-value">{{ settings['search_btn_text'][lang['language_id']] }}</span>
+                        <input id="search-btn-text{{ lang['language_id'] }}" class="popover-input" type="hidden" name="settings[search_btn_text][{{ lang['language_id'] }}]" value="{{ settings['search_btn_text'][lang['language_id']] }}">
+                        <div class="btn-group pull-right">
+                            <button title="{{ language['filter_edit'] }}" type="button" class="btn btn-xs btn-success popover-edit" data-toggle="popover">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#filter-modal-new">
+            <i class="fa fa-plus"></i> {{ language['text_add_filter'] }}
+        </button>
+    </div>
+</div>

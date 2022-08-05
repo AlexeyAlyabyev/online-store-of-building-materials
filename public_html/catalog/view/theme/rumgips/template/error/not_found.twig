@@ -1,0 +1,18 @@
+{{ header }}
+<div class="wrapper">
+
+  {# <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul> #}
+  <section class="not-found-page">
+      <h1 class="not-found-page__title">{{ heading_title }}</h1>
+
+      <p class="not-found-page__text">{{ text_error }}</p>
+
+      <a class="not-found-page__link" href="{{ continue }}">{{ button_continue }}</a>
+
+  </section>
+</div>
+{{ footer }}

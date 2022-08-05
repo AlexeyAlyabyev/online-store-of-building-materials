@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<name>Dream Filter</name>
+	<version>2.5</version>
+	<code>Dream Filter</code>
+	<author>reDream</author>
+    <link>http://www.redream.ru</link>
+	<file path="catalog/controller/product/{category,manufacturer,search}.php">
+		<operation>
+			<ignoreif><![CDATA[$product_total = $this->model_catalog_product->getTotalProducts]]></ignoreif>
+			<search><![CDATA[$results = $this->model_catalog_product->getProducts]]></search>
+			<add position="before"><![CDATA[
+			//Dream filter start
+			$filter_data['rdrf'] = isset($this->request->get['rdrf']) ? $this->request->get['rdrf'] : array();
+			//Dream filter end
+			]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$product_total = $this->model_catalog_product->getFoundProducts]]></ignoreif>
+			<search><![CDATA[$product_total = $this->model_catalog_product]]></search>
+			<add position="before"><![CDATA[
+			//Dream filter start
+			$filter_data['rdrf'] = isset($this->request->get['rdrf']) ? $this->request->get['rdrf'] : array();
+			//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/special.php">
+		<operation>
+			<ignoreif><![CDATA[$product_total = $this->model_catalog_product->getTotalProductSpecials]]></ignoreif>
+			<search><![CDATA[$results = $this->model_catalog_product->getProductSpecials]]></search>
+			<add position="before"><![CDATA[
+			//Dream filter start IGNORE
+			$filter_data['rdrf'] = isset($this->request->get['rdrf']) ? $this->request->get['rdrf'] : array();
+			//Dream filter end IGNORE
+			]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$product_total = $this->model_catalog_product->getFoundProducts]]></ignoreif>
+			<search><![CDATA[$product_total = $this->model_catalog_product]]></search>
+			<add position="before"><![CDATA[
+			//Dream filter start
+			$filter_data['rdrf'] = isset($this->request->get['rdrf']) ? $this->request->get['rdrf'] : array();
+			//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/{category,manufacturer,special,search}.php">
+		<operation>
+			<search><![CDATA[$data['sorts'] =]]></search>
+			<add position="before"><![CDATA[
+			//Dream filter start
+			if (isset($this->request->get['rdrf'])) {
+				$url .= '&' . http_build_query(array('rdrf' => $this->request->get['rdrf']));
+			}
+			//Dream filter end
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[$data['limits'] =]]></search>
+			<add position="before"><![CDATA[
+			//Dream filter start
+			if (isset($this->request->get['rdrf'])) {
+				$url .= '&' . http_build_query(array('rdrf' => $this->request->get['rdrf']));
+			}
+			//Dream filter end
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[$pagination = new Pagination();]]></search>
+			<add position="before"><![CDATA[
+			//Dream filter start
+			if (isset($this->request->get['rdrf'])) {
+				$url .= '&' . http_build_query(array('rdrf' => $this->request->get['rdrf']));
+			}
+			//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/{category,special,search}.php">
+		<operation>
+			<search index="0"><![CDATA[$data['column_left'] = $this->load->controller('common/column_left');]]></search>
+			<add position="before"><![CDATA[
+			//Dream filter start
+			if(!empty($this->request->get['rdf-ajax'])) {
+				$rdr_tpl = 'category';
+
+				$data['column_left'] = '';
+				$data['column_right'] = '';
+				$data['content_top'] = '';
+				$data['content_bottom'] = '';
+				$data['footer'] = '';
+				$data['header'] = '';
+
+				$html = '<div>' . $this->load->view('product/' . $rdr_tpl, $data) . '</div>';
+				if(!empty($this->request->get['rdf-reload']) && !empty($this->request->get['rdf-module'])) {
+					$this->load->model('extension/dream_filter');
+					if($this->config->get('rdrf_sub_categories')) {
+						$filter_data['filter_sub_category'] = 1;
+					}
+					$filters = empty($filter_data) ? array() : $this->model_extension_dream_filter->getFiltersJSON($filter_data, $this->request->get['rdf-module']);
+					$output = json_encode(array(
+						'html' => $html,
+						'filters' => $filters
+					));
+					if(($json_error = json_last_error()) !== JSON_ERROR_NONE) {
+						$output = 'JSON ERROR ' . $json_error;
+					}
+					//Отсылаем в ответ данные в формате json
+					$this->response->addHeader('Content-Type: application/json; charset=utf-8');
+					$this->response->setOutput($output);
+				} else {
+					$this->response->setOutput($html);
+				}
+				$this->response->output();
+				exit;
+			}
+			//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/manufacturer.php">
+		<operation>
+			<search index="1"><![CDATA[$data['column_left'] = $this->load->controller('common/column_left');]]></search>
+			<add position="before"><![CDATA[
+			//Dream filter start
+			if(!empty($this->request->get['rdf-ajax'])) {
+				$rdr_tpl = 'manufacturer_info';
+
+				$data['column_left'] = '';
+				$data['column_right'] = '';
+				$data['content_top'] = '';
+				$data['content_bottom'] = '';
+				$data['footer'] = '';
+				$data['header'] = '';
+
+				$html = '<div>' . $this->load->view('product/' . $rdr_tpl, $data) . '</div>';
+				if(!empty($this->request->get['rdf-reload']) && !empty($this->request->get['rdf-module'])) {
+					$this->load->model('extension/dream_filter');
+					$filters = empty($filter_data) ? array() : $this->model_extension_dream_filter->getFiltersJSON($filter_data, $this->request->get['rdf-module']);
+					$output = json_encode(array(
+						'html' => $html,
+						'filters' => $filters
+					));
+					if(($json_error = json_last_error()) !== JSON_ERROR_NONE) {
+						$output = 'JSON ERROR ' . $json_error;
+					}
+					//Отсылаем в ответ данные в формате json
+					$this->response->addHeader('Content-Type: application/json; charset=utf-8');
+					$this->response->setOutput($output);
+				} else {
+					$this->response->setOutput($html);
+				}
+				$this->response->output();
+				exit;
+			}
+			//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/search.php">
+		<operation>
+			<search><![CDATA[$rdr_tpl = 'category';]]></search>
+			<add position="replace"><![CDATA[$rdr_tpl = 'search';]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/special.php">
+		<operation>
+			<search><![CDATA[$rdr_tpl = 'category';]]></search>
+			<add position="replace"><![CDATA[$rdr_tpl = 'special';
+				$filter_data['special'] = true;
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[getTotalProductSpecials()]]></search>
+			<add position="replace"><![CDATA[getTotalProductSpecials($filter_data)]]></add>
+		</operation>
+	</file>
+	<file path="catalog/model/catalog/product.php">
+		<operation>
+			<search><![CDATA[public function getProducts($data = array()) {]]></search>
+			<add position="after"><![CDATA[
+				//Dream filter start
+				if(!empty($data['rdrf']) && extension_loaded('ionCube Loader') && version_compare(ioncube_loader_version(), '10', '>=')) {
+					$this->load->model('extension/dream_filter');
+					if($this->config->get('rdrf_sub_categories')) {
+						$data['filter_sub_category'] = 1;
+					}
+					if(method_exists($this, 'getFoundProducts')) {
+						$this->FOUND_ROWS = $this->model_extension_dream_filter->getTotalProducts($data);
+					}
+					return $this->model_extension_dream_filter->getProducts($data);
+				}
+				//Dream filter end
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[public function getTotalProducts($data = array()) {]]></search>
+			<add position="after"><![CDATA[
+				//Dream filter start
+				if(!empty($data['rdrf']) && extension_loaded('ionCube Loader') && version_compare(ioncube_loader_version(), '10', '>=')) {
+					$this->load->model('extension/dream_filter');
+					if($this->config->get('rdrf_sub_categories')) {
+						$data['filter_sub_category'] = 1;
+					}
+					return $this->model_extension_dream_filter->getTotalProducts($data);
+				}
+				//Dream filter end
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[public function getProductSpecials($data = array()) {]]></search>
+			<add position="after"><![CDATA[
+				//Dream filter start
+				if(!empty($data['rdrf']) && extension_loaded('ionCube Loader') && version_compare(ioncube_loader_version(), '10', '>=')) {
+					$this->load->model('extension/dream_filter');
+					$data['special'] = true;
+					return $this->model_extension_dream_filter->getProducts($data);
+				}
+				//Dream filter end
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[public function getTotalProductSpecials() {]]></search>
+			<add position="replace"><![CDATA[public function getTotalProductSpecials($data = array()) {
+				//Dream filter start
+				if(!empty($data['rdrf']) && extension_loaded('ionCube Loader') && version_compare(ioncube_loader_version(), '10', '>=')) {
+					$this->load->model('extension/dream_filter');
+					$data['special'] = true;
+					return $this->model_extension_dream_filter->getTotalProducts($data);
+				}
+				//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/{common,startup}/seo_url.php">
+		<operation error="skip">
+			<search><![CDATA[$query .= '&' . rawurlencode]]></search>
+			<add position="before"><![CDATA[
+			//Dream filter start
+			if(is_array($value)) { $query .= '&' . http_build_query(array($key => $value)); continue; }
+			//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="system/library/url.php">
+		<operation>
+			<search><![CDATA[return $url;]]></search>
+			<add position="before"><![CDATA[
+		//Dream filter fix start
+		$url = str_replace(array('%25', '%26amp%3B'), array('%', '%26'), $url);
+		//Dream filter fix end
+			]]></add>
+		</operation>
+	</file>
+	<!-- opencart-russia fix -->
+	<file path="catalog/controller/{common,startup}/seo_url.php">
+		<operation error="skip">
+			<search><![CDATA[(int)$this->request->get['page'];]]></search>
+			<add position="after"><![CDATA[
+				//Dream filter start
+				if(isset($this->request->get['rdrf'])) {
+					$arg .= (strripos($arg, '?') === false ? '?' : '&') . http_build_query(array('rdrf' => $this->request->get['rdrf']));
+				}
+				if(isset($this->request->get['rdf-reload'])) {
+					$arg .= (strripos($arg, '?') === false ? '?' : '&') . 'rdf-reload=' . (int)$this->request->get['rdf-reload'];
+				}
+				if(isset($this->request->get['rdf-module'])) {
+					$arg .= (strripos($arg, '?') === false ? '?' : '&') . 'rdf-module=' . (int)$this->request->get['rdf-module'];
+				}
+				if(isset($this->request->get['rdf-ajax'])) {
+					$arg .= (strripos($arg, '?') === false ? '?' : '&') . 'rdf-ajax=' . (int)$this->request->get['rdf-ajax'];
+				}
+				//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<!-- Caching -->
+	<file path="admin/model/catalog/attribute.php">
+		<operation error="skip">
+			<search><![CDATA[foreach ($data['attribute_description']]]></search>
+			<add position="after" offset="2"><![CDATA[
+		//Dream filter start
+		$this->load->model('catalog/dream_filter');
+		$this->model_catalog_dream_filter->cleanCache();
+		//Dream filter end
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[deleteAttribute($attribute_id)]]></search>
+			<add position="after" offset="2"><![CDATA[
+		//Dream filter start
+		$this->load->model('catalog/dream_filter');
+		$this->model_catalog_dream_filter->cleanCache();
+		//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/model/catalog/filter.php">
+		<operation error="skip">
+			<search><![CDATA[INSERT INTO " . DB_PREFIX . "filter_description]]></search>
+			<add position="after" offset="3"><![CDATA[
+		//Dream filter start
+		$this->load->model('catalog/dream_filter');
+		$this->model_catalog_dream_filter->cleanCache();
+		//Dream filter end
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[deleteFilter($filter_group_id)]]></search>
+			<add position="after" offset="4"><![CDATA[
+		//Dream filter start
+		$this->load->model('catalog/dream_filter');
+		$this->model_catalog_dream_filter->cleanCache();
+		//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/model/catalog/option.php">
+		<operation error="skip">
+			<search><![CDATA[INSERT INTO " . DB_PREFIX . "option_value_description]]></search>
+			<add position="after" offset="4"><![CDATA[
+		//Dream filter start
+		$this->load->model('catalog/dream_filter');
+		$this->model_catalog_dream_filter->cleanCache();
+		//Dream filter end
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[deleteOption($option_id)]]></search>
+			<add position="after" offset="4"><![CDATA[
+		//Dream filter start
+		$this->load->model('catalog/dream_filter');
+		$this->model_catalog_dream_filter->cleanCache();
+		//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/model/catalog/{category,manufacturer,product}*.php">
+		<operation error="skip">
+			<search><![CDATA[$this->cache->delete]]></search>
+			<add position="before"><![CDATA[
+		//Dream filter start
+		$this->load->model('catalog/dream_filter');
+		$this->model_catalog_dream_filter->cleanCache();
+		//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/model/localisation/{length_class,weight_class}.php">
+		<operation>
+			<search><![CDATA[$this->cache->delete]]></search>
+			<add position="before"><![CDATA[
+		//Dream filter start
+		$this->load->model('catalog/dream_filter');
+		$this->model_catalog_dream_filter->cleanCache();
+		//Dream filter end
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/controller/extension/module/dream_filter.php">
+		<operation error="skip">
+			<search><![CDATA[$modification_applied = false;]]></search>
+			<add position="replace"><![CDATA[$modification_applied = true;]]></add>
+		</operation>
+	</file>
+</modification>

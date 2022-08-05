@@ -1,0 +1,89 @@
+<h3>{{ language['text_module'] }}</h3>
+<div class="form-group">
+    <label class="col-sm-2 control-label" for="settings-mode">
+        {{ language['entry_mode'] }}
+    </label>
+    <div class="col-sm-10">
+        <select id="settings-mode" name="settings[mode]" class="form-control">
+            <option value="ajax" {% if settings['mode'] == 'ajax' %}selected{% endif %}>{{ language['val_mode_ajax'] }}</option>
+            <option value="reload" {% if settings['mode'] == 'reload' %}selected{% endif %}>{{ language['val_mode_reload'] }}</option>
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label" for="settings-searchmode">
+        {{ language['entry_searchmode'] }}
+    </label>
+    <div class="col-sm-10">
+        <select id="settings-searchmode" name="settings[search_mode]" class="form-control collapse-select">
+            <option value="auto" {% if settings['search_mode'] == 'auto' %}selected{% endif %}>{{ language['val_automode'] }}</option>
+            <option value="manual" {% if settings['search_mode'] == 'manual' %}selected{% endif %}>{{ language['val_manualmode'] }}</option>
+        </select>
+    </div>
+</div>
+<div id="settings-searchmode-manual" class="collapse settings-searchmode-collapse val-manual {% if settings['search_mode'] == 'manual' %}in{% endif %}">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="settings-usepopper">
+            {{ language['entry_popper'] }}
+        </label>
+        <div class="col-sm-10">
+            <select id="settings-usepopper" name="settings[use_popper]" class="form-control">
+                <option value="1" {% if settings['use_popper'] == 1 %}selected{% endif %}>{{ language['val_yes'] }}</option>
+                <option value="0" {% if settings['use_popper'] == 0 %}selected{% endif %}>{{ language['val_no'] }}</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label" for="settings-minvalues">
+        {{ language['entry_min_values'] }}
+    </label>
+    <div class="col-sm-10">
+        <input id="settings-minvalues" type="number" min="1" step="1" name="settings[min_values]" value="{{ settings['min_values'] }}" class="form-control">
+	    {% if errors['min_values'] %}
+            <div class="text-danger">{{ errors['min_values'] }}</div>
+	    {% endif %}
+    </div>
+</div>
+<hr class="row"/>
+<h3>{{ language['text_categories'] }}</h3>
+<div class="form-group">
+    <label class="col-sm-2 control-label" for="settings-categories">
+        <span data-toggle="tooltip" title="{{ language['help_categories'] }}">{{ language['entry_categories'] }}</span>
+    </label>
+    <div class="col-sm-10">
+        <input type="text" placeholder="{{ language['entry_categories'] }}" id="settings-categories" class="form-control" />
+        <div id="categories" class="well well-sm" style="height: 150px; overflow: auto;">
+            {% for id, category in categories %}
+                <div id="category{{ id }}"><i class="fa fa-minus-circle"></i> {{ category }}
+                    <input type="hidden" name="settings[categories][]" value="{{ id }}"/>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="settings[categories_child]" value="1" {% if settings['categories_child'] == 1 %}checked{% endif %}> {{ language['entry_child'] }}
+            </label>
+        </div>
+    </div>
+</div>
+<div class="form-group" style="border: none">
+    <label class="col-sm-2 control-label" for="settings-excategories">
+        <span data-toggle="tooltip" title="{{ language['help_categories'] }}">{{ language['entry_categories_ex'] }}</span>
+    </label>
+    <div class="col-sm-10">
+        <input type="text" placeholder="{{ language['entry_categories_ex'] }}" id="settings-excategories" class="form-control" />
+        <div id="excategories" class="well well-sm" style="height: 150px; overflow: auto;">
+            {% for id, category in excategories %}
+                <div id="excategory{{ id }}"><i class="fa fa-minus-circle"></i> {{ category }}
+                    <input type="hidden" name="settings[excategories][]" value="{{ id }}"/>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="settings[excategories_child]" value="1" {% if settings['excategories_child'] == 1 %}checked{% endif %}> {{ language['entry_child'] }}
+            </label>
+        </div>
+    </div>
+</div>

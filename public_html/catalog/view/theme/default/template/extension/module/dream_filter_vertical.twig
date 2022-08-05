@@ -1,0 +1,227 @@
+<section class="dream-filter filter-vertical rdf-side-{{ view['mobile']['side'] }}" id="{{ settings['widget_id'] }}">
+	{# {% if view['mobile']['mode'] != 'none' %}
+		<button id="{{ view['mobile']['button_id'] }}" type="button" class="btn btn-block rdf-mobile-toggle {{ view['btn-primary'] }}">
+			{{ mobile_button_text }}
+		</button>
+	{% endif %} #}
+
+	<button id="btnClose" type="button" class="dream-filter-close"></button>
+
+	<form id="{{ settings['form_id'] }}" class="rdf-form" action="{{ settings['form_action'] }}" method="get" enctype="multipart/form-data">
+		{% for name, value in hidden %}
+			<input type="hidden" name="{{ name }}" value="{{ value }}">
+		{% endfor %}
+		{% if title %}
+			<div class="rdf-header">
+				<h3>{{ title }}</h3>
+			</div>
+		{% endif %}
+		<div class="rdf-body">
+			{% if filters %}
+			<div class="rdf-filters">
+				<div class="rdf-picked">
+					{% for pick in picked %}
+						<button type="button" data-clear="{{ pick.id }}" class="btn btn-default btn-xs">
+							{% if pick.name %}{{ pick.name }}: {% endif %}{{ pick.value }}<i>&times;</i>
+						</button>
+					{% endfor %}
+				</div>
+				<div class="panel-group">
+					{% for filter in filters %}
+						<div class="panel panel-default" id="{{ filter['id'] }}"{% if filter.hide %} style="display:none"{% endif %}>
+							<div class="panel-heading">
+								<strong class="panel-title">
+                                    <span data-toggle="collapse" class="{% if filter.open %}{% else %}collapsed{% endif %}" data-target="#{{ filter.id }}-collapse">
+                                        {# <svg width="16px" height="16px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+	                                        <path d="M24.4,6.42l-1.2-1.2a2.06,2.06,0,0,0-1.46-.59,2,2,0,0,0-1.44.59L12.49,13,4.7,5.22a2,2,0,0,0-1.44-.59,2.06,2.06,0,0,0-1.46.59L0.61,6.42A2,2,0,0,0,0,7.88,1.91,1.91,0,0,0,.61,9.32L11.05,19.77a1.91,1.91,0,0,0,1.44.61A2,2,0,0,0,14,19.77L24.4,9.32A2,2,0,0,0,25,7.88a2.06,2.06,0,0,0-.59-1.46h0Zm0,0"/>
+                                        </svg> #}
+                                        {{ filter.title }}
+                                    </span>
+								</strong>
+							</div>
+							<div id="{{ filter.id }}-collapse" class="panel-collapse collapse{% if filter.open %} in{% endif %}">
+								<div class="panel-body">
+									<div class="form-group {{ filter.truncate }}">
+										<div id="{{ filter.id }}-group" class="rdf-group">
+											{% if filter.type == 'field' %}
+												<div class="input-group">
+													<input type="text" id="{{ filter.input_id }}"
+												       name="{{ filter.name }}"
+												       value="{{ filter.value }}"
+												       class="form-control"
+												       placeholder="{{ filter.title }}"
+												       data-id="{{ filter.id }}"
+													/>
+													{% if filter.value %}
+														<span class="rdf-clear input-group-addon" data-clear="{{ filter.id }}">&times;</span>
+													{% endif %}
+												</div>
+											{% elseif filter.type == 'slider' %}
+												<div class="irs-notinit slidewrapper">
+													<input type="hidden" id="{{ filter.input_id }}"
+												       name="{{ filter.name }}"
+												       value="{{ filter.value }}"
+											           data-id="{{ filter.id }}"
+													/>
+												</div>
+											{% elseif filter.type == 'select' %}
+												{% set checked = false %}
+												<div class="input-group">
+													<select name="{{ filter.name }}" id="{{ filter.input_id }}" class="form-control" data-id="{{ filter.id }}">
+														<option value="">{{ language.text_none }}</option>
+														{% for k, value in filter.values %}
+															<option id="{{ value.id }}" value="{{ value.val }}" {{ value.attributes }} {% if value.hide %}style="display:none"{% endif %}>
+																{{ value.name }}&nbsp;
+																{% if value.count %}({{ value.count }}){% endif %}
+															</option>
+															{% if value.checked %}{% set checked = true %}{% endif %}
+														{% endfor %}
+													</select>
+													{% if checked %}
+														<span class="rdf-clear input-group-addon" data-clear="{{ filter.id }}">&times;</span>
+													{% endif %}
+												</div>
+											{% elseif filter.type == 'type_single' %}
+												{% set value = filter.values|first %}
+												<div id="{{ value.id }}" class="checkbox rdf-val" {% if value.hide %}style="display:none"{% endif %}>
+													<label>
+														<input type="checkbox" name="{{ filter.name }}" value="{{ value.val }}" {{ value.attributes }}>
+														<span>{{ value.name }}</span>
+													</label>
+													{% if value.checked %}<span class="rdf-clear" data-clear="{{ value.id }}">&times;</span>{% endif %}
+													<span class="rdf-label">{{ value.count }}</span>
+												</div>
+											{% elseif filter.type == 'checkbox' %}
+												{% for k, value in filter.values %}
+													<div id="{{ value.id }}" class="checkbox rdf-val" {% if value.hide %}style="display:none"{% endif %}>
+														<label>
+															<input type="checkbox" name="{{ filter.name }}[]" value="{{ value.val }}" {{ value.attributes }}>
+															<span>{{ value.name }}</span>
+														</label>
+														{% if value.checked %}
+															<span class="rdf-clear" data-clear="{{ value.id }}">&times;</span>
+														{% endif %}
+														<span class="rdf-label">{{ value.count }}</span>
+													</div>
+												{% endfor %}
+											{% elseif filter.type == 'radio' %}
+												{% for k, value in filter.values %}
+													<div id="{{ value.id }}" class="radio rdf-val" {% if value.hide %}style="display:none"{% endif %}>
+														<label>
+															<input name="{{ filter.name }}" type="radio" value="{{ value.val }}" {{ value.attributes }}>
+															<span>{{ value.name }}</span>
+														</label>
+														{% if value.checked %}
+															<span class="rdf-clear" data-clear="{{ value.id }}">&times;</span>
+														{% endif %}
+														<span class="rdf-label">{{ value.count }}</span>
+													</div>
+												{% endfor %}
+											{% elseif filter.type == 'image' %}
+												{% for k, value in filter.values %}
+													<div id="{{ value.id }}" class="image-filter rdf-val" {% if value.hide %}style="display:none"{% endif %}>
+														<label>
+															<input type="radio" name="{{ filter.name }}" value="{{ value.val }}" {{ value.attributes }}>
+															<img class="img-responsive" src="{{ value.image }}" alt="{{ value.name }}"/>
+															<span>{{ value.name }}</span>
+														</label>
+														{% if value.checked %}
+															<span class="rdf-clear" data-clear="{{ value.id }}">&times;</span>
+														{% endif %}
+														<span class="rdf-label">{{ value.count }}</span>
+													</div>
+												{% endfor %}
+											{% elseif filter.type == 'multiimage' %}
+												{% for k, value in filter.values %}
+													<div id="{{ value.id }}" class="image-filter rdf-val" {% if value.hide %}style="display:none"{% endif %}>
+														<label>
+															<input type="checkbox" name="{{ filter.name }}[]" value="{{ value.val }}" {{ value.attributes }}>
+															<img class="img-responsive" src="{{ value.image }}" alt="{{ value.name }}"/>
+															<span>{{ value.name }}</span>
+														</label>
+														{% if value.checked %}
+															<span class="rdf-clear" data-clear="{{ value.id }}">&times;</span>
+														{% endif %}
+														<span class="rdf-label">{{ value.count }}</span>
+													</div>
+												{% endfor %}
+											{% endif %}
+										</div>
+										{% if filter.truncate and (view['truncate_mode'] == 'element') %}
+											<span data-toggle="truncate-show" data-target="#{{ filter.id }}-group" class="rdf-truncate-show">{{ truncate_text_show }}</span>
+											<span data-toggle="truncate-hide" data-target="#{{ filter.id }}-group" class="rdf-truncate-hide">{{ truncate_text_hide }}</span>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+		</div>
+		{% if settings.reset_btn or (settings.search_mode == 'manual') %}
+			<div class="rdf-footer">
+				{% if settings.reset_btn %}
+					<button id="{{ settings.reset_id }}" type="reset" class="btn btn-block {{ view['btn-reset'] }}" data-loading-text="{{ language['text_loading'] }}">{{ reset_btn_text }}</button>
+				{% endif %}
+				{% if settings.search_mode == 'manual' %}
+					<button type="submit" class="btn btn-block {{ view['btn-primary'] }}" data-loading-text="{{ language['text_loading'] }}">{{ search_btn_text }}</button>
+				{% endif %}
+			</div>
+		{% endif %}
+	</form>
+	{% if popper.enable %}
+		<div class="popper" id="{{ popper.id }}">
+			<span></span>
+			<button id="{{ popper.button_id }}" class="btn btn-block {{ view['btn-primary'] }}" data-loading-text="{{ language['text_loading'] }}">
+				{{ popper.button }}
+			</button>
+			<div class="popper-arrow"></div>
+		</div>
+	{% endif %}
+</section>
+<script type="text/javascript">
+$(document).ready(function () {
+	$("#{{ settings.form_id }}").dreamFilter({
+		module: {{ settings.module_id }},
+		widget_id: "{{ settings.widget_id }}",
+		search_mode: "{{ settings.search_mode }}",
+		disable_null: "{{ view.disable_null }}",
+		show_count: {% if view.show_count %}true{% else %}false{% endif %},
+		show_picked: {% if view.show_picked %}true{% else %}false{% endif %},
+		loader: "{{ loader }}",
+		truncate: {{ view['truncate']|json_encode() }},
+		mobile: {{ view['mobile']|json_encode() }},
+		ajax: {{ settings['ajax']|json_encode() }},
+		popper: {{ popper|json_encode() }},
+		filters: {{ filters_json|json_encode() }},
+	{% if callback.before %}
+		callbackBefore: {{ callback.before }},
+	{% endif %}
+	{% if callback.after %}
+		callbackAfter: {{ callback.after }},
+	{% endif %}
+	});
+	{{ js }}
+});
+</script>
+<style>
+{% if view['truncate']['height'] %}
+	#{{ settings['form_id'] }} .rdf-truncate-height {
+		max-height: {{ view['truncate']['height'] }};
+	}
+	{% endif %}
+{% if view['mobile']['mode'] != 'none' %}
+	@media (max-width: {{ view['mobile']['width'] }}px) {
+		#{{ settings['form_id'] }} .rdf-body {
+			display: none;
+		}
+	}
+	@media (max-width: {{ view['mobile']['width'] - 1 }}px) {
+		#{{ settings['widget_id'] }} .rdf-mobile-toggle {
+			display: block;
+		}
+	}
+{% endif %}
+</style>

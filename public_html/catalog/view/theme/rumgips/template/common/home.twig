@@ -1,0 +1,24 @@
+{{ header }}
+<div id="common-home" class="container">
+  <div class="row">{{ column_left }}
+    <div id="content" class="{{ class }}">
+      {{ content_top }}{{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+<div class="brands_slider mb_adapt">
+	<div class="wrapper swiper">
+		<p class="block_title">Только известные бренды</p>
+		<div class="swiper-wrapper body">
+			{% for manufacturer in manufacturers %}
+				<a href="{{ manufacturer.href }}" class="swiper-slide">
+					<img src="{{ manufacturer.image }}" alt="{{ manufacturer.name }}">
+				</a>
+			{% endfor %}
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+</div>
+
+{{ footer }}

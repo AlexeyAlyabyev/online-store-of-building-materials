@@ -1,0 +1,232 @@
+{{ header }}
+
+<div class="products_category search_page">
+	<div class="wrapper">
+
+		<ul class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+				{% if loop.index > 1 %}
+					<span> \ </span>
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% else %}
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+
+		<div class="header">
+			<div class="info">
+				<h1>{{ heading_title }}</h1>
+				{{ search_form }}
+				<!-- <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}">
+				<button>{{ button_search }}</button> -->
+
+        {% if products %}
+				<div class="total_products">
+					Найдено {{total_products}}
+				</div>
+				{% endif %}
+
+			</div>
+
+			{# <div class="sucategories_list">
+				<a href="#">Подкатегория 1</a>
+				<a href="#">Подкатегория 2</a>
+				<a href="#">Подкатегория 3</a>
+				<a href="#">Подкатегория 4</a>
+				<a href="#">Подкатегория 5</a>
+				<a href="#">Подкатегория 6</a>
+				<a href="#">Подкатегория 7</a>
+				<a href="#">Подкатегория 8</a>
+				<a href="#">Подкатегория 9</a>
+				<a href="#">Подкатегория 10</a>
+				<a href="#">Подкатегория 11</a>
+			</div> #}
+
+      {% if products %}
+			<div class="sort_block">
+				<button id="dream_filter_toggler" class="filter_switcher">
+					<img src="/catalog/view/theme/rumgips/image/filter.svg" alt="Фильтр по товарам">
+					<p>Фильтры</p>
+				</button>
+				<!-- <div class="col-md-3 col-sm-6">
+					<div class="form-group"><a href="{{ compare }}" id="compare-total" class="btn btn-link">{{ text_compare }}</a></div>
+				</div> -->
+
+				<div class="sort">
+					<button>
+						<img src="/catalog/view/theme/rumgips/image/sort.svg" alt="Сортировка товаров">
+						<p>
+							{% for sorts in sorts %}
+								{% if sorts.value == '%s-%s'|format(sort, order) %}
+									{{ sorts.text }}
+								{% endif %}
+							{% endfor %}
+						</p>
+					</button>
+					<ul class="sort_list">
+						{% for sorts in sorts %}
+							{% if sorts.value == '%s-%s'|format(sort, order) %}
+								<a href="{{ sorts.href }}" class="active">{{ sorts.text }}</a>
+							{% else %}
+								<a href="{{ sorts.href }}">{{ sorts.text }}</a>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+      {% endif %}
+		</div>
+
+		<div class="body mb_adapt">
+			{% if products %}
+			<div class="column_left">
+				{{ column_left }}
+			</div>
+			{% endif %}
+
+			{# {% if column_left and column_right %}
+			{% set class = 'col-sm-6' %}
+			{% elseif column_left or column_right %}
+			{% set class = 'col-sm-9' %}
+			{% else %}
+			{% set class = 'col-sm-12' %}
+			{% endif %} #}
+			<div class="products_wrap {{ class }}">
+				{{ content_top }}
+
+				<!-- {% if categories %}
+					<h3>{{ text_refine }}</h3>
+					{% if categories|length <= 5 %}
+						<div class="row">
+							<div class="col-sm-3">
+								<ul>
+									{% for category in categories %}
+									<li><a href="{{ category.href }}">{{ category.name }}</a></li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					{% else %}
+						<div class="row">{% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
+							<div class="col-sm-3">
+								<ul>
+									{% for child in category %}
+									<li><a href="{{ child.href }}">{{ child.name }}</a></li>
+									{% endfor %}
+								</ul>
+							</div>
+							{% endfor %}</div>
+						<br />
+					{% endif %}
+				{% endif %} -->
+
+				<div class="control">
+				{% if products %}
+
+					<div class="total_products">
+						Найдено {{total_products}}
+					</div>
+
+					<div class="sort">
+						<button>
+							<p>
+								{% for sorts in sorts %}
+									{% if sorts.value == '%s-%s'|format(sort, order) %}
+										{{ sorts.text }}
+									{% endif %}
+								{% endfor %}
+							</p>
+						</button>
+						<ul class="sort_list">
+							{% for sorts in sorts %}
+								{% if sorts.value == '%s-%s'|format(sort, order) %}
+									<a href="{{ sorts.href }}" class="active">{{ sorts.text }}</a>
+								{% else %}
+									<a href="{{ sorts.href }}">{{ sorts.text }}</a>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
+
+				{% endif %}
+
+
+					{# <div class="sucategories_list">
+						<a href="#">Подкатегория 1</a>
+						<a href="#">Подкатегория 2</a>
+						<a href="#">Подкатегория 3</a>
+						<a href="#">Подкатегория 4</a>
+						<a href="#">Подкатегория 5</a>
+						<a href="#">Подкатегория 6</a>
+					</div> #}
+				</div>
+
+				{% if products %}
+					<div class="products_list">
+						{% for product in products %}
+							<div class="item">
+								<a href="{{ product.href }}" class="image">
+									<img class="main_img" src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" />
+									{% if product.special and (product.hit == false) %}
+										<span>Скидка</span>
+									{% endif %}
+
+									{% if (product.special == false) and product.hit %}
+										<span class="hit">Хит</span>
+									{% endif %}
+
+									{% if product.special and product.hit %}
+										<span class="hit">Хит</span>
+									{% endif %}
+
+									{% if product.manufacturer_image %}
+										<img class="manufacturer" src="/image/{{ product.manufacturer_image }}" alt="{{ product.name }} производитель">
+									{% endif %}
+								</a>
+								<div class="caption">
+									<div class="identify_info">
+										{# <p class="model">Арт. {{ product.model }}</p> #}
+										<h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+									</div>
+									<div class="price_info">
+										{% if product.price %}
+											<p class="price">
+												{% if not product.special %}
+													{{ product.price }}
+												{% else %}
+													<span class="new">{{ product.special }}</span> <span class="old">{{ product.price }}</span>
+												{% endif %}
+											</p>
+										{% endif %}
+										<button class="btn-red desktop" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');">{{ button_cart }}</button>
+										<button class="btn-red mobile" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');">
+											<svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M2.73255 2.47915L2.54287 2.07895H2.1H0.7V1.37896H2.98579L3.79346 3.07929L3.98329 3.47896H4.42575H19.95C20.1432 3.47896 20.3 3.63508 20.3 3.82895C20.3 3.89269 20.2836 3.94599 20.261 3.98566L20.2609 3.98562L20.2556 3.99521L16.5045 10.805C16.5041 10.8057 16.5037 10.8064 16.5033 10.8071C16.2586 11.2416 15.7989 11.529 15.2775 11.529H7.455H7.04078L6.84141 11.892L5.90356 13.6001C5.81819 13.7525 5.78375 13.9142 5.78375 14.0665C5.78375 14.6001 6.21265 15.029 6.74625 15.029H18.2V15.729H6.3C5.52635 15.729 4.9 15.1026 4.9 14.329C4.9 14.0861 4.96142 13.8587 5.07269 13.6493L6.48784 11.081L6.66076 10.7672L6.5073 10.4434L2.73255 2.47915ZM4.9105 19.579C4.9105 18.8007 5.53092 18.179 6.3 18.179C7.07365 18.179 7.7 18.8053 7.7 19.579C7.7 20.3526 7.07365 20.979 6.3 20.979C5.53092 20.979 4.9105 20.3572 4.9105 19.579ZM15.4105 19.579C15.4105 18.8007 16.0309 18.179 16.8 18.179C17.5737 18.179 18.2 18.8053 18.2 19.579C18.2 20.3526 17.5737 20.979 16.8 20.979C16.0309 20.979 15.4105 20.3572 15.4105 19.579Z" stroke="white" stroke-width="1.4"/>
+											</svg>
+										</button>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+
+					{{ pagination }}
+				{% endif %}
+
+				{% if not categories and not products %}
+					<p>{{ text_empty }}</p>
+					<div class="buttons">
+						<div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+					</div>
+				{% endif %}
+			</div>
+
+			{{ column_right }}
+		</div>
+
+		{{ content_bottom }}
+
+	</div>
+</section>
+{{ footer }}
