@@ -46,9 +46,9 @@
               {% endfor %}
             {% endif %}
 
-            {% if url_video %}
+            {# {% if url_video %}
               <iframe class="thumbnail swiper-slide" src="{{ url_video }}" width="100%" height="45%" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
-            {% endif %}
+            {% endif %} #}
 					</div>
 
 					{% if images or url_video  %}
@@ -66,19 +66,18 @@
 								<img class="swiper-slide" src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
 							{% endfor %}
 						{% endif %}
-            {% if url_video %}
+            {# {% if url_video %}
             <div class="swiper-slide swiper-slide-video">
               <img class="" width="100%" src="{{ url_video_preview }}" title="Превью видео ролика" alt="Превью видео ролика" />
             </div>
-						{% endif %}
+						{% endif %} #}
 					</div>
 					<div class="prev"></div>
 					<div class="next"></div>
 				</div>
         {% endif %}
-
-
 			</div>
+
 			<div class="product_card_main_info">
 				<div>
 					<h1>{{ heading_title }}</h1>
@@ -156,6 +155,53 @@
 		</div>
 
     <p class="product_card__description">{{ description }}</p>
+
+    <h3>{{ text_option }}</h3>
+        {% for option in options %}
+
+            {% if option.type == 'radio' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label">{{ option.name }}</label>
+              <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" />
+                    {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail" /> {% endif %}
+                    {{ option_value.name }}
+                    {% if option_value.price %}
+                    ({{ option_value.price_prefix }}{{ option_value.price }})
+                    {% endif %} </label>
+                </div>
+                {% endfor %} </div>
+            </div>
+            {% endif %}
+
+            {% if option.type == 'checkbox' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label">{{ option.name }}</label>
+              <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" />
+                    {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail" /> {% endif %}
+                    {{ option_value.name }}
+                    {% if option_value.price %}
+                    ({{ option_value.price_prefix }}{{ option_value.price }})
+                    {% endif %} </label>
+                </div>
+                {% endfor %} </div>
+            </div>
+            {% endif %}
+
+            {% endfor %}
+
+
+
+    {% if url_video %}
+    <div class="product_card__video">
+      <iframe class="" src="{{ url_video }}" width="560" height="315" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+    </div>
+    {% endif %}
 
     {% if products %}
     <section class="recommended-products">

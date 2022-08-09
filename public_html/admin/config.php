@@ -26,9 +26,9 @@ define('DIR_UPLOAD', DIR_STORAGE . 'upload/');
 // DB
 define('DB_DRIVER', 'mysqli');
 define('DB_HOSTNAME', 'localhost');
-define('DB_USERNAME', 'romanzvp_rumgips');
-define('DB_PASSWORD', 'Q%fnHE3g');
-define('DB_DATABASE', 'romanzvp_rumgips');
+define('DB_USERNAME', 'romanzvp_gipsdev');
+define('DB_PASSWORD', 'N&M8sY4A');
+define('DB_DATABASE', 'romanzvp_gipsdev');
 define('DB_PORT', '3306');
 define('DB_PREFIX', 'oc_');
 

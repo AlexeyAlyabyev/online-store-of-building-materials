@@ -2459,9 +2459,11 @@ footer .additional .site_development {
   line-height: 17px;
   font-size: 14px;
 }
-/* .product_card .info .attributes .attribute:not(:first-of-type){
 
-} */
+.product_card__video {
+  text-align: center;
+}
+
 .product_card .info .attributes .attribute .name {
   color: #a7aabb;
 }
