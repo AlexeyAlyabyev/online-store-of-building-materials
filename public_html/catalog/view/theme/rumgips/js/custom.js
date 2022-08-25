@@ -199,13 +199,22 @@ const brands_slider = new Swiper('.brands_slider .wrapper', {
 			spaceBetween: 10
 		},
 		992: {
-			slidesPerView: 4,
-			spaceBetween: 20,
-			loop: false,
-			grid: {
-				rows: 2,
-				fill: "row",
-			},
+			// slidesPerView: 4,
+			// spaceBetween: 20,
+			// loop: false,
+			// grid: {
+			// 	rows: 2,
+			// 	fill: "row",
+			// },
+      slidesPerView: 'auto',
+      loop: true,
+      speed: 5000,
+      slidesPerView: '4',
+      autoplay: {
+        enabled: true,
+        delay: 1,
+      },
+      pagination: false,
 		},
 	},
 
