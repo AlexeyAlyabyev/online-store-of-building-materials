@@ -108,6 +108,11 @@
 								{% endfor %}
 							{% endfor %}
 						{% endif %}
+            {# Цвет товара: #}
+						<div class="attribute">
+							<p class="name">{{ color_model }}</p>
+							<p class="value">{{ color }}</p>
+						</div>
 					</div>
 
 					{# <div class="product_card_color_list">
@@ -118,6 +123,25 @@
 							<button class="product_card_color__item product_card_color__item--select"></button>
 						</div>
 					</div> #}
+
+					<div class="product_card_color_list">
+						<span class="product_card_color_radio__text">Цвет</span>
+						<div class="product_card_color-container">
+
+            {# {% if products_related_by_color %} #}
+              {% for related_color in products_related_by_color %}
+                <a href="{{ related_color.href }}"> {{ related_color.color }}
+                  {# <div class="size__checkbox-text color-size" style="background: url(/image/{{ related_color.color }});"></div> #}
+                </a>
+              {% endfor %}
+            {# {% endif %} #}
+
+
+							{# <button class="product_card_color__item"></button>
+							<button class="product_card_color__item"></button>
+							<button class="product_card_color__item product_card_color__item--select"></button> #}
+						</div>
+					</div>
 
 					<div class="price_and_controls">
 						{% if price %}
@@ -156,7 +180,7 @@
 
     <p class="product_card__description">{{ description }}</p>
 
-    <h3>{{ text_option }}</h3>
+    {# <h3>{{ text_option }}</h3>
         {% for option in options %}
 
             {% if option.type == 'radio' %}
@@ -193,7 +217,7 @@
             </div>
             {% endif %}
 
-            {% endfor %}
+            {% endfor %} #}
 
 
 

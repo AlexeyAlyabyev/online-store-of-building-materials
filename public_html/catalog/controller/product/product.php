@@ -282,8 +282,6 @@ class ControllerProductProduct extends Controller {
       // URL видео и превью видео
       if ($product_info['video']) {
 
-
-
         $url_video = $product_info['video'];
         preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url_video, $match);
         $youtube_id = $match[1];
@@ -294,7 +292,21 @@ class ControllerProductProduct extends Controller {
         $data['url_video_preview'] = $url_video_preview;
       }
 
-      // print_r($data);
+      $data ['color'] = $product_info['color'];
+
+			if ($product_info['color']) {
+				$data['color'] = $product_info['color'];
+			}
+
+      $related_colors = $this->model_catalog_product->getProductRelatedByColor($this->request->get['product_id']);
+
+			foreach ($related_colors as $related_color) {
+				if (isset($related_color['color']) && $related_color['color'] !== "")
+					$data['products_related_by_color'][] = array(
+						'color' => $related_color['color'],
+						'href' 	=> $this->url->link('product/product', 'product_id=' . $related_color['product_id']),
+					);
+			}
 
 			if ($product_info['image']) {
 				if (strpos($product_info['image'], ".webp") !== false || strpos($product_info['image'], ".avif") !== false) {
