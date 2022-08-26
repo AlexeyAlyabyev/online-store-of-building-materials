@@ -174,7 +174,7 @@ class ControllerCommonColumnLeft extends Controller {
 
 			// Extension
 			$marketplace = array();
-			
+
 			if ($this->user->hasPermission('access', 'marketplace/opencartforum')) {
 				$marketplace[] = array(
 					'name'	   => $this->language->get('text_opencartforum'),
@@ -611,6 +611,15 @@ class ControllerCommonColumnLeft extends Controller {
 				$localisation[] = array(
 					'name'	   => $this->language->get('text_length_class'),
 					'href'     => $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+			}
+
+      // color product
+      if ($this->user->hasPermission('access', 'localisation/color_class')) {
+				$localisation[] = array(
+					'name'	   => $this->language->get('text_color_class'),
+					'href'     => $this->url->link('localisation/color_class', 'user_token=' . $this->session->data['user_token'], true),
 					'children' => array()
 				);
 			}

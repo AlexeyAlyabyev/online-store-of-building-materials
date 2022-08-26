@@ -69,6 +69,8 @@ $_['entry_currency']                   = 'Валюта';
 $_['entry_currency_auto']              = 'Автоматическое обновление валют';
 $_['entry_currency_engine']            = 'Источник курсов валют';
 $_['entry_length_class']               = 'Единица измерения длины';
+$_['entry_color_class']               = 'Единица измерения цвета )))';
+
 $_['entry_weight_class']               = 'Единица измерения веса';
 $_['entry_product_limit']              = 'Лимит товаров (Витрина)';
 $_['entry_product_description_length'] = 'Количество символов (Витрина)';

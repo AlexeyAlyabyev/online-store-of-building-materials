@@ -923,6 +923,13 @@ class ModelCatalogProduct extends Model {
 		return $query->row['total'];
 	}
 
+	public function getTotalProductsByColorClassId($color_class_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product WHERE color_class_id = '" . (int)$color_class_id . "'");
+
+		return $query->row['total'];
+	}
+
+
 	public function getTotalProductsByDownloadId($download_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_to_download WHERE download_id = '" . (int)$download_id . "'");
 
