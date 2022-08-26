@@ -293,7 +293,7 @@ header .body .logo img {
   }
   header .body .logo img {
     /* height: 30px; */
-    max-width: 220px;
+    width: 210px;
   }
   header .body .contact_icons {
     width: calc(100% / 1200 * 250);
@@ -434,7 +434,7 @@ header .body .logo img {
   }
 
   header .body .logo img {
-    max-width: 244px;
+    width: 244px;
   }
 
 }
