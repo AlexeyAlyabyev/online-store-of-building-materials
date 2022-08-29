@@ -1254,6 +1254,23 @@ class ControllerCatalogProduct extends Controller {
 			$data['length_class_id'] = $this->config->get('config_length_class_id');
 		}
 
+    $this->load->model('localisation/color_class');
+
+
+		$data['color_classes'] = $this->model_localisation_color_class->getColorClasses();
+
+
+		if (isset($this->request->post['color_class_id'])) {
+			$data['color_class_id'] = $this->request->post['color_class_id'];
+		} elseif (!empty($product_info)) {
+			$data['color_class_id'] = $product_info['color_class_id'];
+		} else {
+			$data['color_class_id'] = $this->config->get('config_color_class_id');
+		}
+
+
+    // print_r($data);
+
 		$this->load->model('catalog/manufacturer');
 
 		if (isset($this->request->post['manufacturer_id'])) {
@@ -1486,14 +1503,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_id'] = $product_info['product_id'];
 		}
 
-    // цвет товара
-    if (isset($this->request->post['color'])) {
-			$data['color'] = $this->request->post['color'];
-		} elseif (!empty($product_info)) {
-			$data['color'] = $product_info['color'];
-		} else {
-			$data['color'] = '';
-		}
 
 		$this->load->model('tool/image');
 

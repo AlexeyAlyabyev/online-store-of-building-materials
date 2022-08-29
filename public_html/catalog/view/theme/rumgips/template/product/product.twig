@@ -111,14 +111,15 @@
             {# Цвет товара: #}
 						<div class="attribute">
 							<p class="name">{{ color_model }}</p>
-							<p class="value">{{ color }}</p>
+							<p class="value">{{ color_name }}</p>
 						</div>
 					</div>
 
 					{# <div class="product_card_color_list">
 						<span class="product_card_color_radio__text">Цвет</span>
 						<div class="product_card_color-container">
-							<button class="product_card_color__item"></button>
+
+							<button class="product_card_color__item" style="background-color: red"></button>
 							<button class="product_card_color__item"></button>
 							<button class="product_card_color__item product_card_color__item--select"></button>
 						</div>
@@ -128,13 +129,16 @@
 						<span class="product_card_color_radio__text">Цвет</span>
 						<div class="product_card_color-container">
 
-            {# {% if products_related_by_color %} #}
-              {% for related_color in products_related_by_color %}
-                <a href="{{ related_color.href }}"> {{ related_color.color }}
-                  {# <div class="size__checkbox-text color-size" style="background: url(/image/{{ related_color.color }});"></div> #}
-                </a>
-              {% endfor %}
-            {# {% endif %} #}
+
+            {% for related_color in products_related_by_color|sort((a, b) => a.color_value <=> b.color_value) %}
+              {% if related_color.href %}
+                <a  class="product_card_color__item" style="background-color: {{ related_color.color_value }}" href="{{ related_color.href }}"></a>
+              {% else %}
+                <div class="product_card_color__item product_card_color__item--select" style="background-color: {{ related_color.color_value }}"></div>
+              {% endif %}
+
+            {% endfor %}
+            {# <a  class="product_card_color__item product_card_color__item--select" style="background-color: {{ color_value }}"></a> #}
 
 
 							{# <button class="product_card_color__item"></button>

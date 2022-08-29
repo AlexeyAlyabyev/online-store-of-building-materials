@@ -33,6 +33,9 @@
             <li style="display: none;"><a href="#tab-recurring" data-toggle="tab">{{ tab_recurring }}</a></li>
             <li style="display: none;"><a href="#tab-discount" data-toggle="tab">{{ tab_discount }}</a></li>
             <li><a href="#tab-special" data-toggle="tab">{{ tab_special }}</a></li>
+
+            <li><a href="#tab-color" data-toggle="tab">{{ tab_color }}</a></li>
+
             <li><a href="#tab-image" data-toggle="tab">{{ tab_image }}</a></li>
             <li style="display: none;"><a href="#tab-reward" data-toggle="tab">{{ tab_reward }}</a></li>
             <li><a href="#tab-seo" data-toggle="tab">{{ tab_seo }}</a></li>
@@ -294,15 +297,9 @@
                     {% for length_class in length_classes %}
                       {% if length_class.length_class_id == length_class_id %}
 
-
                         <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
-
-
                       {% else %}
-
-
                         <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
-
 
                       {% endif %}
                     {% endfor %}
@@ -459,7 +456,7 @@
           </div>
         </div>
 
-
+{# //// по цвету во вкладке связи
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-related-by-color"><span data-toggle="tooltip" title="{{ entry_another_color }}">{{ entry_another_color }}</span></label>
           <div class="col-sm-10">
@@ -472,7 +469,7 @@
               {% endfor %}
             </div>
           </div>
-        </div>
+        </div> #}
 
 
 
@@ -1039,41 +1036,110 @@
                 </table>
               </div>
             </div>
-            <div class="tab-pane" id="tab-image">
+
+{# ///////////////// color!!! /////////////////////// #}
+          <div class="tab-pane" id="tab-color">
+
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                  <td class="text-left">{{ entry_color }}</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td class="text-left">
+                  {# <input type="text" name="color" value="{{ color }}" id="color" class="form-control" placeholder="Введите цвет товара"/> #}
+                  <select name="color_class_id" id="input-color-class" class="form-control">
+                    {% for color_class in color_classes %}
+                      {% if color_class.color_class_id == color_class_id %}
+
+                        <option value="{{ color_class.color_class_id }}" selected="selected">{{ color_class.name }}</option>
+                      {% else %}
+                        <option value="{{ color_class.color_class_id }}">{{ color_class.name }}</option>
+
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                  </td>
 
 
-			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-hover">
-					<thead>
-					<tr>
-						<td class="text-left">{{ entry_color }}</td>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td class="text-left">
-						<input type="text" name="color" value="{{ color }}" id="color" class="form-control" placeholder="Введите цвет товара"/>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-				</div>
-
-              <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <td class="text-left">{{ entry_image }}</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="text-left"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
-                        <input type="hidden" name="image" value="{{ image }}" id="input-image" /></td>
-                    </tr>
-                  </tbody>
+                </tr>
+                </tbody>
                 </table>
               </div>
+
+              <div class="col-sm-10">
+
+              </div>
+
+
+              {# <div class="form-group{% if option.required %} required {% endif %}">
+                <label class="control-label">{{ option.name }}</label>
+                <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" />
+                      {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail" /> {% endif %}
+                      {{ option_value.name }}
+                      {% if option_value.price %}
+                      ({{ option_value.price_prefix }}{{ option_value.price }})
+                      {% endif %} </label>
+                  </div>
+                  {% endfor %} </div>
+              </div> #}
+
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-related-by-color"><span data-toggle="tooltip" title="{{ entry_another_color }}">{{ entry_another_color }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="related-by-color" value="" placeholder="{{ entry_another_color }}" id="input-related-by-color" class="form-control"/>
+                  <div id="product-related-by-color" class="well well-sm" style="height: 150px; overflow: auto;">
+                    {% for product_related in product_relateds_by_color %}
+                      <div id="product-related-by-color{{ product_related.product_id }}"><i class="fa fa-minus-circle"></i> {{ product_related.name }}
+                        <input type="hidden" name="product_related_by_color[]" value="{{ product_related.product_id }}"/>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+          </div>
+
+{# /////////////////////////////////////// #}
+            <div class="tab-pane" id="tab-image">
+              {# <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <td class="text-left">{{ entry_color }}</td>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td class="text-left">
+                    <input type="text" name="color" value="{{ color }}" id="color" class="form-control" placeholder="Введите цвет товара"/>
+                    </td>
+                  </tr>
+                  </tbody>
+                  </table>
+                </div> #}
+
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <td class="text-left">{{ entry_image }}</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-left"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                          <input type="hidden" name="image" value="{{ image }}" id="input-image" /></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
 
               <div class="table-responsive">
@@ -1142,10 +1208,9 @@
                   </tbody>
                 </table>
               </div>
-
-
-
             </div>
+
+
             <div class="tab-pane" id="tab-reward">
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-points"><span data-toggle="tooltip" title="{{ help_points }}">{{ entry_points }}</span></label>

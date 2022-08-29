@@ -36,6 +36,7 @@ class ModelLocalisationColorClass extends Model {
 	public function getColorClasses($data = array()) {
 		if ($data) {
 			// $sql = "SELECT * FROM " . DB_PREFIX . "color_class lc LEFT JOIN " . DB_PREFIX . "length_class_description lcd ON (lc.length_class_id = lcd.length_class_id) WHERE lcd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+
       $sql = "SELECT * FROM " . DB_PREFIX . "color_class";
 
 			$sort_data = array(
@@ -72,17 +73,17 @@ class ModelLocalisationColorClass extends Model {
 
 			return $query->rows;
 		} else {
-			$color_class_data = $this->cache->get('color_class.' . (int)$this->config->get('config_language_id'));
+			// $color_class_data = $this->cache->get('color_class.' . (int)$this->config->get('config_language_id'));
 
-			if (!$color_class_data) {
+			// if (!$color_class_data) {
 				// $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "length_class lc LEFT JOIN " . DB_PREFIX . "length_class_description lcd ON (lc.length_class_id = lcd.length_class_id) WHERE lcd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "color_class");
 
 
 				$color_class_data = $query->rows;
 
-				$this->cache->set('color_class.' . (int)$this->config->get('config_language_id'), $color_class_data);
-			}
+				// $this->cache->set('color_class.' . (int)$this->config->get('config_language_id'), $color_class_data);
+			// }
 
 			return $color_class_data;
 		}
