@@ -13,11 +13,22 @@ class ControllerExtensionModuleBestSeller extends Controller {
 
 		if ($results) {
 			foreach ($results as $result) {
-				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height']);
+
+        if ($result['image']) {
+					if (strpos($result['image'], ".webp") !== false || strpos($result['image'], ".avif") !== false)
+						$image = "/image/".$result['image'];
+					else
+            // $image = "/image/".$result['image'];
+						$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
 				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
+					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
 				}
+
+				// if ($result['image']) {
+				// 	$image = $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height']);
+				// } else {
+				// 	$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
+				// }
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
@@ -32,7 +43,7 @@ class ControllerExtensionModuleBestSeller extends Controller {
 					$special = false;
 					$tax_price = (float)$result['price'];
 				}
-	
+
 				if ($this->config->get('config_tax')) {
 					$tax = $this->currency->format($tax_price, $this->session->data['currency']);
 				} else {

@@ -1254,6 +1254,7 @@ class ControllerCatalogProduct extends Controller {
 			$data['length_class_id'] = $this->config->get('config_length_class_id');
 		}
 
+
     $this->load->model('localisation/color_class');
 
 
@@ -1268,8 +1269,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['color_class_id'] = $this->config->get('config_color_class_id');
 		}
 
-
-    // print_r($data);
 
 		$this->load->model('catalog/manufacturer');
 
@@ -1503,7 +1502,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_id'] = $product_info['product_id'];
 		}
 
-
 		$this->load->model('tool/image');
 
 		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
@@ -1625,6 +1623,7 @@ class ControllerCatalogProduct extends Controller {
 				);
 			}
 		}
+
 
 
     ///////цвет товара
@@ -1863,9 +1862,6 @@ class ControllerCatalogProduct extends Controller {
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
-
-        // if ($result['product_id'] == $this->request->get['product_id']) continue;
-
 				$option_data = array();
 
 				$product_options = $this->model_catalog_product->getProductOptions($result['product_id']);

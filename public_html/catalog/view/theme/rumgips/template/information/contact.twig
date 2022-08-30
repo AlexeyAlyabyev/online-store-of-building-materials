@@ -5,7 +5,11 @@
 <div class="page-wrapper">
   <section class="contacts-page">
     <h1 class="contacts-page__title">Контакты</h1>
-    <a class="contacts-page__phone" href="tel:+74950237200">+7 (495) 023-72-00</a>
+
+    <div class="contacts-page__phone-container">
+      <a class="contacts-page__phone contacts-page__phone--img contacts-page__phone--line" href="tel:+74950237200">+7 (495) 023-72-00</a>
+      <a class="contacts-page__phone contacts-page__phone--whatsapp" href="https://api.whatsapp.com:/send?phone=79151598877" target="_blank">{{ whatsapp }}</a>
+    </div>
 
     <div class="contacts-page__wrapper">
       <section class="contacts-list contacts-list__container">
@@ -15,11 +19,11 @@
             <ul class="contacts-page__list">
               <li class="contacts-page__item">
                 <p class="contacts-page__caption contacts-page__caption--phone">Call-центр</p>
-                <p class="contacts-page__text">Ежедневно с 9:00 до 22:00</p>
+                <p class="contacts-page__text">Ежедневно с 9:00 до 19:00</p>
               </li>
               <li class="contacts-page__item">
                 <p class="contacts-page__caption contacts-page__caption--delivery">Доставка заказов</p>
-                <p class="contacts-page__text">Ежедневно с 9:00 до 21:00</p>
+                <p class="contacts-page__text">Ежедневно с 9:00 до 18:00</p>
               </li>
               <li class="contacts-page__item">
                 <p class="contacts-page__caption contacts-page__caption--letter">Пишите нам</p>
@@ -42,7 +46,9 @@
         <div class="props__container">
           <div>
             <p class="props__text props__text--name"><b>Фактический адрес:</b></p>
-            <adress class="props__text props__adress">125040, г. Москва, МКАД 32-й км., вл.4</adress>
+            {# <adress class="props__text props__adress">125040, г. Москва, МКАД 32-й км., вл.4</adress> #}
+            <adress class="props__text props__adress">125040, г. Москва, Варшавское шоссе, 21-й километр, с.26</adress>
+
           </div>
           <div></div>
             <div>
@@ -376,7 +382,7 @@
           <div>
             <h2 class="delivery-block__title">Доставка</h2>
             <span class="delivery__text"><b>По Москве</b></span>
-            <p class="delivery__text">Доставка в пределах МКАД - бесплатно,</br>
+            <p class="delivery__text">Доставка в пределах МКАД - бесплатно,<br>
             при сумме заказа от 20 000₽</p>
           </div>
           <picture>

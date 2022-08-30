@@ -36,7 +36,7 @@ class ModelCatalogProduct extends Model {
 				'stock_status'     => $query->row['stock_status'],
 				'image'            => $query->row['image'],
 				'video'            => $query->row['video'],
-				'color_name'       => $color_name,
+        'color_name'       => $color_name,
 				'color_value'      => $color_value,
 				'color_class_id'   => $query->row['color_class_id'],
 				'manufacturer_id'  => $query->row['manufacturer_id'],
@@ -410,18 +410,20 @@ class ModelCatalogProduct extends Model {
 		return $product_data;
 	}
 
-  // загрузка этого товара другого цвета
-  public function getProductRelatedByColor($product_id) {
-		$product_data = array();
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_related_by_color pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_color_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id = '" . (int)$product_id . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+// загрузка этого товара другого цвета
+public function getProductRelatedByColor($product_id) {
+  $product_data = array();
 
-		foreach ($query->rows as $result) {
-			$product_data[$result['related_color_id']] = $this->getProduct($result['related_color_id']);
-		}
+  $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_related_by_color pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_color_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id = '" . (int)$product_id . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
-		return $product_data;
-	}
+  foreach ($query->rows as $result) {
+    $product_data[$result['related_color_id']] = $this->getProduct($result['related_color_id']);
+  }
+
+  return $product_data;
+}
+
 
 	public function getProductLayoutId($product_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_layout WHERE product_id = '" . (int)$product_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");

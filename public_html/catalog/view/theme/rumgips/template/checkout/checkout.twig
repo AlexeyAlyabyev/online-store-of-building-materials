@@ -59,12 +59,12 @@
 							{% else %}
 								<input type="radio" name="shipping_method" id="сourier" value="{{ shipping_methods.flat }}" data-delivery-price="{{shipping_flat_cost}}" data-total="{{ total_cost_with_flat }}" checked>
 							{% endif %}
-              <label class="order-registration__radio-label order-registration__radio-label--сourier" for="сourier">Курьерская доставка</br>(в пределах МКАД)
+              <label class="order-registration__radio-label order-registration__radio-label--сourier" for="сourier">Курьерская доставка<br>(в пределах МКАД)
               </label>
 
               <div class="order-registration__сourier-container">
-                <p class="order-registration__сourier-text">Курьер принимает только наличные средства.</br>Пожалуйста, подготовьте сумму без сдачи.
-                </br>Стоимость доставки фиксирована и составляет {{shipping_flat_cost}} ₽.</br>
+                <p class="order-registration__сourier-text">Курьер принимает только наличные средства.<br>Пожалуйста, подготовьте сумму без сдачи.
+                <br>Стоимость доставки фиксирована и составляет {{shipping_flat_cost}} ₽.<br>
                   Доставка в пределах МКАД - бесплатно,
                   при сумме заказа от {{min_free_cost}} ₽.
                 </p>
@@ -118,7 +118,7 @@
               <div class="order-registration__payment-container">
                 <input type="radio" name="payment_method" id="cash" value="{{ payment_methods.cod }}">
                 <label class="order-registration__cashless-label" for="cash">Наличными при получении</label>
-                <p class="order-registration__cashless-text">Оплата при получении производится после осмотра товаров. Курьер принимает только наличные средства.</br>Пожалуйста, подготовьте сумму без сдачи.</p>
+                <p class="order-registration__cashless-text">Оплата при получении производится после осмотра товаров. Курьер принимает только наличные средства.<br>Пожалуйста, подготовьте сумму без сдачи.</p>
               </div>
             </div>
 

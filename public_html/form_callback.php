@@ -22,18 +22,17 @@
       $subject = "Новая подписка на новинки и акции в rumgips!";
       $message = "
       Email: ".$_POST['email']."
-      Текст данной акции: Узнай первым о новинках, мероприятиях и спецпредложениях
-      Скидка до 30% на первый заказ, новым пользователям";
+      Текст данной акции: Узнай первым о новинках, мероприятиях и спецпредложениях";
     }
 
     $headers = "From: $from \r\n"; // конец заголовка письма
 
     /* Отправка сообщения, с помощью функции mail() */
     if (mail($to, $subject, $message, $headers . 'Content-type: text/plain; charset=utf-8')) {
-			if (isset($_POST['name'])) 
+			if (isset($_POST['name']))
 				header('Location: thank-you');
 			else
-				header('Location: thank-you?subscription=1');
+				header('Location: thank-you-for-subscription');
     } else {
       header('Location: 404');
     }

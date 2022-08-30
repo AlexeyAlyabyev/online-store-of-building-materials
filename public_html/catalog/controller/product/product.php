@@ -256,6 +256,13 @@ class ControllerProductProduct extends Controller {
 			$data['model'] = $product_info['model'];
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
+
+      $data['length'] = number_format($product_info['length']).' '.$this->length->getUnit($product_info['length_class_id']);
+      $data['width'] = number_format($product_info['width']).' '.$this->length->getUnit($product_info['length_class_id']);
+      $data['height'] = number_format($product_info['height']).' '.$this->length->getUnit($product_info['length_class_id']);
+
+      // print_r($data);
+
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
 			if ($product_info['quantity'] <= 0) {
@@ -292,6 +299,7 @@ class ControllerProductProduct extends Controller {
         $data['url_video_preview'] = $url_video_preview;
       }
 
+
       $data ['color_class_id'] = $product_info['color_class_id'];
 
 			if ($product_info['color_class_id']) {
@@ -314,8 +322,6 @@ class ControllerProductProduct extends Controller {
         'color_name'  => $product_info['color_name'],
         'color_value' => $product_info['color_value'],
       );
-
-      // print_r($data);
 
 			if ($product_info['image']) {
 				if (strpos($product_info['image'], ".webp") !== false || strpos($product_info['image'], ".avif") !== false) {
@@ -362,42 +368,40 @@ class ControllerProductProduct extends Controller {
 				$tax_price = (float)$product_info['price'];
 			}
 
+			// $data['options'] = array();
 
+			// foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
+			// 	$product_option_value_data = array();
 
-			$data['options'] = array();
+			// 	foreach ($option['product_option_value'] as $option_value) {
+			// 		if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
+			// 			if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
+			// 				$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
+			// 			} else {
+			// 				$price = false;
+			// 			}
 
-			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
-				$product_option_value_data = array();
+			// 			$product_option_value_data[] = array(
+			// 				'product_option_value_id' => $option_value['product_option_value_id'],
+			// 				'option_value_id'         => $option_value['option_value_id'],
+			// 				'name'                    => $option_value['name'],
+			// 				'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
+			// 				'price'                   => $price,
+			// 				'price_prefix'            => $option_value['price_prefix']
+			// 			);
+			// 		}
+			// 	}
 
-				foreach ($option['product_option_value'] as $option_value) {
-					if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
-						if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
-							$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
-						} else {
-							$price = false;
-						}
-						$product_option_value_data[] = array(
-							'product_option_value_id' => $option_value['product_option_value_id'],
-							'option_value_id'         => $option_value['option_value_id'],
-							'name'                    => $option_value['name'],
-							'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
-							'price'                   => $price,
-							'price_prefix'            => $option_value['price_prefix']
-						);
-					}
-				}
-				$data['options'][] = array(
-					'product_option_id'    => $option['product_option_id'],
-					'product_option_value' => $product_option_value_data,
-					'option_id'            => $option['option_id'],
-					'name'                 => $option['name'],
-					'type'                 => $option['type'],
-					'value'                => $option['value'],
-					'required'             => $option['required']
-				);
-			}
-
-      // print_r($data['options']);
+			// 	$data['options'][] = array(
+			// 		'product_option_id'    => $option['product_option_id'],
+			// 		'product_option_value' => $product_option_value_data,
+			// 		'option_id'            => $option['option_id'],
+			// 		'name'                 => $option['name'],
+			// 		'type'                 => $option['type'],
+			// 		'value'                => $option['value'],
+			// 		'required'             => $option['required']
+			// 	);
+			// }
 
 			if ($product_info['minimum']) {
 				$data['minimum'] = $product_info['minimum'];
@@ -472,8 +476,6 @@ class ControllerProductProduct extends Controller {
 					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
 					'price'       => $price,
 					'special'     => $special,
-          // 'color_name'  => $result['color_name'],
-          // 'color_value' => $result['color_value'],
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $rating,
@@ -500,8 +502,6 @@ class ControllerProductProduct extends Controller {
 			$hit = true;
 
 			$data['hit'] = $hit;
-
-			// print_r($data);
 
 			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 
@@ -583,6 +583,8 @@ class ControllerProductProduct extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
+
+
 
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}

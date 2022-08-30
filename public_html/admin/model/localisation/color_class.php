@@ -36,7 +36,6 @@ class ModelLocalisationColorClass extends Model {
 	public function getColorClasses($data = array()) {
 		if ($data) {
 			// $sql = "SELECT * FROM " . DB_PREFIX . "color_class lc LEFT JOIN " . DB_PREFIX . "length_class_description lcd ON (lc.length_class_id = lcd.length_class_id) WHERE lcd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
-
       $sql = "SELECT * FROM " . DB_PREFIX . "color_class";
 
 			$sort_data = array(

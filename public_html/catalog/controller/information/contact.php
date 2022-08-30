@@ -78,6 +78,8 @@ class ControllerInformationContact extends Controller {
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = $this->config->get('config_comment');
 
+		$data['whatsapp'] = $this->config->get('config_whatsapp_telephone');
+
 		$data['locations'] = array();
 
 		$this->load->model('localisation/location');
@@ -183,7 +185,7 @@ class ControllerInformationContact extends Controller {
 			'href' => $this->url->link('information/contact')
 		);
 
- 		$data['text_message'] = $this->language->get('text_message'); 
+ 		$data['text_message'] = $this->language->get('text_message');
 
 		$data['continue'] = $this->url->link('common/home');
 

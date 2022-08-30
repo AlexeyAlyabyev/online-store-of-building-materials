@@ -13,7 +13,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 			foreach ($products as $product) {
 				if ($product['image']) {
 					if (strpos($product['image'], ".webp") !== false || strpos($product['image'], ".avif") !== false) 
-						$image = "https://develop.rumgips.ru/image/".$product['image'];
+						$image = "https://rumgips.ru/image/".$product['image'];
 					else 
 						$image = $this->model_tool_image->resize($product['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height'));
 					$output .= '<url>';

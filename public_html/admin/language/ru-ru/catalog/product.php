@@ -67,7 +67,8 @@ $_['entry_weight_class']     = 'Единица измерения веса';
 $_['entry_weight']           = 'Вес';
 $_['entry_dimension']        = 'Размеры (Д х Ш х В)';
 $_['entry_length_class']     = 'Единица измерения длины';
-$_['entry_color_class']     = 'Единица измерения цвета )))';
+
+$_['entry_color_class']     = 'Единица измерения цвета';
 
 $_['entry_length']           = 'Длина';
 $_['entry_width']            = 'Ширина';
@@ -76,7 +77,6 @@ $_['entry_image']            = 'Изображение';
 $_['entry_additional_image'] = 'Дополнительные изображения';
 $_['entry_video']            = 'Видео из YouTube';
 $_['entry_color']            = 'Цвет товара';
-$_['entry_video_mp4']        = 'Видео mp4';
 $_['entry_customer_group']   = 'Группа покупателей';
 $_['entry_date_start']       = 'Дата начала';
 $_['entry_date_end']         = 'Дата окончания';

@@ -75,8 +75,6 @@ $_['entry_insurance']              = 'Enable Insurance';
 $_['entry_display_weight']         = 'Display Delivery Weight';
 $_['entry_weight_class']           = 'Единица измерения веса';
 $_['entry_length_class']           = 'Единица измерения длины';
-$_['entry_color_class']           = 'Единица измерения цвета )))';
-
 $_['entry_dimension']			   = 'Размеры (Д х Ш х В)';
 $_['entry_length']                 = 'Длина';
 $_['entry_height']                 = 'Высота';
