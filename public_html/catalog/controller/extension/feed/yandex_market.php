@@ -507,7 +507,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 			$to = array('&quot;', '&amp;', '&gt;', '&lt;', '&apos;');
 			$field = str_replace($from, $to, $field);
 			if ($key == 'description') {
-				$field = "<![CDATA[" . mb_substr($field, 0, 3000) . "]]>";
+				$field = mb_substr($field, 0, 3000);
 			}
 			if ($this->from_charset == 'windows-1251') {
 				$field = iconv($this->from_charset, 'windows-1251//TRANSLIT//IGNORE', $field);
