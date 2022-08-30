@@ -32,8 +32,8 @@ class ControllerCommonHeader extends Controller {
 
 
 		// Убираем из индекска тестовый поддомен
-		// $in_dev = strpos($_SERVER['HTTP_HOST'], 'develop');
-		// if ($in_dev !== false || (isset($_POST['no_index']) && $_POST['no_index'])) $data['noindex'] = true;
+		$in_dev = strpos($_SERVER['HTTP_HOST'], 'develop');
+		if ($in_dev !== false || (isset($_POST['no_index']) && $_POST['no_index'])) $data['noindex'] = true;
 
 
 		$this->load->language('common/header');
