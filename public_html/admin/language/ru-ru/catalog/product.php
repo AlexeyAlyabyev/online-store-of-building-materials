@@ -67,12 +67,16 @@ $_['entry_weight_class']     = 'Единица измерения веса';
 $_['entry_weight']           = 'Вес';
 $_['entry_dimension']        = 'Размеры (Д х Ш х В)';
 $_['entry_length_class']     = 'Единица измерения длины';
+
+$_['entry_color_class']     = 'Единица измерения цвета';
+
 $_['entry_length']           = 'Длина';
 $_['entry_width']            = 'Ширина';
 $_['entry_height']           = 'Высота';
 $_['entry_image']            = 'Изображение';
 $_['entry_additional_image'] = 'Дополнительные изображения';
-$_['entry_video']            = 'Видео';
+$_['entry_video']            = 'Видео из YouTube';
+$_['entry_color']            = 'Цвет товара';
 $_['entry_customer_group']   = 'Группа покупателей';
 $_['entry_date_start']       = 'Дата начала';
 $_['entry_date_end']         = 'Дата окончания';
@@ -92,6 +96,7 @@ $_['entry_main_category']    = 'Главная категория';
 $_['entry_filter']           = 'Фильтры';
 $_['entry_download']         = 'Файлы для скачивания';
 $_['entry_related']          = 'Рекомендуемые товары';
+$_['entry_another_color']    = 'Товары другого цвета';
 $_['entry_related_article']  = 'Рекомендуем почитать';
 $_['entry_tag']          	 = 'Теги товара';
 $_['entry_reward']           = 'Бонусные баллы';

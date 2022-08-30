@@ -116,8 +116,6 @@ class ControllerProductCategory extends Controller {
 		}
 
 
-
-
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 		// print_r($category_info);
 
@@ -141,6 +139,10 @@ class ControllerProductCategory extends Controller {
 
 			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
+
+      // $data['description'] = $category_info['description'];
+			$data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
+
 
 			// $data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 

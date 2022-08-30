@@ -216,8 +216,11 @@
 
 				{% if not categories and not products %}
 					<p>{{ text_empty }}</p>
-					<div class="buttons">
-						<div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+					<div class="not-found-page">
+
+      <a class="not-found-page__link" href="{{ continue }}">{{ button_continue }}</a>
+
+						{# <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div> #}
 					</div>
 				{% endif %}
 			</div>

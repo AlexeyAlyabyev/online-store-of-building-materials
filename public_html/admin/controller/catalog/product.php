@@ -1254,6 +1254,22 @@ class ControllerCatalogProduct extends Controller {
 			$data['length_class_id'] = $this->config->get('config_length_class_id');
 		}
 
+
+    $this->load->model('localisation/color_class');
+
+
+		$data['color_classes'] = $this->model_localisation_color_class->getColorClasses();
+
+
+		if (isset($this->request->post['color_class_id'])) {
+			$data['color_class_id'] = $this->request->post['color_class_id'];
+		} elseif (!empty($product_info)) {
+			$data['color_class_id'] = $product_info['color_class_id'];
+		} else {
+			$data['color_class_id'] = $this->config->get('config_color_class_id');
+		}
+
+
 		$this->load->model('catalog/manufacturer');
 
 		if (isset($this->request->post['manufacturer_id'])) {
@@ -1479,6 +1495,13 @@ class ControllerCatalogProduct extends Controller {
 			$data['video'] = '';
 		}
 
+    // id товара
+		if (isset($this->request->post['product_id'])) {
+			$data['product_id'] = $this->request->post['product_id'];
+		} else {
+			$data['product_id'] = $product_info['product_id'];
+		}
+
 		$this->load->model('tool/image');
 
 		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
@@ -1600,6 +1623,33 @@ class ControllerCatalogProduct extends Controller {
 				);
 			}
 		}
+
+
+
+    ///////цвет товара
+    if (isset($this->request->post['product_related_by_color'])) {
+			$products = $this->request->post['product_related_by_color'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$products = $this->model_catalog_product->getProductRelatedByColor($this->request->get['product_id']);
+		} else {
+			$products = array();
+		}
+
+		$data['product_relateds_by_color'] = array();
+
+		foreach ($products as $product_id) {
+			$related_info = $this->model_catalog_product->getProduct($product_id);
+
+			if ($related_info) {
+				$data['product_relateds_by_color'][] = array(
+					'product_id' => $related_info['product_id'],
+					'name'       => $related_info['name']
+				);
+			}
+		}
+
+    /////
+
 
 		if (isset($this->request->post['points'])) {
 			$data['points'] = $this->request->post['points'];

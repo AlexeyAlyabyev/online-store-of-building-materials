@@ -256,6 +256,13 @@ class ControllerProductProduct extends Controller {
 			$data['model'] = $product_info['model'];
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
+
+      $data['length'] = number_format($product_info['length']).' '.$this->length->getUnit($product_info['length_class_id']);
+      $data['width'] = number_format($product_info['width']).' '.$this->length->getUnit($product_info['length_class_id']);
+      $data['height'] = number_format($product_info['height']).' '.$this->length->getUnit($product_info['length_class_id']);
+
+      // print_r($data);
+
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
 			if ($product_info['quantity'] <= 0) {
@@ -282,8 +289,6 @@ class ControllerProductProduct extends Controller {
       // URL видео и превью видео
       if ($product_info['video']) {
 
-
-
         $url_video = $product_info['video'];
         preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url_video, $match);
         $youtube_id = $match[1];
@@ -294,7 +299,29 @@ class ControllerProductProduct extends Controller {
         $data['url_video_preview'] = $url_video_preview;
       }
 
-      // print_r($data);
+
+      $data ['color_class_id'] = $product_info['color_class_id'];
+
+			if ($product_info['color_class_id']) {
+				$data['color_class_id'] = $product_info['color_class_id'];
+			}
+
+      $related_colors = $this->model_catalog_product->getProductRelatedByColor($this->request->get['product_id']);
+
+			foreach ($related_colors as $related_color) {
+				// if (isset($related_color['color']) && $related_color['color'] !== "")
+				if (isset($related_color['color_class_id']) !== "")
+					$data['products_related_by_color'][] = array(
+            'color_name'  => $related_color['color_name'],
+            'color_value' => $related_color['color_value'],
+						'href' 	=> $this->url->link('product/product', 'product_id=' . $related_color['product_id']),
+					);
+			}
+
+      $data['products_related_by_color'][] = array(
+        'color_name'  => $product_info['color_name'],
+        'color_value' => $product_info['color_value'],
+      );
 
 			if ($product_info['image']) {
 				if (strpos($product_info['image'], ".webp") !== false || strpos($product_info['image'], ".avif") !== false) {
@@ -391,6 +418,9 @@ class ControllerProductProduct extends Controller {
 
 			$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
 
+      $data['color_name'] = $product_info['color_name'];
+      $data['color_value'] = $product_info['color_value'];
+
 			$data['products'] = array();
 
 			$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
@@ -473,8 +503,6 @@ class ControllerProductProduct extends Controller {
 
 			$data['hit'] = $hit;
 
-			// print_r($data);
-
 			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
@@ -555,6 +583,8 @@ class ControllerProductProduct extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
+
+
 
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}

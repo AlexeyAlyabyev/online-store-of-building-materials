@@ -3,7 +3,7 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 // Heading
-$_['heading_title'] = 'Лидеры продаж';
+$_['heading_title'] = 'Хит продаж';
 
 // Text
 $_['text_tax']      = 'Без НДС:';

@@ -17,6 +17,10 @@
 		<meta name="description" content="{{ description }}" />
 	{% endif %}
 
+  {% if noindex %}
+    <meta name="robots" content="noindex, nofollow" />
+  {% endif %}
+
 	<meta property="og:title" content="{{ title }}" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="{{ og_url }}" />
@@ -31,10 +35,12 @@
 
 	<link href="/favicon.svg" rel="icon">
 
-	<link href="catalog/view/theme/rumgips/stylesheet/stylesheet.css" rel="stylesheet">
+	<link href="catalog/view/theme/rumgips/stylesheet/stylesheet.css?v=08" rel="stylesheet">
 
 	{% for style in styles %}
-		<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="lazy" onload="this.media = '{{ style.media }}'" />
+		{# <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="lazy" onload="this.media = '{{ style.media }}'" /> #}
+		<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" onload="this.media = '{{ style.media }}'" />
+
 	{% endfor %}
 
 	<link rel="stylesheet" href="/catalog/view/javascript/jquery/swiper/css/swiper.min.css" media="lazy" onload="this.media = '{{ style.media }}'">
@@ -49,28 +55,34 @@
 		<link href="{{ link.href }}" rel="{{ link.rel }}" />
 	{% endfor %}
 
-  <script type="text/javascript">
-    var __cs = __cs || [];
-    __cs.push(["setCsAccount", "vkFBMGgoaY72XZV3GSCf6RbqzWfyWlGb"]);
-  </script>
-  <script type="text/javascript" async src="https://app.comagic.ru/static/cs.min.js">
-  </script>
 
-  <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+  {% if not noindex %}
+      <script type="text/javascript">
+        var __cs = __cs || [];
+        __cs.push(["setCsAccount", "vkFBMGgoaY72XZV3GSCf6RbqzWfyWlGb"]);
+      </script>
+      <script type="text/javascript" async src="https://app.comagic.ru/static/cs.min.js">
+      </script>
+	{% endif %}
 
-   ym(89709163, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/89709163" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+
+  {% if not noindex %}
+        <!-- Yandex.Metrika counter -->
+      <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(89709163, "init", {
+              clickmap:true,
+              trackLinks:true,
+              accurateTrackBounce:true,
+              webvisor:true
+        });
+      </script>
+      <noscript><div><img src="https://mc.yandex.ru/watch/89709163" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+      <!-- /Yandex.Metrika counter -->
+  {% endif %}
 
 </head>
 
@@ -103,7 +115,7 @@
 		</a>
 
 		<div class="contact_icons">
-			<a href="https://t.me/RumGips" class="telegram">
+			<a href="https://t.me/RumGips" class="telegram" target="_blank">
 				<picture>
 					<svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M20.7119 40.3796C31.7576 40.3796 40.7119 31.4253 40.7119 20.3796C40.7119 9.33394 31.7576 0.379639 20.7119 0.379639C9.66622 0.379639 0.711914 9.33394 0.711914 20.3796C0.711914 31.4253 9.66622 40.3796 20.7119 40.3796Z" fill="#039BE5"/>
@@ -112,7 +124,9 @@
 					</svg>
 				</picture>
 			</a>
-			<a href="whatsapp://send?phone={{ whatsapp }}" class="whatsapp">
+			{# <a href="api.whatsapp://send?phone={{ whatsapp }}" class="whatsapp"> #}
+			<a href="https://api.whatsapp.com:/send?phone=79151598877" class="whatsapp" target="_blank">
+			{# <a href="https://api.whatsapp.com:/send?phone={{ whatsapp }}" class="whatsapp"> #}
 				<picture>
 					<svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M20.7169 0.50647H20.7069C9.67941 0.50647 0.711914 9.47647 0.711914 20.5065C0.711914 24.8815 2.12191 28.9365 4.51941 32.229L2.02691 39.659L9.71441 37.2015C12.8769 39.2965 16.6494 40.5065 20.7169 40.5065C31.7444 40.5065 40.7119 31.534 40.7119 20.5065C40.7119 9.47897 31.7444 0.50647 20.7169 0.50647Z" fill="#75C067"/>
@@ -124,8 +138,9 @@
 			</a>
 			<a href="tel:{{ telephone }}" class="phone">
 				<picture>
-					<source media="(min-width: 768px)" srcset="/catalog/view/theme/rumgips/image/phone.svg">
-					<img src="" alt="rumgips phone">
+					{# <source media="(min-width: 375px)" srcset="/catalog/view/theme/rumgips/image/phone.svg"> #}
+					{# <img src="" alt="rumgips phone"> #}
+					<img src="/catalog/view/theme/rumgips/image/phone.svg" alt="rumgips phone">
 				</picture>
 			</a>
 		</div>
@@ -136,7 +151,7 @@
 			<button class="btn-text" onclick="showModal()">Обратный<br>звонок</button>
 		</div>
 
-		<a href="https://develop.rumgips.ru/online-catalog-of-profil-systms.pdf"  class="online_catalog" target="_blank">
+		<a href="https://rumgips.ru/catalog_rumgips.pdf"  class="online_catalog" target="_blank">
 			<picture>
 				<svg width="19" height="21" viewBox="0 0 19 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<g clip-path="url(#clip0_502_28367)">
@@ -151,11 +166,11 @@
 					</defs>
 				</svg>
 			</picture>
-			<p>Онлайн-</br>
+			<p>Онлайн-<br>
 				каталог</p>
 		</a>
 
-		<a href="https://develop.rumgips.ru/rumgips_price.pdf" target="_blank" class="price_list">
+		<a href="https://rumgips.ru/rumgips_price.pdf" target="_blank" class="price_list">
 			<picture>
 				<svg width="21" height="15" viewBox="0 0 21 15" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<g clip-path="url(#clip0_502_28361)">
@@ -190,7 +205,7 @@
 				</svg>
 				<span>Каталог</span>
 			</div>
-			<a class="item" href="whatsapp://send?phone={{ telephone }}">
+			<a class="item" href="whatsapp://send?phone={{ whatsapp }}">
 				<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M3.35564 15.3772L3.48062 15.0076L3.24976 14.6931C2.25341 13.3358 1.66797 11.6655 1.66797 9.86182C1.66797 5.31802 5.3946 1.61182 9.98831 1.61182H9.99284C14.5865 1.61182 18.3132 5.31908 18.3132 9.86182C18.3132 14.4046 14.5865 18.1118 9.99284 18.1118C8.29786 18.1118 6.72913 17.6123 5.41366 16.7478L5.11534 16.5517L4.77506 16.6597L2.69936 17.3179L3.35564 15.3772Z" stroke="#A7AABB" stroke-width="1.5"/>
 					<path d="M14.164 12.7892C13.9875 13.2835 13.2871 13.6935 12.7285 13.8132C12.3463 13.894 11.8471 13.9583 10.1666 13.2672C8.01701 12.3838 6.63274 10.217 6.52485 10.0764C6.42153 9.93581 5.65625 8.92904 5.65625 7.88781C5.65625 6.84657 6.1893 6.33956 6.40416 6.12188C6.58062 5.9432 6.87229 5.86157 7.15207 5.86157C7.24259 5.86157 7.32396 5.86611 7.39711 5.86974C7.61197 5.87881 7.71986 5.8915 7.86158 6.228C8.03804 6.64975 8.46777 7.69099 8.51897 7.79801C8.57109 7.90504 8.6232 8.05016 8.55006 8.19074C8.48148 8.33586 8.42114 8.40026 8.31325 8.52361C8.20536 8.64696 8.10296 8.74129 7.99507 8.87371C7.89632 8.9889 7.78478 9.11226 7.90912 9.3254C8.03347 9.53401 8.4632 10.2297 9.0959 10.7884C9.91239 11.5095 10.5744 11.7398 10.8112 11.8378C10.9876 11.9103 11.1979 11.8931 11.3268 11.7571C11.4905 11.582 11.6926 11.2918 11.8983 11.0061C12.0446 10.8011 12.2293 10.7757 12.4231 10.8482C12.6206 10.9163 13.6657 11.4287 13.8805 11.5348C14.0954 11.6419 14.2371 11.6927 14.2892 11.7825C14.3404 11.8723 14.3404 12.294 14.164 12.7892Z" fill="#A7AABB"/>
@@ -261,6 +276,8 @@
           {# <a href="/warranty">Гарантия</a> #}
           <a href="/exchange">Обмен и возврат</a>
           <a href="/contacts">Контакты</a>
+          <a href="#">О нас</a>
+
 				</div>
 			</div>
 
@@ -275,14 +292,7 @@
 			<div class="content">
 				<div class="body">
 
-					<div class="item">
-						<a href="gipsokarton">Гипсокартон</a>
-						<a href="gipsokarton/standartnyj">Стандартный</a>
-						<a href="#">Влагостойкий</a>
-						<a href="#">Огнестойкий</a>
-					</div>
-
-					<div class="item">
+          <div class="item">
 						<a href="profil-dlya-gipsokartona">Профиль</a>
 						<a href="profil-dlya-gipsokartona/tenevoj">Теневой</a>
 						<a href="profil-dlya-gipsokartona/paryaschij">Парящий</a>
@@ -292,26 +302,44 @@
 						<a href="profil-dlya-gipsokartona/profil-standartnyj">Стандартный</a>
 					</div>
 
+          <div class="item">
+						<a href="lameli">Декоративные рейки,<br>панели</a>
+						{# <a href="#">Стандартный</a>
+						<a href="#">Влагостойкий</a>
+						<a href="#">Огнестойкий</a> #}
+					</div>
+
+          <div class="item">
+						<a href="dekorativnye-peregorodki">Декоративные<br>перегородки</a>
+						{# <a href="#">Стандартный</a>
+						<a href="#">Влагостойкий</a>
+						<a href="#">Огнестойкий</a> #}
+					</div>
+
+          <div class="item">
+						<a href="komponenty-dlya-profiley">Компоненты</a>
+						{# <a href="#">Стандартный</a>
+						<a href="#">Влагостойкий</a>
+						<a href="#">Огнестойкий</a> #}
+					</div>
+
 					<div class="item">
+						<a href="#">Комплектующие</a>
 						<a href="#">Крепеж</a>
-						<a href="#">Дюбель и дюбель-гвозди</a>
-						<a href="#">Саморезы и шурупы</a>
+						<a href="#">Крепление</a>
+						<a href="#">Сетки малярные</a>
+						{# <a href="#">Дюбель и дюбель-гвозди</a> #}
+						{# <a href="#">Саморезы и шурупы</a> #}
 						<a href="#">Анкерные болты</a>
 					</div>
 
-					<div class="item">
-						<a href="#">Крепление</a>
-						{# <a href="#">Стандартный</a>
+          <div class="item">
+						<a href="gipsokarton">Гипсокартон</a>
+						<a href="gipsokarton/standartnyj">Стандартный</a>
 						<a href="#">Влагостойкий</a>
-						<a href="#">Огнестойкий</a> #}
+						<a href="#">Огнестойкий</a>
 					</div>
 
-					<div class="item">
-						<a href="#">Сетки малярные</a>
-						{# <a href="#">Стандартный</a>
-						<a href="#">Влагостойкий</a>
-						<a href="#">Огнестойкий</a> #}
-					</div>
 				</div>
 			</div>
 		</div>
@@ -322,6 +350,8 @@
 			{# <a href="/warranty">Гарантия</a> #}
 			<a href="/exchange">Обмен и возврат</a>
 			<a href="/contacts">Контакты</a>
+			<a href="#">О нас</a>
+
 		</div>
 		<div class="search_and_cart">
 			{{search}}

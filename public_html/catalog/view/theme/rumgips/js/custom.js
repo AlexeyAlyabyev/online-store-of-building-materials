@@ -102,14 +102,14 @@ $(function(){
 	// 		$(this).siblings("input[name='quantity']").val(+$(this).siblings("input[name='quantity']").val() + 1);
 	// });
 
-  $(":input").on('input', function() {
+  $('input[name^="quantity"]').on('input', function() {
     if ($(this).val() >=1 ) {
       cartUpdate();
       }
     }
   )
 
-  $(":input").on('change', function() {
+  $('input[name^="quantity"]').on('change', function() {
       if ($(this).val() == 0) {
         cartUpdate();
         $(this).parents(".checkout-cart__item").remove();
@@ -157,9 +157,9 @@ function cartUpdate(){
 
           $(".checkout-cart__total-count").html(json["total_short_text"]);
 
-          $(".checkout-cart__sub-total").html(json["initial_total"]);
-          $(".checkout-cart__total-discount").html(json["discount"]);
-          $(".checkout-cart__total-with-discount").html(json["total"]);
+          $(".checkout-cart__sub-total").html(json["initial_total"] + ' ₽');
+          $(".checkout-cart__total-discount").html(json["discount"] + ' ₽');
+          $(".checkout-cart__total-with-discount").html(json["total"] + ' ₽');
 
           for (key in json['products']) {
             $("input[name='quantity["+ key +"]']").parent().next().html(json['products'][key]['total'] + ' ₽');
@@ -199,13 +199,22 @@ const brands_slider = new Swiper('.brands_slider .wrapper', {
 			spaceBetween: 10
 		},
 		992: {
-			slidesPerView: 4,
-			spaceBetween: 20,
-			loop: false,
-			grid: {
-				rows: 2,
-				fill: "row",
-			},
+			// slidesPerView: 3,
+			// spaceBetween: 21,
+			// loop: false,
+			// grid: {
+			// 	rows: 2,
+			// 	fill: "row",
+			// },
+      slidesPerView: 'auto',
+      loop: true,
+      speed: 5000,
+      slidesPerView: '4',
+      autoplay: {
+        enabled: true,
+        delay: 1,
+      },
+      pagination: false,
 		},
 	},
 
@@ -284,7 +293,7 @@ const complaint_swiper = new Swiper('.complaint-swiper', {
 });
 
 
-// Изменение размера мбильной менюшки в зависимости от наличия верхнего рекламного баннера
+// Изменение размера мобильной менюшки в зависимости от наличия верхнего рекламного баннера
 function resizeMobileCatalog(){
 	if (window.innerWidth >= 768 && window.innerWidth < 992)
 		if ($(".new_gips").length){
@@ -621,6 +630,33 @@ const recommended_products_swiper = new Swiper('.recommended-products-swiper', {
 
 	pagination: {
 		el: '.recommended-products-swiper__pagination',
+		clickable: true,
+	},
+
+  navigation: {
+    nextEl: '.recommended-products-swiper-button-next',
+    prevEl: '.recommended-products-swiper-button-prev',
+  },
+});
+
+// Слайдер "Хит продаж"
+const productsHitSwiper = new Swiper('.products-hit-swiper', {
+	slidesPerView: 'auto',
+	spaceBetween: 10,
+
+	breakpoints: {
+		768: {
+			slidesPerView: 3,
+			spaceBetween: 15
+		},
+		992: {
+			slidesPerView: 4,
+			spaceBetween: 20,
+		},
+	},
+
+	pagination: {
+		el: '.products-hit-swiper__pagination',
 		clickable: true,
 	},
 

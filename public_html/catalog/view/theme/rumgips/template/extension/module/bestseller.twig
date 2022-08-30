@@ -1,4 +1,62 @@
-<h3>{{ heading_title }}</h3>
+{% if products %}
+<section class="products-hit wrapper">
+
+  <div class="products-hit-swiper swiper">
+  <h3 class="products-hit__title">{{ heading_title }}</h3>
+
+  <div class="recommended-products__buttons-container">
+    <div class="recommended-products-swiper-button-prev"></div>
+    <div class="recommended-products-swiper-button-next"></div>
+  </div>
+
+  <ul class="products-hit__list swiper-wrapper">
+    {% for product in products %}
+    <li class="products-hit__item product-card swiper-slide">
+      <a href="{{ product.href }}" class="image">
+        <img class="product-card__img" width="236" height="auto" src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" />
+        {% if product.special and (product.hit == false) %}
+          <span>Скидка</span>
+        {% endif %}
+
+        {% if (product.special == false) and product.hit %}
+          <span class="hit">Хит</span>
+        {% endif %}
+
+        {% if product.special and product.hit %}
+          <span class="hit">Хит</span>
+        {% endif %}
+
+        {% if product.manufacturer_image %}
+          <img class="manufacturer" src="/image/{{ product.manufacturer_image }}" alt="{{ product.name }} производитель">
+        {% endif %}
+      </a>
+
+      {# <p class="model">Арт. {{ product.model }}</p> #}
+      <h4><a class="product-card__name" href="{{ product.href }}">{{ product.name }}</a></h4>
+
+      <div class="product-card__price-container">
+        {% if product.price %}
+          <p class="product-card__price">
+            {% if not product.special %}
+              {{ product.price }}
+            {% else %}
+              <span class="new">{{ product.special }}</span>
+              <span class="old">{{ product.price }}</span>
+            {% endif %}
+          </p>
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="products-hit-swiper__pagination"></div>
+</div>
+
+</section>
+{% endif %}
+
+
+{# <h3>{{ heading_title }}</h3>
 <div class="row">
  {% for product in products %}
   <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -39,4 +97,4 @@
     </div>
   </div>
   {% endfor %}
-</div>
+</div> #}

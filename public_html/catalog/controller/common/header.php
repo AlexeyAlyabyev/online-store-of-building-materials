@@ -30,6 +30,12 @@ class ControllerCommonHeader extends Controller {
 
 		$data['name'] = $this->config->get('config_name');
 
+
+		// Убираем из индекска тестовый поддомен
+		$in_dev = strpos($_SERVER['HTTP_HOST'], 'develop');
+		if ($in_dev !== false || (isset($_POST['no_index']) && $_POST['no_index'])) $data['noindex'] = true;
+
+
 		$this->load->language('common/header');
 
 		$host = isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1')) ? HTTPS_SERVER : HTTP_SERVER;

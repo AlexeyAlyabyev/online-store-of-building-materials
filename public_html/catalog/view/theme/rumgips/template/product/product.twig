@@ -46,9 +46,10 @@
               {% endfor %}
             {% endif %}
 
-            {% if url_video %}
-              <iframe class="thumbnail swiper-slide" src="{{ url_video }}" width="100%" height="45%" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
-            {% endif %}
+            {# {% if url_video %}
+              <iframe class="thumbnail swiper-slide" src="{{ url_video }}" width="100%" height="45%" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" >
+              </iframe>
+            {% endif %} #}
 					</div>
 
 					{% if images or url_video  %}
@@ -66,11 +67,11 @@
 								<img class="swiper-slide" src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
 							{% endfor %}
 						{% endif %}
-            {% if url_video %}
+            {# {% if url_video %}
             <div class="swiper-slide swiper-slide-video">
               <img class="" width="100%" src="{{ url_video_preview }}" title="Превью видео ролика" alt="Превью видео ролика" />
             </div>
-						{% endif %}
+						{% endif %} #}
 					</div>
 					<div class="prev"></div>
 					<div class="next"></div>
@@ -109,16 +110,52 @@
 								{% endfor %}
 							{% endfor %}
 						{% endif %}
+            {% if length %}
+              <div class="attribute">
+                <p class="name">Длина</p>
+                <p class="value">{{ length }}</p>
+              </div>
+						{% endif %}
+            {% if width %}
+              <div class="attribute">
+                <p class="name">Ширина</p>
+                <p class="value">{{ width }}</p>
+              </div>
+						{% endif %}
+            {% if height %}
+              <div class="attribute">
+                <p class="name">Высота</p>
+                <p class="value">{{ height }}</p>
+              </div>
+						{% endif %}
+
+           {# Цвет товара: #}
+          {% if color_name > 1 %}
+           <div class="attribute">
+            <p class="name">{{ color_model }}</p>
+            <p class="value">{{ color_name }}</p>
+          </div>
+          {% endif %}
+
+
 					</div>
 
-					{# <div class="product_card_color_list">
+          {% if products_related_by_color.length > 1 %}
+					<div class="product_card_color_list">
 						<span class="product_card_color_radio__text">Цвет</span>
 						<div class="product_card_color-container">
-							<button class="product_card_color__item"></button>
-							<button class="product_card_color__item"></button>
-							<button class="product_card_color__item product_card_color__item--select"></button>
+            {% for related_color in products_related_by_color|sort((a, b) => a.color_value <=> b.color_value) %}
+              {% if related_color.href %}
+                <a  class="product_card_color__item" style="background-color: {{ related_color.color_value }}" href="{{ related_color.href }}"></a>
+              {% else %}
+                <div class="product_card_color__item product_card_color__item--select" style="background-color: {{ related_color.color_value }}"></div>
+              {% endif %}
+
+            {% endfor %}
 						</div>
-					</div> #}
+					</div>
+          {% endif %}
+
 
 					<div class="price_and_controls">
 						{% if price %}
@@ -154,6 +191,13 @@
 				</div>
 			</div>
 		</div>
+
+
+    {% if url_video %}
+    <div class="product_card__video">
+      <iframe class="" src="{{ url_video }}" width="560" height="315" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+    </div>
+    {% endif %}
 
     <p class="product_card__description">{{ description }}</p>
 

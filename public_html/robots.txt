@@ -10,6 +10,8 @@ Disallow: /catalog/controller
 Disallow: /catalog/language
 Disallow: /catalog/model
 Disallow: /download
+Disallow: /profil
+Disallow: /login
 Disallow: /system
 Disallow: /search
 Disallow: */storage/
@@ -44,5 +46,4 @@ Allow: *.woff
 Allow: *.woff2
 
 # При включенном SeoPro, раскомментировать строку Sitemap и подставить Ваш адрес сайта
-Host: https://develop.rumgips.ru
-Sitemap: https://develop.rumgips.ru/index.php?route=extension/feed/google_sitemap
+# Sitemap: https://site.com/sitemap.xml
