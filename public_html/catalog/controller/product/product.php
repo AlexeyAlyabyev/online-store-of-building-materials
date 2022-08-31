@@ -323,13 +323,18 @@ class ControllerProductProduct extends Controller {
         'color_value' => $product_info['color_value'],
       );
 
+
 			if ($product_info['image']) {
+
 				if (strpos($product_info['image'], ".webp") !== false || strpos($product_info['image'], ".avif") !== false) {
-					$data['thumb'] = "/image/".$product_info['image'];
+          $basename = basename($product_info['image'], ".webp").'-wm.webp';
+          $this->model_tool_image-> watermarkWebp (DIR_IMAGE.$product_info['image'], DIR_IMAGE.'watermark.png', DIR_IMAGE."wm/".$basename);
+          $data['thumb'] = "/image/wm/" . $basename;
 				}
 				else {
-          // $data['thumb'] = "/image/".$product_info['image'];
-					$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_height'));
+          // $data['thumb'] = $this->model_tool_image-> watermarkJpg (DIR_IMAGE.$product_info['image'], DIR_IMAGE.'watermark.png', 'image_with_watermark1.jpg');
+
+					$data['thumb'] = $this->model_tool_image-> resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_height'));
 				}
 			} else {
 				$data['thumb'] = '';
@@ -341,9 +346,15 @@ class ControllerProductProduct extends Controller {
 
 			foreach ($results as $result) {
 				if (strpos($result['image'], ".webp") !== false || strpos($result['image'], ".avif") !== false) {
+
+          $basename = basename($result['image'], ".webp").'-wm.webp';
+          $this->model_tool_image-> watermarkWebp (DIR_IMAGE.$result['image'], DIR_IMAGE.'watermark.png', DIR_IMAGE."wm/".$basename);
+          $data['thumb'] = "/image/wm/" . $basename;
+
 					$data['images'][] = array(
 						'popup' => "/image/".$result['image'],
-						'thumb' => "/image/".$result['image']
+						// 'thumb' => "/image/".$result['image']
+						'thumb' => "/image/wm/" . $basename
 					);
 				}
 				else {
