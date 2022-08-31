@@ -427,20 +427,34 @@ header .body .logo img {
     font-size: 14px;
   }
   header .body .online_catalog svg,
-  header .body .price_list svg {
+  header .body .price_list svg rect {
     transition: 0.3s;
   }
-  header .body .online_catalog:hover p,
-  header .body .price_list:hover p {
+  header .body .online_catalog:hover p {
     color: #f32b37;
   }
-  header .body .online_catalog:hover picture,
-  header .body .price_list:hover picture {
+  header .body .online_catalog:hover picture {
     background-color: #f32b37;
   }
-  header .body .online_catalog:hover svg path[fill='#0F111D'],
-  header .body .price_list:hover svg path[fill='#0F111D'] {
+  header .body .price_list span {
+    position: absolute;
+    margin: 4px 0px 0 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+  header .body .online_catalog:hover svg path[fill='#0F111D'] {
     fill: #fff;
+  }
+  header .body .price_list svg rect {
+    fill: #0f111d;
+  }
+  header .body .price_list:hover svg rect {
+    fill: #f32b37;
+  }
+  header .body .price_list:hover path {
+    transition: 0.3s;
+    fill: #f32b37;
   }
 }
 @media (min-width: 1230px) {
@@ -818,7 +832,7 @@ header .body .logo img {
     display: flex;
     align-items: center;
     position: relative;
-    width: 90%;
+    width: 98%;
   }
   .desktop_menu .search_and_cart .search input {
     width: 0%;
@@ -6082,6 +6096,13 @@ input[type='radio'].order-registration__free-shipping{
   background-color: #E6EBF0;
   opacity: 0;
   z-index: 9;
+}
+
+@media (min-width: 992px) {
+  .scroll-up {
+    width: 60px;
+    height: 60px;
+  }
 }
 
 .scroll-up:hover {
