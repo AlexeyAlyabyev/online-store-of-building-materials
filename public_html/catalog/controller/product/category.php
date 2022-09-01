@@ -218,7 +218,7 @@ class ControllerProductCategory extends Controller {
 				$data["total_products"] .= " товаров";
 
 			$results = $this->model_catalog_product->getProducts($filter_data);
-
+			// print_r($results);
 			foreach ($results as $result) {
 			// print_r($results['tag']);
 				if ($result['image']) {
