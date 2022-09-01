@@ -1183,14 +1183,15 @@ footer .additional .site_development {
 .popular_categories .body .item .info {
   width: calc(100% / 290 * 190);
   padding: 15px 0 15px 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 .popular_categories .body .item .info .name {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 10px;
+}
+.popular_categories .body .item .info .name span{
+	display: none;
+	text-transform: lowercase;
 }
 .popular_categories .body .item .info .total {
   font-size: 12px;

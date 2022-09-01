@@ -18,18 +18,33 @@ $(document).ready(function() {
 				lineNumbers: true,
 				theme: 'monokai'
 			},
-			fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '24', '30', '36', '48' , '64'],
+			fontSizes: ['12', '14', '16', '18', '20', '22', '24', '28', '32', '48', '64', '72', '96', '128'],
 			toolbar: [
-				['style', ['style']],
-				['font', ['bold', 'underline', 'clear']],
-				['fontname', ['fontname']],
-				['fontsize', ['fontsize']],
-				['color', ['color']],
-				['para', ['ul', 'ol', 'paragraph']],
-				['table', ['table']],
-				['insert', ['link', 'image', 'video']],
-				['view', ['fullscreen', 'codeview', 'help']]
+					['cleaner',['cleaner']], // The Button
+					['style',['style']],
+					['font',['bold','italic','underline','clear']],
+					['fontname',['fontname']],
+					['fontsize', ['fontsize']],
+					['color',['color']],
+					['para',['ul','ol','paragraph']],
+					['height',['height']],
+					['table',['table']],
+					['insert',['media','link','hr']],
+					['view',['fullscreen','codeview']]
 			],
+			cleaner: {
+					action: 'both',
+					icon: '<i class="note-icon">[Your Button]</i>',
+					keepHtml: true,
+					keepTagContents: ['span'], //Remove tags and keep the contents
+					badTags: ['applet', 'col', 'colgroup', 'embed', 'noframes', 'noscript', 'script', 'style', 'title', 'meta', 'link', 'head'], //Remove full tags with contents
+					badAttributes: ['bgcolor', 'border', 'height', 'cellpadding', 'cellspacing', 'lang', 'start', 'style', 'valign', 'width'],
+					limitChars: false,
+					limitDisplay: 'both',
+					limitStop: false,
+					notTimeOut: 850, //time before status message is hidden in miliseconds
+					imagePlaceholder: 'https://via.placeholder.com/200' // URL, or relative path to file.
+			},
 			popover: {
            		image: [
 					['custom', ['imageAttributes']],

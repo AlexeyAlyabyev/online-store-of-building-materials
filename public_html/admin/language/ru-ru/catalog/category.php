@@ -22,6 +22,8 @@ $_['column_action']          = 'Действие';
 
 // Entry
 $_['entry_name']             = 'Название категории';
+$_['entry_menu_name'] 	     = 'Название категории в меню';
+$_['entry_menu_name_addition'] = 'Дополнение к названию в меню';
 $_['entry_description']      = 'Описание';
 $_['entry_description_bottom']  = 'Описание Низ:';
 $_['entry_meta_title'] 	     = 'Мета-тег Title';

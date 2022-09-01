@@ -1182,3 +1182,6 @@ select, input[type="text"], input[type="password"], input[type="datetime"], inpu
 #attribute_values input{
 	width: 100%;
 }
+.img-thumbnail img{
+	max-width: 200px;
+}

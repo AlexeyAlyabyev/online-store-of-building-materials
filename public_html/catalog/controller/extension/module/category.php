@@ -24,13 +24,14 @@ class ControllerExtensionModuleCategory extends Controller {
 				else
 					$total .= " товаров";
 
-				$category['meta_h1'] ? $name = $category['meta_h1'] : $name = $category['name'];
+				$category['menu_name'] ? $name = $category['menu_name'] : $name = $category['name'];
 
 				$data['categories'][] = array(
-					'name'     	=> $name,
-					'total'			=> $total,
-					'href'     	=> $this->url->link('product/category', 'path=' . $category['category_id']),
-					'image'			=> "image/".$category['image']
+					'name'     			=> $name,
+					'name_addition' => $category['menu_name_addition'],
+					'total'					=> $total,
+					'href'     			=> $this->url->link('product/category', 'path=' . $category['category_id']),
+					'image'					=> "image/".$category['image']
 				);
 			}
 		}
