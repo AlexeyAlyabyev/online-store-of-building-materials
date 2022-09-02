@@ -26,10 +26,12 @@
 			</div>
 
 			<div class="sort_block">
-				<button id="dream_filter_toggler" class="filter_switcher">
-					<img src="/catalog/view/theme/rumgips/image/filter.svg" alt="Фильтр по товарам">
-					<p>Фильтры</p>
-				</button>
+				{% if column_left %}
+					<button id="dream_filter_toggler" class="filter_switcher">
+						<img src="/catalog/view/theme/rumgips/image/filter.svg" alt="Фильтр по товарам">
+						<p>Фильтры</p>
+					</button>
+				{% endif %}
 				<div class="sort">
 					<button>
 						<img src="/catalog/view/theme/rumgips/image/sort.svg" alt="Сортировка товаров">
@@ -55,10 +57,12 @@
 		</div>
 
 		<div class="body mb_adapt">
-			<div class="column_left">
-				{{ column_left }}
-			</div>
-			<div class="products_wrap {{ class }}">
+			{% if column_left %}
+				<div class="column_left">
+					{{ column_left }}
+				</div>
+			{% endif %}
+			<div class="products_wrap {{ class }}{% if not column_left %}full{% endif %}">
 				{# {{ content_top }} #}
 
 				<div class="control">
