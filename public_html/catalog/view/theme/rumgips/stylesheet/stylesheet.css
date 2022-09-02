@@ -239,7 +239,7 @@ footer .body .item.contacts .socials a svg path {
 header .body .telegram,
 header .body .order_call,
 header .body .online_catalog,
-header .body .price_list {
+header .body .main_cart {
   display: none;
 }
 
@@ -389,7 +389,7 @@ header .body .logo img {
     color: #f32b37;
   }
   header .body .online_catalog,
-  header .body .price_list {
+  header .body .main_cart {
     display: flex;
     gap: 10px;
     align-items: center;
@@ -399,15 +399,15 @@ header .body .logo img {
     width: calc(100% / 1200 * 160);
     border-right: 1px solid #e6ebf0;
   }
-  header .body .price_list {
+  header .body .main_cart {
     width: calc(100% / 1200 * 178);
   }
   header .body .online_catalog img,
-  header .body .price_list img {
+  header .body .main_cart img {
     width: 20px;
   }
   header .body .online_catalog picture,
-  header .body .price_list picture {
+  header .body .main_cart picture {
     width: 50px;
     height: 50px;
     border-radius: 120px;
@@ -418,11 +418,11 @@ header .body .logo img {
     transition: 0.3s;
   }
   header .body .online_catalog p,
-  header .body .price_list p {
+  header .body .main_cart p {
     font-size: 14px;
   }
   header .body .online_catalog svg,
-  header .body .price_list svg rect {
+  header .body .main_cart svg rect {
     transition: 0.3s;
   }
   header .body .online_catalog:hover p {
@@ -431,7 +431,7 @@ header .body .logo img {
   header .body .online_catalog:hover picture {
     background-color: #f32b37;
   }
-  header .body .price_list span {
+  header .body .main_cart span {
     position: absolute;
     margin: 4px 0px 0 0;
     font-size: 12px;
@@ -441,14 +441,14 @@ header .body .logo img {
   header .body .online_catalog:hover svg path[fill='#0F111D'] {
     fill: #fff;
   }
-  header .body .price_list svg rect {
+  header .body .main_cart svg rect {
     fill: #0f111d;
   }
-  header .body .price_list:hover svg rect {
+  header .body .main_cart:hover svg rect {
     fill: #f32b37;
   }
-  header .body .price_list:hover path {
-    transition: 0.3s;
+  header .body .main_cart:hover path {
+    /* transition: 0.3s; */
     fill: #f32b37;
   }
 }
@@ -3122,6 +3122,95 @@ footer .additional .site_development {
 .contacts-page__text {
   font-size: 16px;
   /* font-weight: 400; */
+}
+
+.about-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-us__title {
+  font-size: 32px;
+  line-height: 39px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .about-us__title {
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e6ebf0;
+  }
+}
+
+@media (min-width: 992px) {
+  .about-us__title {
+    padding-bottom: 40px;
+    margin-bottom: 45px;
+    border-bottom: none;
+  }
+}
+
+.about-us__wrapper {
+  background-color: #fff;
+  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.15);
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 70px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .about-us__wrapper {
+    padding: 40px 20px 60px 20px;
+  }
+}
+
+@media (min-width: 992px) {
+  .about-us__wrapper {
+    width: calc(100% - 30px);
+    padding: 40px 80px 60px 80px;
+    margin-bottom: 80px;
+    max-width: 990px;
+  }
+}
+
+.about-us__text {
+  display: block;
+  font-size: 16px;
+  line-height: 19px;
+  margin-bottom: 24px;
+}
+
+.about-us__list {
+  display: block;
+  font-size: 16px;
+  line-height: 19px;
+  margin-bottom: 24px;
+  list-style:disc;
+  padding-left: 20px;
+}
+
+.about-us__subheader {
+  display: block;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  margin-bottom: 24px;
+}
+
+.about-us__call-back {
+  border: none;
+  background: none;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 .button-call-back {

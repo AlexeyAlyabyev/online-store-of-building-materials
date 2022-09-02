@@ -177,7 +177,7 @@ var cart = {
 						// $('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
 						$(".mobile_menu .navigation .item.cart .quantity").html(json['total_short']);
 						// $(".desktop_menu .search_and_cart .cart span").html(json['total_short']);
-						$("header .body .price_list span").html(json['total_short']);
+						$("header .body .main_cart span").html(json['total_short']);
 					}, 100);
 
 					// $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -242,7 +242,7 @@ var cart = {
         setTimeout(function () {
           $(".mobile_menu .navigation .item.cart .quantity").html(json['total_short']);
           // $(".desktop_menu .search_and_cart .cart span").html(json['total_short']);
-          $("header .body .price_list span").html(json['total_short']);
+          $("header .body .main_cart span").html(json['total_short']);
 
           $(".checkout-cart__total-count").html(json["total_short_text"]);
           $(".checkout-cart__sub-total").html(json["initial_total"]);

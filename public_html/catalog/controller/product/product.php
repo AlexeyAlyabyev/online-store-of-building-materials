@@ -257,9 +257,12 @@ class ControllerProductProduct extends Controller {
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
 
-      $data['length'] = number_format($product_info['length']).' '.$this->length->getUnit($product_info['length_class_id']);
-      $data['width'] = number_format($product_info['width']).' '.$this->length->getUnit($product_info['length_class_id']);
-      $data['height'] = number_format($product_info['height']).' '.$this->length->getUnit($product_info['length_class_id']);
+      if (number_format($product_info['length']))
+        $data['length'] = number_format($product_info['length']).' '.$this->length->getUnit($product_info['length_class_id']);
+      if (number_format($product_info['width']))
+        $data['width'] = number_format($product_info['width']).' '.$this->length->getUnit($product_info['length_class_id']);
+      if (number_format($product_info['height']))
+        $data['height'] = number_format($product_info['height']).' '.$this->length->getUnit($product_info['length_class_id']);
 
       // print_r($data);
 
