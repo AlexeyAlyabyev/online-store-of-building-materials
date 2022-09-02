@@ -154,7 +154,7 @@ function cartUpdate(){
         setTimeout(function () {
           $(".mobile_menu .navigation .item.cart .quantity").html(json['total_short']);
           // $(".desktop_menu .search_and_cart .cart span").html(json['total_short']);
-          $("header .body .price_list span").html(json['total_short']);
+          $("header .body .main_cart span").html(json['total_short']);
 
 
           $(".checkout-cart__total-count").html(json["total_short_text"]);
