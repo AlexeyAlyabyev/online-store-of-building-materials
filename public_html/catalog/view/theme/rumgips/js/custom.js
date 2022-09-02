@@ -53,9 +53,9 @@ $(function(){
 	// });
 
   $(".desktop_menu .search_and_cart .search button").click(function(){
-		$(".desktop_menu .menu").addClass("hidden");
-		$(".desktop_menu .search_and_cart .search input").addClass("active");
-		$(".desktop_menu .search_and_cart").addClass("active");
+		$(".desktop_menu .menu").toggleClass("hidden");
+		$(".desktop_menu .search_and_cart .search input").toggleClass("active");
+		$(".desktop_menu .search_and_cart").toggleClass("active");
 		$(".desktop_menu .search_and_cart .search input").focus();
 	});
 
@@ -153,7 +153,9 @@ function cartUpdate(){
       if (json['success']) {
         setTimeout(function () {
           $(".mobile_menu .navigation .item.cart .quantity").html(json['total_short']);
-          $(".desktop_menu .search_and_cart .cart span").html(json['total_short']);
+          // $(".desktop_menu .search_and_cart .cart span").html(json['total_short']);
+          $("header .body .price_list span").html(json['total_short']);
+
 
           $(".checkout-cart__total-count").html(json["total_short_text"]);
 
