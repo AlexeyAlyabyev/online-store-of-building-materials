@@ -250,7 +250,6 @@ header .body .price_list {
 }
 
 header .body .logo img {
-  max-height: 35px;
   width: 187px;
 }
 
@@ -271,9 +270,6 @@ header .body .logo img {
     justify-content: center;
     align-items: center;
     border-right: 1px solid #e6ebf0;
-  }
-  header .body .logo img {
-    max-height: 35px;
   }
   header .body .contact_icons {
     width: calc(100% / 768 * 220);
@@ -307,7 +303,6 @@ header .body .logo img {
     justify-content: flex-start;
   }
   header .body .logo img {
-    /* height: 30px; */
     width: 210px;
   }
   header .body .contact_icons {
