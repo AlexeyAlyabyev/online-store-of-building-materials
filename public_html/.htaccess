@@ -9,6 +9,8 @@ Options +FollowSymlinks
 # Prevent Directory listing
 Options -Indexes
 
+AddDefaultCharset utf-8
+
 # Prevent Direct Access to files
 <FilesMatch "(?i)((\.tpl|\.twig|\.ini|\.log|(?<!robots)\.txt))">
  Require all denied

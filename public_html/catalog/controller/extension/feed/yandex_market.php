@@ -61,7 +61,8 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 
 			$currencies = $this->model_localisation_currency->getCurrencies();
 
-			$supported_currencies = array('RUR', 'RUB', 'USD', 'BYN', 'BYR', 'KZT', 'EUR', 'UAH');
+			// $supported_currencies = array('RUR', 'RUB', 'USD', 'BYN', 'BYR', 'KZT', 'EUR', 'UAH');
+			$supported_currencies = array('RUB');
 
 			$currencies = array_intersect_key($currencies, array_flip($supported_currencies));
 
@@ -147,12 +148,18 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 //				$data['barcode'] = $product['sku'];
 
 				if (!empty($product['image'])) {
-					$data['picture'] = $this->model_tool_image->resize($product['image'], $bus_image_width, $bus_image_height);
+					if (strpos($product['image'], ".webp") !== false || strpos($product['image'], ".avif") !== false)
+						$data['picture'] = HTTP_SERVER . "image/" . $product['image'];
+					else
+						$data['picture'] = $this->model_tool_image->resize($product['image'], $bus_image_width, $bus_image_height);
 				}
 
 				if (isset($product['images'])) {
 					foreach (explode(',', $product['images']) as $image) {
-						$data['picture'] .= ',' . $this->model_tool_image->resize($image, $bus_image_width, $bus_image_height);
+						if (strpos($image, ".webp") !== false || strpos($image, ".avif") !== false)
+							$data['picture'] .= ',' . HTTP_SERVER . "image/".$image;
+						else
+							$data['picture'] .= ',' . $this->model_tool_image->resize($image, $bus_image_width, $bus_image_height);
 					}
 				}
 /*
@@ -507,7 +514,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 			$to = array('&quot;', '&amp;', '&gt;', '&lt;', '&apos;');
 			$field = str_replace($from, $to, $field);
 			if ($key == 'description') {
-				$field = "<![CDATA[" . mb_substr($field, 0, 3000) . "]]>";
+				$field = mb_substr($field, 0, 3000);
 			}
 			if ($this->from_charset == 'windows-1251') {
 				$field = iconv($this->from_charset, 'windows-1251//TRANSLIT//IGNORE', $field);
