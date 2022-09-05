@@ -1185,3 +1185,9 @@ select, input[type="text"], input[type="password"], input[type="datetime"], inpu
 .img-thumbnail img{
 	max-width: 200px;
 }
+#header .navbar-right > li.refresh{
+	display: flex;
+	align-items: center;
+	padding: 0 10px;
+	height: 60px;
+}

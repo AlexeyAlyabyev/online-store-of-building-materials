@@ -86,6 +86,22 @@ class ControllerCommonHeader extends Controller {
 
 		$data['search'] = $this->load->controller('search/search');
 
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['refresh'] = $this->url->link('marketplace/modification/refresh', 'user_token=' . $this->session->data['user_token'] . $url, true);
+
 		return $this->load->view('common/header', $data);
 	}
 }
