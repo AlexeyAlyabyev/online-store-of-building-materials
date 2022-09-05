@@ -6523,3 +6523,76 @@ input[type='radio'].order-registration__free-shipping{
     line-height: 25px;
   }
 }
+
+.home_page_banner{
+	text-align: center;
+	margin: 0 0 20px 0;
+}
+.home_page_banner .wrapper{
+	background-image: url('../image/home_page_banner/background.webp');
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 95px 15px 40px 15px;
+}
+.home_page_banner img{
+	margin: 0 0 10px 0;
+}
+.home_page_banner .name{
+	margin: 0 0 30px 0;
+	font-weight: 600;
+	font-size: 20px;
+}
+.home_page_banner a{
+	font-weight: 600;
+	font-size: 16px;
+	background-color: #F32B37;
+	border: 1px solid #F32B37;
+	padding: 20px 52px;
+	border-radius: 120px;
+	color: #fff;
+	display: block;
+	width: fit-content;
+	margin: 0 auto;
+}
+.home_page_banner a:hover{
+	background-color: #fff;
+	color: inherit;
+}
+@media (min-width:480px){
+	.home_page_banner .wrapper{
+		background-image: url('../image/home_page_banner/background-768.webp');
+		background-position: center top;
+	}
+}
+@media (min-width: 768px){
+	.home_page_banners{
+		margin: 0 0 30px 0;
+	}
+	.home_page_banner .wrapper{
+		padding: 90px 15px 25px 15px;
+	}
+	.home_page_banner .name{
+		font-size: 32px;
+		margin: 0 0 20px 0;
+	}
+}
+@media (min-width: 992px){
+	.home_page_banners{
+		margin: 0 0 40px 0;
+	}
+	.home_page_banner .wrapper{
+		background-image: url('../image/home_page_banner/background-992.webp');
+		padding: 120px 15px 35px 15px;
+	}
+	.home_page_banner img{
+		height: 20px;
+		margin: 0 0 15px 0;
+	}
+	.home_page_banner .name{
+		font-weight: 700;
+		margin: 0 0 30px 0;
+	}
+	.home_page_banner a{
+		padding: 20px 60px;
+	}
+}
