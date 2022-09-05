@@ -1254,6 +1254,17 @@ class ControllerCatalogProduct extends Controller {
 			$data['length_class_id'] = $this->config->get('config_length_class_id');
 		}
 
+		$this->load->model('localisation/measure_class');
+
+		$data['measure_classes'] = $this->model_localisation_measure_class->getMeasureClasses();
+
+		if (isset($this->request->post['measure_class_id'])) {
+			$data['measure_class_id'] = $this->request->post['measure_class_id'];
+		} elseif (!empty($product_info)) {
+			$data['measure_class_id'] = $product_info['measure_class_id'];
+		} else {
+			$data['measure_class_id'] = NULL;
+		}
 
     $this->load->model('localisation/color_class');
 

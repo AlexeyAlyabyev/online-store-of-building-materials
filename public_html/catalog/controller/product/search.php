@@ -191,7 +191,10 @@ class ControllerProductSearch extends Controller {
 				else
 					$manufacturer_image = $this->model_catalog_product->getProduct($result['product_id'])['manufacturer_image'];
 
-
+					if (isset($result['measure_class']))
+						$measure = $result['measure_class'];
+					else
+						$measure = "";
 
 				$data['products'][] = array(
 					'product_id'  				=> $result['product_id'],
@@ -202,7 +205,8 @@ class ControllerProductSearch extends Controller {
 					'price'       				=> $price,
 					'special'     				=> $special,
 					'minimum'     				=> $result['minimum'] > 0 ? $result['minimum'] : 1,
-					'href'        				=> $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
+					'href'        				=> $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url),
+					'measure'							=> $measure
 				);
 			}
 

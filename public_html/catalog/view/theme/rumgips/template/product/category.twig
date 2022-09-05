@@ -139,9 +139,9 @@
 										{% if product.price %}
 											<p class="price">
 												{% if not product.special %}
-													{{ product.price }}
+													{{ product.price }}{% if product.measure %}/{{ product.measure }}{% endif %}
 												{% else %}
-													<span class="new">{{ product.special }}</span> <span class="old">{{ product.price }}</span>
+													<span class="new">{{ product.special }}{% if product.measure %}/{{ product.measure }}{% endif %}</span> <span class="old">{{ product.price }}{% if product.measure %}/{{ product.measure }}{% endif %}</span>
 												{% endif %}
 											</p>
 										{% endif %}

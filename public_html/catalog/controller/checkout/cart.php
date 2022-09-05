@@ -140,6 +140,11 @@ class ControllerCheckoutCart extends Controller {
 					}
 				}
 
+				if (isset($product['measure']))
+					$measure = $product['measure'];
+				else
+					$measure = "";
+
 				$data['products'][] = array(
 					'cart_id'       => $product['cart_id'],
 					'thumb'         => $image,
@@ -154,7 +159,8 @@ class ControllerCheckoutCart extends Controller {
 					'reward'        => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
 					'price'         => $price,
 					'total'         => $total,
-					'href'          => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+					'href'          => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+					'measure'				=> $measure
 				);
 			}
 

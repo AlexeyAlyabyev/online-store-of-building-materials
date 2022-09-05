@@ -135,6 +135,11 @@ class ControllerProductSpecial extends Controller {
 				$rating = false;
 			}
 
+			if (isset($result['measure_class']))
+				$measure = $result['measure_class'];
+			else
+				$measure = "";
+
 			$data['products'][] = array(
 				'product_id'  => $result['product_id'],
 				'thumb'       => $image,
@@ -145,7 +150,8 @@ class ControllerProductSpecial extends Controller {
 				'tax'         => $tax,
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 				'rating'      => $result['rating'],
-				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
+				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url),
+				'measure'							=> $measure
 			);
 		}
 

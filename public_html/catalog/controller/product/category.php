@@ -218,9 +218,8 @@ class ControllerProductCategory extends Controller {
 				$data["total_products"] .= " товаров";
 
 			$results = $this->model_catalog_product->getProducts($filter_data);
-			// print_r($results);
+
 			foreach ($results as $result) {
-			// print_r($results['tag']);
 				if ($result['image']) {
 					if (strpos($result['image'], ".webp") !== false || strpos($result['image'], ".avif") !== false)
 						$image = "/image/".$result['image'];
@@ -253,6 +252,11 @@ class ControllerProductCategory extends Controller {
 				else
 					$hit = true;
 
+				if (isset($result['measure_class']))
+					$measure = $result['measure_class'];
+				else
+					$measure = "";
+
 				$data['products'][] = array(
 					'product_id'  				=> $result['product_id'],
 					'thumb'       				=> $image,
@@ -263,7 +267,8 @@ class ControllerProductCategory extends Controller {
 					'special'     				=> $special,
 					'minimum'     				=> $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'href'        				=> $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url),
-					'hit'						=> $hit
+					'hit'									=> $hit,
+					'measure'							=> $measure
 				);
 			}
 

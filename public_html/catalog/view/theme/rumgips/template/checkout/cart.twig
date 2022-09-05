@@ -33,9 +33,9 @@
                 <a class="checkout-cart__item-title" href="{{ product.href }}">{{ product.name }}</a>
 
                 <div class="checkout-cart__price-container">
-                  <span class="checkout-cart__item-price">{{ product.price }}</span>
+                  <span class="checkout-cart__item-price">{{ product.price }}{% if product.measure %}/{{ product.measure }}{% endif %}</span>
                   <span class="checkout-cart__item-special-price {% if product.initial_price == product.price %} checkout-cart__item-price-view {% endif %}">
-                      {{ product.initial_price }} ₽</span>
+                      {{ product.initial_price }} ₽{% if product.measure %}/{{ product.measure }}{% endif %}</span>
                 </div>
 
                 <div class="checkout-cart__discount">{{ product.discount }} ₽</div>
@@ -209,7 +209,7 @@ $('.quantity_block .minus, .quantity_block .plus').on('click', function() {
                   <button type="submit" data-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
                   <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="cart.remove('{{ product.cart_id }}');"><i class="fa fa-times-circle"></i></button>
                   </span></div></td>
-              <td class="text-right">{{ product.price }}</td>
+              <td class="text-right">{{ product.price }}{% if product.measure %}/{{ product.measure }}{% endif %}</td>
               <td class="text-right">{{ product.total }}</td>
             </tr>
             {% endfor %}

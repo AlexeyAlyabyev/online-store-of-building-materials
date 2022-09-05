@@ -67,6 +67,7 @@ $_['entry_weight_class']     = 'Единица измерения веса';
 $_['entry_weight']           = 'Вес';
 $_['entry_dimension']        = 'Размеры (Д х Ш х В)';
 $_['entry_length_class']     = 'Единица измерения длины';
+$_['entry_measure_class']    = 'Ед. измерения товара';
 
 $_['entry_color_class']     = 'Единица измерения цвета';
 
