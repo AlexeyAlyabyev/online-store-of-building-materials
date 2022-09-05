@@ -65,18 +65,18 @@ class ControllerCommonHeader extends Controller {
 					'filter_sub_category' => true
 				);
 
-				$total = $this->model_catalog_product->getTotalProducts($filter);
-				// Правильные склонения для количества товаров
-				if (($total % 10) == 1 && ($total < 10 || $total > 20))
-					$total .= " товар";
-				elseif ((($total % 10) >= 2 && ($total % 10) < 5) && ($total < 10 || $total > 20))
-					$total .= " товара";
-				else
-					$total .= " товаров";
+				// $total = $this->model_catalog_product->getTotalProducts($filter);
+				// // Правильные склонения для количества товаров
+				// if (($total % 10) == 1 && ($total < 10 || $total > 20))
+				// 	$total .= " товар";
+				// elseif ((($total % 10) >= 2 && ($total % 10) < 5) && ($total < 10 || $total > 20))
+				// 	$total .= " товара";
+				// else
+				// 	$total .= " товаров";
 
 				$data['categories'][] = array(
 					'name'     	=> $category['name'],
-					'total'			=> $total,
+					// 'total'			=> $total,
 					'href'     	=> $this->url->link('product/category', 'path=' . $category['category_id']),
 					'image'			=> "image/".$category['image']
 				);

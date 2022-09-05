@@ -615,6 +615,14 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
+			if ($this->user->hasPermission('access', 'localisation/measure_class')) {
+				$localisation[] = array(
+					'name'	   => $this->language->get('text_measure_class'),
+					'href'     => $this->url->link('localisation/measure_class', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+			}
+
       // color product
       if ($this->user->hasPermission('access', 'localisation/color_class')) {
 				$localisation[] = array(

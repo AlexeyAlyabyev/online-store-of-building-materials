@@ -62,6 +62,7 @@ $_['entry_weight_class']     = 'Weight Class';
 $_['entry_weight']           = 'Weight';
 $_['entry_dimension']        = 'Dimensions (L x W x H)';
 $_['entry_length_class']     = 'Length Class';
+$_['entry_measure_class']    = 'Measure Class';
 $_['entry_length']           = 'Length';
 $_['entry_width']            = 'Width';
 $_['entry_height']           = 'Height';

@@ -236,6 +236,12 @@ class Cart {
 					$recurring = false;
 				}
 
+				
+				// print_r($product_query->row);
+
+				$measure = $this->db->query("SELECT * FROM ". DB_PREFIX . "measure_class WHERE measure_class_id = " . $product_query->row['measure_class_id']);
+				$measure = $measure->row['value'];
+
 				$product_data[] = array(
 					'cart_id'         => $cart['cart_id'],
 					'product_id'      => $product_query->row['product_id'],
@@ -263,7 +269,8 @@ class Cart {
 					'width'           => $product_query->row['width'],
 					'height'          => $product_query->row['height'],
 					'length_class_id' => $product_query->row['length_class_id'],
-					'recurring'       => $recurring
+					'recurring'       => $recurring,
+					'measure'					=> $measure
 				);
 			} else {
 				$this->remove($cart['cart_id']);
