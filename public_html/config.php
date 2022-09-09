@@ -1,6 +1,6 @@
 <?php
 // HTTP
-define('HTTP_SERVER', 'http://develop.rumgips.ru/');
+define('HTTP_SERVER', 'https://develop.rumgips.ru/');
 
 // HTTPS
 define('HTTPS_SERVER', 'https://develop.rumgips.ru/');

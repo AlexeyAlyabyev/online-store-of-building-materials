@@ -2858,6 +2858,14 @@ footer .additional .site_development {
   line-height: 17px;
   text-align: justify;
 }
+.product_card__description a{
+	text-decoration: underline;
+}
+@media (min-width: 992px){
+	.product_card__description{
+		font-size: 16px;
+	}
+}
 
 .product_card__video {
   text-align: center;

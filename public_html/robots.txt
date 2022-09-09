@@ -33,6 +33,7 @@ Disallow: /*?tracking=
 Disallow: /*&tracking=
 Disallow: /*&tag=*
 Disallow: /*?tag=*
+Disallow: /compare-products*
 Allow: *.css
 Allow: *.js
 Allow: *.jpg

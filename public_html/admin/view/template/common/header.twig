@@ -56,7 +56,6 @@
       {{ search }}
     </div>
     <ul class="nav navbar-nav navbar-right">
-			<li onclick="refresh_modification()" class="refresh"><button class="btn btn-info"><i class="fa fa-refresh"></i></button></li>
       <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="img-circle" />{{ firstname }} {{ lastname }} <i class="fa fa-caret-down fa-fw"></i></a>
         <ul class="dropdown-menu dropdown-menu-right">
           <li><a href="{{ profile }}"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a></li>
@@ -76,19 +75,3 @@
     </ul>
     {% endif %}</div>
 </header>
-<script>
-	function refresh_modification(){
-		let url = "{{ refresh }}".replace("amp;", "");
-		$.ajax({
-			method: "GET",
-			url: url,
-			success: function(){
-				let success_message = '<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i>Обновление модификаторов прошло успешно!<button type="button" class="close" data-dismiss="alert">&times;</button> </div>'
-				$(success_message).prependTo($("#content .container-fluid").eq(1));
-				setTimeout(function(){
-					$(".alert.alert-success").remove();
-				}, 3000);
-			},
-		});
-	}
-</script>

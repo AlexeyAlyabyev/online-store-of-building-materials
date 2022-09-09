@@ -5,7 +5,8 @@ class ControllerInformationContact extends Controller {
 	public function index() {
 		$this->load->language('information/contact');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle("Контакты компании RumGips");
+		$this->document->setDescription("Контакты Румгипс: Телефон - +7 (495) 023-72-00, e-mail - info@rumgips.ru, whatsapp - +7 (915) 159-88-77. Реквизиты.");
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$mail = new Mail($this->config->get('config_mail_engine'));

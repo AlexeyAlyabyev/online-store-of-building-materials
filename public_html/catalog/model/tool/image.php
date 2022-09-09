@@ -12,11 +12,11 @@ class ModelToolImage extends Model {
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
 			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
-
-			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) {
+				 
+			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
 				return DIR_IMAGE . $image_old;
 			}
-
+						
 			$path = '';
 
 			$directories = explode('/', dirname($image_new));
@@ -37,51 +37,13 @@ class ModelToolImage extends Model {
 				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
 			}
 		}
-
+		
 		$image_new = str_replace(' ', '%20', $image_new);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
-
+		
 		if ($this->request->server['HTTPS']) {
 			return $this->config->get('config_ssl') . 'image/' . $image_new;
 		} else {
 			return $this->config->get('config_url') . 'image/' . $image_new;
 		}
 	}
-
-  // public function watermarkJpg ($target, $wtrmrk_file, $newcopy) {
-  //     $watermark = imagecreatefrompng($wtrmrk_file);
-  //     // imagealphablending($watermark, false);
-  //     // imagesavealpha($watermark, true);
-  //     $img = imagecreatefromjpeg($target);
-  //     $img_w = imagesx($img);
-  //     $img_h = imagesy($img);
-  //     $wtrmrk_w = imagesx($watermark);
-  //     $wtrmrk_h = imagesy($watermark);
-  //     $dst_x = ($img_w / 2) - ($wtrmrk_w / 2); // For centering the watermark on any image
-  //     $dst_y = ($img_h / 2) - ($wtrmrk_h / 2); // For centering the watermark on any image
-  //     imagecopy($img, $watermark, $dst_x, $dst_y, 0, 0, $wtrmrk_w, $wtrmrk_h);
-  //     imagejpeg($img, $newcopy, 100);
-  //     imagedestroy($img);
-  //     imagedestroy($watermark);
-
-  //     return $newcopy;
-  // }
-
-  public function watermarkWebp ($target, $wtrmrk_file, $newcopy) {
-    $watermark = imagecreatefrompng($wtrmrk_file);
-    // imagealphablending($watermark, false);
-    // imagesavealpha($watermark, true);
-    $img = imagecreatefromwebp($target);
-    $img_w = imagesx($img);
-    $img_h = imagesy($img);
-    $wtrmrk_w = imagesx($watermark);
-    $wtrmrk_h = imagesy($watermark);
-    $dst_x = ($img_w / 2) - ($wtrmrk_w / 2); // For centering the watermark on any image
-    $dst_y = ($img_h / 2) - ($wtrmrk_h / 2); // For centering the watermark on any image
-    imagecopy($img, $watermark, $dst_x, $dst_y, 0, 0, $wtrmrk_w, $wtrmrk_h);
-    imagewebp($img, $newcopy, 100);
-    imagedestroy($img);
-    imagedestroy($watermark);
-
-    return $newcopy;
-}
 }
