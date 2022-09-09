@@ -302,30 +302,6 @@ class ControllerProductProduct extends Controller {
         $data['url_video_preview'] = $url_video_preview;
       }
 
-
-      $data ['color_class_id'] = $product_info['color_class_id'];
-
-			if ($product_info['color_class_id']) {
-				$data['color_class_id'] = $product_info['color_class_id'];
-			}
-
-      $related_colors = $this->model_catalog_product->getProductRelatedByColor($this->request->get['product_id']);
-
-			foreach ($related_colors as $related_color) {
-				// if (isset($related_color['color']) && $related_color['color'] !== "")
-				if (isset($related_color['color_class_id']) !== "")
-					$data['products_related_by_color'][] = array(
-            'color_name'  => $related_color['color_name'],
-            'color_value' => $related_color['color_value'],
-						'href' 	=> $this->url->link('product/product', 'product_id=' . $related_color['product_id']),
-					);
-			}
-
-      $data['products_related_by_color'][] = array(
-        'color_name'  => $product_info['color_name'],
-        'color_value' => $product_info['color_value'],
-      );
-
 			if ($product_info['image']) {
 				if (strpos($product_info['image'], ".webp") !== false || strpos($product_info['image'], ".avif") !== false) {
 					$data['thumb'] = "/image/".$product_info['image'];
@@ -420,9 +396,6 @@ class ControllerProductProduct extends Controller {
 			}
 
 			$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
-
-      $data['color_name'] = $product_info['color_name'];
-      $data['color_value'] = $product_info['color_value'];
 
 			$data['products'] = array();
 

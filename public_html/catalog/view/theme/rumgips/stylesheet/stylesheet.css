@@ -2824,33 +2824,6 @@ footer .additional .site_development {
   stroke: #0f111d;
 }
 
-.product_card_color_list {
-  margin-bottom: 30px;
-}
-
-.product_card_color_radio__text {
-  display: block;
-  font-size: 16px;
-  line-height: 19px;
-  margin-bottom: 10px;
-}
-.product_card_color-container {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-.product_card_color__item {
-  width: 25px;
-  height: 25px;
-  border: 1px solid #a7aabb;
-  border-radius: 50%;
-}
-
-.product_card_color__item--select {
-  outline: 1px solid #a7aabb;
-  outline-offset: 4px;
-}
-
 .product_card__description {
   /* display: block; */
   margin-top: 30px;

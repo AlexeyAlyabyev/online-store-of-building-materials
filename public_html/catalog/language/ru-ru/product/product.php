@@ -7,7 +7,6 @@ $_['text_search']              = 'Поиск';
 $_['text_brand']               = 'Производитель';
 $_['text_manufacturer']        = 'Производитель:';
 $_['text_model']               = 'Код Товара:';
-$_['color_model']              = 'Цвет';
 $_['text_reward']              = 'Бонусные баллы:';
 $_['text_points']              = 'Цена в бонусных баллах:';
 $_['text_stock']               = 'Наличие';
