@@ -264,9 +264,7 @@ class ControllerProductProduct extends Controller {
       if (number_format($product_info['height']))
         $data['height'] = number_format($product_info['height']).' '.$this->length->getUnit($product_info['length_class_id']);
 
-
-			if (isset($product_info['measure_class']))
-				$data['measure'] = $product_info['measure_class'];
+      // print_r($data);
 
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
@@ -328,19 +326,13 @@ class ControllerProductProduct extends Controller {
         'color_value' => $product_info['color_value'],
       );
 
-
 			if ($product_info['image']) {
-
 				if (strpos($product_info['image'], ".webp") !== false || strpos($product_info['image'], ".avif") !== false) {
-          // $basename = basename($product_info['image'], ".webp").'-wm.webp';
-          // $this->model_tool_image-> watermarkWebp (DIR_IMAGE.$product_info['image'], DIR_IMAGE.'watermark.png', DIR_IMAGE."wm/".$basename);
-          // $data['thumb'] = "/image/wm/" . $basename;
-          $data['thumb'] = "/image/" . $product_info['image'];
+					$data['thumb'] = "/image/".$product_info['image'];
 				}
 				else {
-          // $data['thumb'] = $this->model_tool_image-> watermarkJpg (DIR_IMAGE.$product_info['image'], DIR_IMAGE.'watermark.png', 'image_with_watermark1.jpg');
-
-					$data['thumb'] = $this->model_tool_image-> resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_height'));
+          // $data['thumb'] = "/image/".$product_info['image'];
+					$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_height'));
 				}
 			} else {
 				$data['thumb'] = '';
@@ -352,16 +344,9 @@ class ControllerProductProduct extends Controller {
 
 			foreach ($results as $result) {
 				if (strpos($result['image'], ".webp") !== false || strpos($result['image'], ".avif") !== false) {
-
-          // $basename = basename($result['image'], ".webp").'-wm.webp';
-          // $this->model_tool_image-> watermarkWebp (DIR_IMAGE.$result['image'], DIR_IMAGE.'watermark.png', DIR_IMAGE."wm/".$basename);
-          // $data['thumb'] = "/image/wm/" . $basename;
-          $data['thumb'] = "/image/" . $result['image'];
-
 					$data['images'][] = array(
 						'popup' => "/image/".$result['image'],
 						'thumb' => "/image/".$result['image']
-						// 'thumb' => "/image/wm/" . $basename
 					);
 				}
 				else {
@@ -487,11 +472,6 @@ class ControllerProductProduct extends Controller {
 					$rating = false;
 				}
 
-				if (isset($result['measure_class']))
-					$measure = $result['measure_class'];
-				else
-					$measure = "";
-
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
@@ -502,8 +482,7 @@ class ControllerProductProduct extends Controller {
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
-					'measure'			=> $measure
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}
 

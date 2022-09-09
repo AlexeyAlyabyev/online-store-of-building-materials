@@ -424,7 +424,7 @@ class ControllerSettingSetting extends Controller {
 		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
 
 
-  //  //color
+   //color
   //  if (isset($this->request->post['config_color_class_id'])) {
   //   $data['config_color_class_id'] = $this->request->post['config_color_class_id'];
   // } else {

@@ -7,12 +7,12 @@ class ControllerProductSpecial extends Controller {
 
 		$this->load->model('tool/image');
 
-        if ($this->config->get('config_noindex_disallow_params')) {
-            $params = explode ("\r\n", $this->config->get('config_noindex_disallow_params'));
-            if(!empty($params)) {
-                $disallow_params = $params;
-            }
-        }
+		if ($this->config->get('config_noindex_disallow_params')) {
+				$params = explode ("\r\n", $this->config->get('config_noindex_disallow_params'));
+				if(!empty($params)) {
+						$disallow_params = $params;
+				}
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -50,7 +50,8 @@ class ControllerProductSpecial extends Controller {
 			$limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
 		}
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle("Акции и скидки на товары для гипсокартона. Время акций ограничено!");
+		$this->document->setDescription("Товары по акциям и скидкам. Все необходимое для монтажа ГКЛ. Спешите купить!");
 
 		$data['breadcrumbs'] = array();
 
