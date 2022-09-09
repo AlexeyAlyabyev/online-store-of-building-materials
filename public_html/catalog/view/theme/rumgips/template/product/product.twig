@@ -128,33 +128,7 @@
                 <p class="value">{{ height }}</p>
               </div>
 						{% endif %}
-
-					{# Цвет товара: #}
-          {% if color_name %}
-						<div class="attribute">
-							<p class="name">{{ color_model }}</p>
-							<p class="value">{{ color_name }}</p>
-						</div>
-          {% endif %}
-
-
 					</div>
-
-          {% if products_related_by_color|length > 1 %}
-						<div class="product_card_color_list">
-							<span class="product_card_color_radio__text">Цвет</span>
-							<div class="product_card_color-container">
-								{% for related_color in products_related_by_color|sort((a, b) => a.color_value <=> b.color_value) %}
-									{% if related_color.href %}
-										<a  class="product_card_color__item" style="background-color: {{ related_color.color_value }}" href="{{ related_color.href }}"></a>
-									{% else %}
-										<div class="product_card_color__item product_card_color__item--select" style="background-color: {{ related_color.color_value }}"></div>
-									{% endif %}
-								{% endfor %}
-							</div>
-						</div>
-          {% endif %}
-
 
 					<div class="price_and_controls">
 						{% if price %}

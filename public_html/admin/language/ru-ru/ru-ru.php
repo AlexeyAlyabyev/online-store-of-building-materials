@@ -123,7 +123,6 @@ $_['tab_ftp']                       = 'FTP';
 $_['tab_ip']                        = 'IP адрес';
 $_['tab_links']                     = 'Связи';
 $_['tab_log']                       = 'Лог';
-$_['tab_color']                     = 'Цвет';
 $_['tab_image']                     = 'Фото / Видео';
 $_['tab_option']                    = 'Опции';
 $_['tab_server']                    = 'Сервер';

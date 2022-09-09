@@ -623,15 +623,6 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
-      // color product
-      if ($this->user->hasPermission('access', 'localisation/color_class')) {
-				$localisation[] = array(
-					'name'	   => $this->language->get('text_color_class'),
-					'href'     => $this->url->link('localisation/color_class', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
-
 			if ($this->user->hasPermission('access', 'localisation/weight_class')) {
 				$localisation[] = array(
 					'name'	   => $this->language->get('text_weight_class'),
