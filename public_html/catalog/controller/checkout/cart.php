@@ -105,6 +105,15 @@ class ControllerCheckoutCart extends Controller {
 						'name'  => $option['name'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
 					);
+					$product['name'] .= " " . (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value);
+					if (isset($option['product_option_value_image']) && $option['product_option_value_image'] != "") {
+						if (strpos($option['product_option_value_image'], ".webp") !== false || strpos($option['product_option_value_image'], ".avif") !== false) {
+							$image = "/image/".$option['product_option_value_image'];
+						}
+						else {
+							$image = $this->model_tool_image->resize($option['product_option_value_image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+						}
+					}
 				}
 
 				// Display prices

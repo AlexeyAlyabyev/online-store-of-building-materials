@@ -1393,17 +1393,32 @@ class ControllerCatalogProduct extends Controller {
 
 			if (isset($product_option['product_option_value'])) {
 				foreach ($product_option['product_option_value'] as $product_option_value) {
+
+					$this->load->model('tool/image');
+					if (!empty($product_option_value) && is_file(DIR_IMAGE . $product_option_value['image'])) {
+						if (strpos($product_option_value['image'], ".webp") !== false || strpos($product_option_value['image'], ".avif") !== false)
+							$option_thumb = "/image/" . $product_option_value['image'];
+						else
+							$option_thumb = $this->model_tool_image->resize($product_option_value['image'], 100, 100);
+					} else {
+						$option_thumb = $this->model_tool_image->resize('no_image.png', 100, 100);
+					}
+
 					$product_option_value_data[] = array(
-						'product_option_value_id' => $product_option_value['product_option_value_id'],
-						'option_value_id'         => $product_option_value['option_value_id'],
-						'quantity'                => $product_option_value['quantity'],
-						'subtract'                => $product_option_value['subtract'],
-						'price'                   => $product_option_value['price'],
-						'price_prefix'            => $product_option_value['price_prefix'],
-						'points'                  => $product_option_value['points'],
-						'points_prefix'           => $product_option_value['points_prefix'],
-						'weight'                  => $product_option_value['weight'],
-						'weight_prefix'           => $product_option_value['weight_prefix']
+						'product_option_value_id' 		=> $product_option_value['product_option_value_id'],
+						'option_value_id'         		=> $product_option_value['option_value_id'],
+						'quantity'                		=> $product_option_value['quantity'],
+						'subtract'                		=> $product_option_value['subtract'],
+						'price'                   		=> $product_option_value['price'],
+						'price_prefix'            		=> $product_option_value['price_prefix'],
+						'points'                  		=> $product_option_value['points'],
+						'points_prefix'           		=> $product_option_value['points_prefix'],
+						'weight'                  		=> $product_option_value['weight'],
+						'weight_prefix'           		=> $product_option_value['weight_prefix'],
+						'image'           						=> $product_option_value['image'],
+						'thumb'           						=> $option_thumb,
+						'product_option_value_1c_id'  => $product_option_value['product_option_value_1c_id'],
+						'product_option_sort_order'  	=> $product_option_value['product_option_sort_order']
 					);
 				}
 			}

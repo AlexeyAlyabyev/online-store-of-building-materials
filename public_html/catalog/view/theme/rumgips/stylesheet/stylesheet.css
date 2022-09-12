@@ -2571,6 +2571,7 @@ footer .additional .site_development {
   border-bottom: 1px solid #e6ebf0;
   line-height: 17px;
   font-size: 14px;
+	gap: 5px;
 }
 /* .product_card .info .attributes .attribute:not(:first-of-type){
 
@@ -2578,6 +2579,46 @@ footer .additional .site_development {
 .product_card .info .attributes .attribute .name {
   color: #a7aabb;
 }
+
+.product_card .info .options{
+	margin: 0 0 15px 0;
+}
+.product_card .info .options h3{
+	margin: 0 0 10px 0;
+}
+.product_card .info .options .option_images{
+	display: flex;
+	gap: 10px;
+}
+.product_card .info .options .option_images label{
+	width: calc((100% - 30px) / 4);
+}
+.product_card .info .options .option_images label.active img{
+	border-color: #0f111d;
+}
+.product_card .info .options .option_images label input{
+	display: none;
+}
+.product_card .info .options .option_images label img{
+	width: 100%;
+	border: 1px solid #e6ebf0;
+	border-radius: 5px;
+	transition: .3s;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+}
+.product_card .info .options .option_images label:hover img{
+	border-color: #0f111d;
+}
+@media (min-width: 768px){
+	.product_card .info .options{
+		margin: 0 0 28px 0;
+	}
+	.product_card .info .options .option_images label p{
+		font-size: 14px;
+	}
+}
+
 .product_card .info .price_and_controls {
   display: flex;
   flex-wrap: wrap;
