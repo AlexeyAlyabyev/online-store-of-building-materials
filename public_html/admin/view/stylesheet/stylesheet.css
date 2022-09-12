@@ -1185,3 +1185,6 @@ select, input[type="text"], input[type="password"], input[type="datetime"], inpu
 .img-thumbnail img{
 	max-width: 200px;
 }
+#tab-option .img-thumbnail img{
+	max-width: 100px;
+}

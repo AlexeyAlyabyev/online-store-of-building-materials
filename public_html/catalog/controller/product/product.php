@@ -347,40 +347,80 @@ class ControllerProductProduct extends Controller {
 				$tax_price = (float)$product_info['price'];
 			}
 
-			// $data['options'] = array();
+			$data['options'] = array();
 
-			// foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
-			// 	$product_option_value_data = array();
+			$this->load->model('tool/image');
 
-			// 	foreach ($option['product_option_value'] as $option_value) {
-			// 		if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
-			// 			if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
-			// 				$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
-			// 			} else {
-			// 				$price = false;
-			// 			}
+			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
+				$product_option_value_data = array();
 
-			// 			$product_option_value_data[] = array(
-			// 				'product_option_value_id' => $option_value['product_option_value_id'],
-			// 				'option_value_id'         => $option_value['option_value_id'],
-			// 				'name'                    => $option_value['name'],
-			// 				'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
-			// 				'price'                   => $price,
-			// 				'price_prefix'            => $option_value['price_prefix']
-			// 			);
-			// 		}
-			// 	}
+				$product_option_has_image = false;
 
-			// 	$data['options'][] = array(
-			// 		'product_option_id'    => $option['product_option_id'],
-			// 		'product_option_value' => $product_option_value_data,
-			// 		'option_id'            => $option['option_id'],
-			// 		'name'                 => $option['name'],
-			// 		'type'                 => $option['type'],
-			// 		'value'                => $option['value'],
-			// 		'required'             => $option['required']
-			// 	);
-			// }
+				foreach ($option['product_option_value'] as $option_value) {
+					if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
+
+						if (!is_null($product_info['special']) && (float)$product_info['special'] >= 0){
+							$special = $product_info['special'] + ((int)($option_value['price_prefix']."1") * $option_value['price']);
+
+							if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$special) {
+								$special = $this->currency->format($this->tax->calculate($special, $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
+							} else {
+								$special = false;
+							}
+						}
+						else
+							$special = "";
+
+						$option_price = $product_info['price'] + ((int)($option_value['price_prefix']."1") * $option_value['price']);
+
+						if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_price) {
+							$option_price = $this->currency->format($this->tax->calculate($option_price, $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
+						} else {
+							$option_price = false;
+						}
+
+						if (isset($option_value['option_value_image']) && $option_value['option_value_image'] !== ""){
+							if (!empty($option_value) && is_file(DIR_IMAGE . $option_value['option_value_image'])) {
+								if (strpos($option_value['option_value_image'], ".webp") !== false || strpos($option_value['option_value_image'], ".avif") !== false)
+									$option_thumb = "/image/" . $option_value['option_value_image'];
+								else
+									$option_thumb = $this->model_tool_image->resize($option_value['option_value_image'], 200, 200);
+							} else {
+								$option_thumb = $this->model_tool_image->resize('no_image.png', 100, 100);
+							}
+							$product_option_has_image = true;
+							$full_size_image = "/image/" . $option_value['option_value_image'];
+						} else {
+							$option_thumb = "";
+							$full_size_image = "";
+						}
+
+						$product_option_value_data[] = array(
+							'product_option_value_id' => $option_value['product_option_value_id'],
+							'option_value_id'         => $option_value['option_value_id'],
+							'name'                    => $option_value['name'],
+							'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
+							'price'                   => $option_price,
+							'special'      						=> $special,
+							'price_prefix'            => $option_value['price_prefix'],
+							'option_value_image'      => $option_thumb,
+							'full_size_image'      		=> $full_size_image,
+						);
+					}
+				}
+
+				$data['options'][] = array(
+					'product_option_id'    => $option['product_option_id'],
+					'product_option_value' => $product_option_value_data,
+					'option_id'            => $option['option_id'],
+					'name'                 => $option['name'],
+					'type'                 => $option['type'],
+					'value'                => $option['value'],
+					'required'             => $option['required'],
+					'has_image'						 => $product_option_has_image
+				);
+			}
+			// print_r($data['options']);
 
 			if ($product_info['minimum']) {
 				$data['minimum'] = $product_info['minimum'];

@@ -41,6 +41,9 @@ class Cart {
 			$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_store p2s LEFT JOIN " . DB_PREFIX . "product p ON (p2s.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND p2s.product_id = '" . (int)$cart['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.date_available <= NOW() AND p.status = '1'");
 
 			if ($product_query->num_rows && ($cart['quantity'] > 0)) {
+				$price = $product_query->row['price'];
+				$initial_price = round($price);
+
 				$option_price = 0;
 				$option_points = 0;
 				$option_weight = 0;
@@ -52,7 +55,7 @@ class Cart {
 
 					if ($option_query->num_rows) {
 						if ($option_query->row['type'] == 'select' || $option_query->row['type'] == 'radio') {
-							$option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$value . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+							$option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix, pov.product_option_value_image  FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$value . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 							if ($option_value_query->num_rows) {
 								if ($option_value_query->row['price_prefix'] == '+') {
@@ -77,27 +80,30 @@ class Cart {
 									$stock = false;
 								}
 
+								$initial_price = $initial_price + ((int)($option_value_query->row['price_prefix']."1") * $option_value_query->row['price']);
+
 								$option_data[] = array(
-									'product_option_id'       => $product_option_id,
-									'product_option_value_id' => $value,
-									'option_id'               => $option_query->row['option_id'],
-									'option_value_id'         => $option_value_query->row['option_value_id'],
-									'name'                    => $option_query->row['name'],
-									'value'                   => $option_value_query->row['name'],
-									'type'                    => $option_query->row['type'],
-									'quantity'                => $option_value_query->row['quantity'],
-									'subtract'                => $option_value_query->row['subtract'],
-									'price'                   => $option_value_query->row['price'],
-									'price_prefix'            => $option_value_query->row['price_prefix'],
-									'points'                  => $option_value_query->row['points'],
-									'points_prefix'           => $option_value_query->row['points_prefix'],
-									'weight'                  => $option_value_query->row['weight'],
-									'weight_prefix'           => $option_value_query->row['weight_prefix']
+									'product_option_id'       		=> $product_option_id,
+									'product_option_value_id' 		=> $value,
+									'option_id'               		=> $option_query->row['option_id'],
+									'option_value_id'         		=> $option_value_query->row['option_value_id'],
+									'name'                    		=> $option_query->row['name'],
+									'value'                   		=> $option_value_query->row['name'],
+									'type'                    		=> $option_query->row['type'],
+									'quantity'                		=> $option_value_query->row['quantity'],
+									'subtract'                		=> $option_value_query->row['subtract'],
+									'price'                   		=> $option_value_query->row['price'],
+									'price_prefix'            		=> $option_value_query->row['price_prefix'],
+									'points'                  		=> $option_value_query->row['points'],
+									'points_prefix'           		=> $option_value_query->row['points_prefix'],
+									'weight'                  		=> $option_value_query->row['weight'],
+									'weight_prefix'           		=> $option_value_query->row['weight_prefix'],
+									'product_option_value_image'  => $option_value_query->row['product_option_value_image']
 								);
 							}
 						} elseif ($option_query->row['type'] == 'checkbox' && is_array($value)) {
 							foreach ($value as $product_option_value_id) {
-								$option_value_query = $this->db->query("SELECT pov.option_value_id, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix, ovd.name FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (pov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$product_option_value_id . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+								$option_value_query = $this->db->query("SELECT pov.option_value_id, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix, pov.product_option_value_image, ovd.name FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (pov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$product_option_value_id . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 								if ($option_value_query->num_rows) {
 									if ($option_value_query->row['price_prefix'] == '+') {
@@ -123,48 +129,47 @@ class Cart {
 									}
 
 									$option_data[] = array(
-										'product_option_id'       => $product_option_id,
-										'product_option_value_id' => $product_option_value_id,
-										'option_id'               => $option_query->row['option_id'],
-										'option_value_id'         => $option_value_query->row['option_value_id'],
-										'name'                    => $option_query->row['name'],
-										'value'                   => $option_value_query->row['name'],
-										'type'                    => $option_query->row['type'],
-										'quantity'                => $option_value_query->row['quantity'],
-										'subtract'                => $option_value_query->row['subtract'],
-										'price'                   => $option_value_query->row['price'],
-										'price_prefix'            => $option_value_query->row['price_prefix'],
-										'points'                  => $option_value_query->row['points'],
-										'points_prefix'           => $option_value_query->row['points_prefix'],
-										'weight'                  => $option_value_query->row['weight'],
-										'weight_prefix'           => $option_value_query->row['weight_prefix']
+										'product_option_id'       		=> $product_option_id,
+										'product_option_value_id' 		=> $product_option_value_id,
+										'option_id'               		=> $option_query->row['option_id'],
+										'option_value_id'         		=> $option_value_query->row['option_value_id'],
+										'name'                    		=> $option_query->row['name'],
+										'value'                   		=> $option_value_query->row['name'],
+										'type'                    		=> $option_query->row['type'],
+										'quantity'                		=> $option_value_query->row['quantity'],
+										'subtract'                		=> $option_value_query->row['subtract'],
+										'price'                   		=> $option_value_query->row['price'],
+										'price_prefix'            		=> $option_value_query->row['price_prefix'],
+										'points'                  		=> $option_value_query->row['points'],
+										'points_prefix'           		=> $option_value_query->row['points_prefix'],
+										'weight'                  		=> $option_value_query->row['weight'],
+										'weight_prefix'           		=> $option_value_query->row['weight_prefix'],
+										'product_option_value_image'  => $option_value_query->row['product_option_value_image']
 									);
 								}
 							}
 						} elseif ($option_query->row['type'] == 'text' || $option_query->row['type'] == 'textarea' || $option_query->row['type'] == 'file' || $option_query->row['type'] == 'date' || $option_query->row['type'] == 'datetime' || $option_query->row['type'] == 'time') {
 							$option_data[] = array(
-								'product_option_id'       => $product_option_id,
-								'product_option_value_id' => '',
-								'option_id'               => $option_query->row['option_id'],
-								'option_value_id'         => '',
-								'name'                    => $option_query->row['name'],
-								'value'                   => $value,
-								'type'                    => $option_query->row['type'],
-								'quantity'                => '',
-								'subtract'                => '',
-								'price'                   => '',
-								'price_prefix'            => '',
-								'points'                  => '',
-								'points_prefix'           => '',
-								'weight'                  => '',
-								'weight_prefix'           => ''
+								'product_option_id'       		=> $product_option_id,
+								'product_option_value_id' 		=> '',
+								'option_id'               		=> $option_query->row['option_id'],
+								'option_value_id'         		=> '',
+								'name'                    		=> $option_query->row['name'],
+								'value'                   		=> $value,
+								'type'                    		=> $option_query->row['type'],
+								'quantity'                		=> '',
+								'subtract'                		=> '',
+								'price'                   		=> '',
+								'price_prefix'            		=> '',
+								'points'                  		=> '',
+								'points_prefix'           		=> '',
+								'weight'                  		=> '',
+								'weight_prefix'           		=> '',
+								'product_option_value_image'  => ''
 							);
 						}
 					}
 				}
-
-				$price = $product_query->row['price'];
-				$initial_price = round($price);
 
 				// Product Discounts
 				$discount_quantity = 0;
@@ -240,7 +245,10 @@ class Cart {
 				// print_r($product_query->row);
 
 				$measure = $this->db->query("SELECT * FROM ". DB_PREFIX . "measure_class WHERE measure_class_id = " . $product_query->row['measure_class_id']);
-				$measure = $measure->row['value'];
+				if (isset($measure->row['value']))
+					$measure = $measure->row['value'];
+				else
+					$measure = "";
 
 				$product_data[] = array(
 					'cart_id'         => $cart['cart_id'],
