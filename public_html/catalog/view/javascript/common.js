@@ -178,7 +178,7 @@ var cart = {
 						// $('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
 						$(".mobile_menu .navigation .item.cart .quantity").html(json['total_short']);
 						// $(".desktop_menu .search_and_cart .cart span").html(json['total_short']);
-            $("header .body .main-cart span").html(json['total_short']);
+            $("header .body .main_cart span").html(json['total_short']);
 					}, 100);
 
 
