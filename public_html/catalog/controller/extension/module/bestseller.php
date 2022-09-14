@@ -68,6 +68,7 @@ class ControllerExtensionModuleBestSeller extends Controller {
 					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
 					'price'       => $price,
 					'special'     => $special,
+					'minimum'			=> $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'tax'         => $tax,
 					'rating'      => $rating,
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),

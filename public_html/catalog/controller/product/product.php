@@ -257,12 +257,24 @@ class ControllerProductProduct extends Controller {
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
 
-      if (number_format($product_info['length']))
-        $data['length'] = number_format($product_info['length']).' '.$this->length->getUnit($product_info['length_class_id']);
-      if (number_format($product_info['width']))
-        $data['width'] = number_format($product_info['width']).' '.$this->length->getUnit($product_info['length_class_id']);
-      if (number_format($product_info['height']))
-        $data['height'] = number_format($product_info['height']).' '.$this->length->getUnit($product_info['length_class_id']);
+      if (number_format($product_info['length'])){
+				if ($product_info['length'] - floor($product_info['length']))
+					$data['length'] = number_format($product_info['length'], 2, '.', '').' '.$this->length->getUnit($product_info['length_class_id']);
+				else
+					$data['length'] = number_format($product_info['length'], 0, '.', '').' '.$this->length->getUnit($product_info['length_class_id']);
+			}
+      if (number_format($product_info['width'])){
+				if ($product_info['width'] - floor($product_info['width']))
+					$data['width'] = number_format($product_info['width'], 2, '.', '').' '.$this->length->getUnit($product_info['length_class_id']);
+				else
+					$data['width'] = number_format($product_info['width'], 0, '.', '').' '.$this->length->getUnit($product_info['length_class_id']);
+			}
+      if (number_format($product_info['height'])){
+				if ($product_info['height'] - floor($product_info['height']))
+					$data['height'] = number_format($product_info['height'], 2, '.', '').' '.$this->length->getUnit($product_info['length_class_id']);
+				else
+					$data['height'] = number_format($product_info['height'], 0, '.', '').' '.$this->length->getUnit($product_info['length_class_id']);
+			}
 
       // print_r($data);
 
@@ -332,7 +344,6 @@ class ControllerProductProduct extends Controller {
 					);
 				}
 			}
-
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 			} else {
@@ -346,6 +357,11 @@ class ControllerProductProduct extends Controller {
 				$data['special'] = false;
 				$tax_price = (float)$product_info['price'];
 			}
+
+			if (isset($product_info['measure_class']))
+				$data['measure'] = $product_info['measure_class'];
+			else
+				$data['measure'] = "";
 
 			$data['options'] = array();
 
@@ -485,6 +501,11 @@ class ControllerProductProduct extends Controller {
 					$rating = false;
 				}
 
+				if (isset($result['measure_class']))
+					$measure = $result['measure_class'];
+				else
+					$measure = "";
+
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
@@ -495,7 +516,8 @@ class ControllerProductProduct extends Controller {
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'measure'							=> $measure
 				);
 			}
 
