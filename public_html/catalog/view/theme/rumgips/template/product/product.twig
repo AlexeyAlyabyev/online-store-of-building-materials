@@ -251,10 +251,10 @@
 						{% if price %}
 							<div class="price">
 								{% if not special %}
-									<p>{{ price }}</p>
+									<p>{{ price }}{% if measure %}/{{ measure }}{% endif %}</p>
 								{% else %}
-									<span>{{ price }}</span>
-									<p>{{ special }}</p>
+									<span>{{ price }}{% if measure %}/{{ measure }}{% endif %}</span>
+									<p>{{ special }}{% if measure %}/{{ measure }}{% endif %}</p>
 								{% endif %}
 							</div>
 						{% endif %}
@@ -319,10 +319,10 @@
 
               <div class="recommended-product__price-container">
                 {% if not product.special %}
-                  <p class="recommended-product__new-price">{{ product.price }}</p>
+                  <p class="recommended-product__new-price">{{ product.price }}{% if product.measure %}/{{ product.measure }}{% endif %}</p>
                 {% else %}
                   <span class="recommended-product__new-price">{{ product.special }}</span>
-                  <span class="recommended-product__price">{{ product.price }}</span>
+                  <span class="recommended-product__price">{{ product.price }}{% if product.measure %}/{{ product.measure }}{% endif %}</span>
                 {% endif %}
               </div>
             </article>

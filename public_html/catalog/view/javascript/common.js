@@ -171,14 +171,14 @@ var cart = {
 
 				if (json['success']) {
 					showMessageProductAdded();
-					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					// $('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					// Need to set timeout otherwise it wont update the total
 					setTimeout(function () {
 						// $('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
 						$(".mobile_menu .navigation .item.cart .quantity").html(json['total_short']);
 						// $(".desktop_menu .search_and_cart .cart span").html(json['total_short']);
-            $("header .body .main-cart span").html(json['total_short']);
+            $("header .body .main_cart span").html(json['total_short']);
 					}, 100);
 
 

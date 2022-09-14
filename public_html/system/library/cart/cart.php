@@ -42,7 +42,10 @@ class Cart {
 
 			if ($product_query->num_rows && ($cart['quantity'] > 0)) {
 				$price = $product_query->row['price'];
-				$initial_price = round($price);
+				if (!($price - floor($price)))
+					$initial_price = round($price);
+				else
+					$initial_price = round($price, 2);
 
 				$option_price = 0;
 				$option_points = 0;
@@ -241,9 +244,6 @@ class Cart {
 					$recurring = false;
 				}
 
-				
-				// print_r($product_query->row);
-
 				$measure = $this->db->query("SELECT * FROM ". DB_PREFIX . "measure_class WHERE measure_class_id = " . $product_query->row['measure_class_id']);
 				if (isset($measure->row['value']))
 					$measure = $measure->row['value'];
@@ -284,7 +284,7 @@ class Cart {
 				$this->remove($cart['cart_id']);
 			}
 		}
-
+		
 		return $product_data;
 	}
 

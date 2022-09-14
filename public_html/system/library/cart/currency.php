@@ -24,7 +24,10 @@ class Currency {
 	public function format($number, $currency, $value = '', $format = true) {
 		$symbol_left = $this->currencies[$currency]['symbol_left'];
 		$symbol_right = $this->currencies[$currency]['symbol_right'];
-		$decimal_place = $this->currencies[$currency]['decimal_place'];
+		if (!($number - floor($number)))
+			$decimal_place = 0;
+		else
+			$decimal_place = $this->currencies[$currency]['decimal_place'];
 
 		if (!$value) {
 			$value = $this->currencies[$currency]['value'];

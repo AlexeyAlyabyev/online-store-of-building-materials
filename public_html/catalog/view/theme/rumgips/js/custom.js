@@ -145,9 +145,9 @@ $(function(){
 	$(".product_card .info .options .option_images label").click(function(){
 		$(".product_card .info .options .option_images label").removeClass("active");
 		$(this).addClass("active");
-		if ($(".product_card .header .product_images_slider .swiper-slide").length - 1){
-			$(".product_card .header .product_images_slider .swiper-slide[aria-label='1 / 2'] img").attr("src", $(this).find("img").attr("data-full-size"));
-			$(".product_card .header .product_images_slider_thumbs .swiper-slide[aria-label='1 / 2']").attr("src", $(this).find("img").attr("data-full-size"));
+		if ($(".product_card .header .product_images_slider .swiper-slide").length - 1 > 0){
+			$(".product_card .header .product_images_slider .swiper-slide[aria-label^='1 / '] img").attr("src", $(this).find("img").attr("data-full-size"));
+			$(".product_card .header .product_images_slider_thumbs .swiper-slide[aria-label^='1 / ']").attr("src", $(this).find("img").attr("data-full-size"));
 		}
 		else
 			$(".product_card .header .product_images_slider .swiper-slide img").attr("src", $(this).find("img").attr("data-full-size"));
