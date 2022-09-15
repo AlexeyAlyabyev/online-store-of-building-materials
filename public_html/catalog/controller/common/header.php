@@ -59,7 +59,6 @@ class ControllerCommonHeader extends Controller {
 
 		foreach ($categories as $category) {
 			// if ($category['top']) {
-
 				$filter = array(
 					'filter_category_id'  => $category['category_id'],
 					'filter_sub_category' => true
