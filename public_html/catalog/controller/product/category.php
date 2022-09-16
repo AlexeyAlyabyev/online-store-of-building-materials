@@ -175,7 +175,7 @@ class ControllerProductCategory extends Controller {
 			$data['categories'] = array();
 
 			$results = $this->model_catalog_category->getCategories($category_id);
-
+			// print_r($results);
 			foreach ($results as $result) {
 				$filter_data = array(
 					'filter_category_id'  => $result['category_id'],
@@ -188,9 +188,18 @@ class ControllerProductCategory extends Controller {
 				// );
 
         if ($this->model_catalog_product->getTotalProducts($filter_data) > 0) {
+					if ($result['image']) {
+						if (strpos($result['image'], ".webp") !== false || strpos($result['image'], ".avif") !== false)
+							$image = "/image/".$result['image'];
+						else
+							$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+					} else {
+						$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+					}
           $data['categories'][] = array(
-            'name' => $result['name'],
-            'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
+            'name' 	=> $result['name'],
+            'image' => "/image/" . $result['image'],
+            'href' 	=> $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
           );
         }
 			}

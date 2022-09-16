@@ -1823,10 +1823,26 @@ footer .additional .site_development {
 }
 .products_category .header .sucategories_list a {
   font-size: 16px;
-  min-width: fit-content;
-  padding: 10px 15px;
   border-radius: 3px;
   background-color: #fafafc;
+	min-width: 55%;
+}
+@media (min-width: 420px){
+	.products_category .header .sucategories_list a {
+		min-width: 40%;
+	}
+}
+@media (min-width: 640px){
+	.products_category .header .sucategories_list a {
+		min-width: 30%;
+	}
+}
+.products_category .header .sucategories_list a p{
+  padding: 10px 15px;
+}
+.products_category .header .sucategories_list a img{
+	max-width: 100%;
+	width: 100%;
 }
 .products_category .header .sort_block {
   display: flex;
@@ -2086,7 +2102,9 @@ footer .additional .site_development {
   path[stroke='white'] {
   stroke: #f32b37;
 }
-
+.products_category .wrapper >.sucategories_list{
+	display: none;
+}
 @media (min-width: 768px) {
   .products_category .header {
     display: flex;
@@ -2238,19 +2256,25 @@ footer .additional .site_development {
     border-bottom-color: #f32b37;
     border-right-color: #f32b37;
   }
-  .products_category .body .products_wrap .control .sucategories_list {
+  .products_category .wrapper >.sucategories_list {
     margin: 20px 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
+    /* flex-wrap: wrap; */
+    gap: 15px;
     width: 100%;
   }
-  .products_category .body .products_wrap .control .sucategories_list a {
+  .products_category .wrapper >.sucategories_list a {
     font-size: 16px;
-    padding: 10px 20px;
     background-color: #fafafc;
     border-radius: 3px;
+		width: calc((100% - 60px) / 5);
   }
+	.products_category .wrapper >.sucategories_list a img{
+		max-width: 100%;
+	}
+	.products_category .wrapper >.sucategories_list p{
+		padding: 10px 15px;
+	}
 
 	.products_category .body .products_wrap.full .products_list .item{
 		width: calc((100% - 45px) / 4);
@@ -2278,6 +2302,14 @@ footer .additional .site_development {
     font-size: 16px;
     line-height: 19px;
     margin-bottom: 0;
+  }
+}
+@media (min-width: 1230px){
+	.products_category .wrapper >.sucategories_list a {
+    font-size: 16px;
+    background-color: #fafafc;
+    border-radius: 3px;
+		width: calc((100% - 90px) / 7);
   }
 }
 
