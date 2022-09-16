@@ -188,7 +188,7 @@ class ControllerProductCategory extends Controller {
 				// );
 
         if ($this->model_catalog_product->getTotalProducts($filter_data) > 0) {
-					if ($result['image']) {
+					if ($result['image'] && is_file(DIR_IMAGE . $result['image'])) {
 						if (strpos($result['image'], ".webp") !== false || strpos($result['image'], ".avif") !== false)
 							$image = "/image/".$result['image'];
 						else
@@ -198,7 +198,7 @@ class ControllerProductCategory extends Controller {
 					}
           $data['categories'][] = array(
             'name' 	=> $result['name'],
-            'image' => "/image/" . $result['image'],
+            'image' => $image,
             'href' 	=> $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
           );
         }
@@ -229,7 +229,7 @@ class ControllerProductCategory extends Controller {
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
-				if ($result['image']) {
+				if ($result['image'] && is_file(DIR_IMAGE . $result['image'])) {
 					if (strpos($result['image'], ".webp") !== false || strpos($result['image'], ".avif") !== false)
 						$image = "/image/".$result['image'];
 					else
