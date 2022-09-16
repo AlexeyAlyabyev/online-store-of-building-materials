@@ -24,11 +24,14 @@
 			</div>
 
       {% if categories %}
-      <div class="sucategories_list">
-        {% for category in categories %}
-          <a href="{{ category.href }}">{{ category.name }}</a>
-        {% endfor %}
-      </div>
+				<div class="sucategories_list">
+					{% for category in categories %}
+						<a href="{{ category.href }}">
+							<img src="{{ category.image }}" alt="{{ category.name }}">
+							<p>{{ category.name }}</p>
+						</a>
+					{% endfor %}
+				</div>
       {% endif %}
 
 			<div class="sort_block">
@@ -63,6 +66,17 @@
 			</div>
 		</div>
 
+		{% if categories %}
+			<div class="sucategories_list">
+				{% for category in categories %}
+					<a href="{{ category.href }}">
+						<img src="{{ category.image }}" alt="{{ category.name }}">
+						<p>{{ category.name }}</p>
+					</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+
 		<div class="body mb_adapt">
 			{% if column_left %}
 				<div class="column_left">
@@ -96,15 +110,6 @@
 							{% endfor %}
 						</ul>
 					</div>
-
-          {% if categories %}
-					<div class="sucategories_list">
-            {% for category in categories %}
-						  <a href="{{ category.href }}">{{ category.name }}</a>
-            {% endfor %}
-					</div>
-          {% endif %}
-
         </div>
 
 
