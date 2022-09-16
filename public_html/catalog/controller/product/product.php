@@ -465,14 +465,14 @@ class ControllerProductProduct extends Controller {
 				// }
 
         if ($result['image']) {
-				if (strpos($result['image'], ".webp") !== false || strpos($result['image'], ".avif") !== false) {
-					$image = "/image/".$result['image'];
-				}
-				else {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_height'));
-				}
+					if (strpos($result['image'], ".webp") !== false || strpos($result['image'], ".avif") !== false) {
+						$image = "/image/".$result['image'];
+					}
+					else {
+						$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_height'));
+					}
         } else {
-          $image = '';
+          $image = "/image/placeholder.svg";
         }
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
