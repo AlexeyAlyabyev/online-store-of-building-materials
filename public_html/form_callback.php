@@ -6,7 +6,7 @@
     }
 
     $to = "info@rumgips.ru"; // кому
-    $from = "rumgips@yandex.ru";
+    $from = "all@rumgips.ru";
 
     if (isset($_POST['name'])) {
       $subject = "Заявка на обратный звонок в rumgips!"; // фиксированная тема письма
