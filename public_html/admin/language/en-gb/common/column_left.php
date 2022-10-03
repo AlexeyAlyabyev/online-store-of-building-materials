@@ -19,6 +19,7 @@ $_['text_dashboard']            = 'Dashboard';
 $_['text_design']               = 'Design';
 $_['text_download']             = 'Downloads';
 $_['text_log']                  = 'Error Logs';
+$_['text_import_yml']								= 'Import YML';
 $_['text_event']                = 'Events';
 $_['text_extension']            = 'Extensions';
 $_['text_filter']               = 'Filters';

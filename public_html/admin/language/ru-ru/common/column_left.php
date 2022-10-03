@@ -29,6 +29,7 @@ $_['text_design']                      = 'Дизайн';
 $_['text_download']                    = 'Файлы для скачивания';
 $_['text_seomanager'] 				   = 'SEO Менеджер';
 $_['text_log']                   	   = 'Журнал ошибок';
+$_['text_import_yml']                   	   = 'Импорт из YML';
 $_['text_event']                       = 'События';
 $_['text_extension']                   = 'Расширения';
 $_['text_feed']                        = 'Каналы продвижения';

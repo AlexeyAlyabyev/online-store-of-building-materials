@@ -674,6 +674,14 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
+			if ($this->user->hasPermission('access', 'tool/import_yml')) {
+				$maintenance[] = array(
+					'name'	   => $this->language->get('text_import_yml'),
+					'href'     => $this->url->link('tool/import_yml', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+			}
+
 			if ($maintenance) {
 				$system[] = array(
 					'id'       => 'menu-maintenance',
