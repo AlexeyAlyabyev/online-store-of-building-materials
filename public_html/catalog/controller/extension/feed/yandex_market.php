@@ -108,7 +108,8 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				}
 //				$data['type'] = $bus_type;
 //				$data['type'] = 'vendor.model';
-				$data['available'] = ($product['quantity'] > 0 || $product['stock_status_id'] == $in_stock_id);
+				// $data['available'] = ($product['quantity'] > 0 || $product['stock_status_id'] == $in_stock_id);
+					$data['available'] = true;
 //				$data['bid'] = 10;
 //				$data['cbid'] = 15;
 

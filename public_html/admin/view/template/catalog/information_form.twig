@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-information" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <button type="submit" form="form-information" data-toggle="tooltip" title="{{ button_save }} (Ctrl + S)" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -222,6 +222,13 @@
   <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script> 
   <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
   <script type="text/javascript"><!--
-$('#language a:first').tab('show');
-//--></script></div>
+		$('#language a:first').tab('show');
+
+		document.addEventListener('keydown', function(event) {
+			if (event.code == 'KeyS' && (event.ctrlKey || event.metaKey)) {
+				event.preventDefault();
+				$("button.btn.btn-primary").click();
+			}
+		});
+	//--></script></div>
 {{ footer }} 

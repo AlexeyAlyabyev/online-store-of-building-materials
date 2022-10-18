@@ -6543,6 +6543,9 @@ input[type='radio'].order-registration__free-shipping{
   display: flex;
   align-items: flex-end;
 }
+.products-hit__list.swiper-wrapper{
+	margin: 0 0 15px 0;
+}
 @media (min-width: 992px) {
   .products-hit__list li a.image {
 		margin-bottom: 20px;
@@ -6733,4 +6736,22 @@ input[type='radio'].order-registration__free-shipping{
 	.home_page_banner a{
 		padding: 20px 60px;
 	}
+}
+.show_more{
+	display: block;
+	width: 100%;
+	border: none;
+	text-align: center;
+	background-color: #e6ebf0;
+	border-radius: 3px;
+	font-size: 16px;
+	font-weight: 500;
+	padding: 10px 15px;
+	margin: 0 0 20px 0;
+	transition: .3s;
+	cursor: pointer;
+}
+.show_more:hover{
+	background-color: #f32b37;
+	color: #fff;
 }

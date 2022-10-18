@@ -121,12 +121,6 @@ class ControllerProductCategory extends Controller {
 
 		if ($category_info) {
 
-			if ($category_info['meta_title']) {
-				$this->document->setTitle($category_info['meta_title']);
-			} else {
-				$this->document->setTitle($category_info['name']);
-			}
-
 			if ($category_info['noindex'] <= 0 && $this->config->get('config_noindex_status')) {
 				$this->document->setRobots('noindex,follow');
 			}
@@ -135,6 +129,18 @@ class ControllerProductCategory extends Controller {
 				$data['heading_title'] = $category_info['meta_h1'];
 			} else {
 				$data['heading_title'] = $category_info['name'];
+			}
+
+			if (isset($_GET['page']))  {
+				$category_info['meta_title'] .= " | Страница ".$_GET['page'];
+				$category_info['meta_description'] .= " | Страница ".$_GET['page'];
+				$data['heading_title'] .= " | Страница ".$_GET['page'];
+			}
+
+			if ($category_info['meta_title']) {
+				$this->document->setTitle($category_info['meta_title']);
+			} else {
+				$this->document->setTitle($category_info['name']);
 			}
 
 			$this->document->setDescription($category_info['meta_description']);
