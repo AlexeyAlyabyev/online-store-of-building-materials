@@ -159,6 +159,60 @@ $(function(){
 	});
 });
 
+// "Показать еще" в категориях, производителях и т.д.
+// Готовый компонент, можно вставлять в любой проект opencart (Предварительно заменив .products_list и .item на классы в проекте)
+var query_in_process = false;
+
+if ($(".pagination").length){
+	$('<button class="show_more">Показать еще</button>').insertBefore(".pagination");
+
+	$(document).scroll(function(){
+		if ($(".show_more").position().top - window.scrollY < window.innerHeight/2 && !query_in_process && sessionStorage.getItem("dynamic_loading")) {
+			loadNextPage();
+		}
+	});
+
+	$(".show_more").click(function(){
+		sessionStorage.setItem("dynamic_loading", true);
+		loadNextPage();
+	});
+}
+
+function loadNextPage(){
+	let query_url = new URL(window.location.href);
+
+	if (query_url.searchParams.get("page") == null) {
+		query_url.searchParams.set("page", 1);
+	}
+	query_url.searchParams.set("page", +query_url.searchParams.get("page") + 1);
+
+	$.ajax({
+		url: query_url,
+		dataType: 'html',
+		beforeSend: function(){
+			$(".show_more").text("Загрузка...");
+			query_in_process = true;
+		},
+		complete: function() {
+			$(".show_more").text("Показать еще");
+			query_in_process = false;
+		},
+		success: function(html) {
+			if ($(html).find(".products_list .item").length != 0) {
+
+				$(".products_list").append($(html).find(".products_list .item"));
+				$(".pagination").replaceWith($(html).find(".pagination"));
+
+				window.history.pushState({}, '', query_url);
+
+			} else {
+				sessionStorage.setItem("dynamic_loading", false);
+				$(".show_more").remove();
+			}
+		}
+	});
+}
+
 function cartUpdate(){
   $.ajax({
     url: 'index.php?route=checkout/cart/editCart',
@@ -167,9 +221,10 @@ function cartUpdate(){
     dataType: 'json',
     success: function(json) {
       if (json['success']) {
+				console.log(json);
         setTimeout(function () {
           $(".mobile_menu .navigation .item.cart .quantity").html(json['total_short']);
-          $(".desktop_menu .search_and_cart .cart span").html(json['total_short']);
+          $("header .body .main_cart span").html(json['total_short']);
 
           $(".checkout-cart__total-count").html(json["total_short_text"]);
 

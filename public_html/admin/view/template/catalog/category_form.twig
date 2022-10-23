@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-category" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <button type="submit" form="form-category" data-toggle="tooltip" title="{{ button_save }} (Ctrl + S)" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -418,6 +418,21 @@ $('input[name=\'article_related_input\']').autocomplete({
 $('#article-related').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
+
+if (!$("[name*='category_description'][id*='input-name']").val().length) {
+	$("[name*='category_description'][id*='input-name']").keyup(function(){
+		$("[name*='category_description'][id*='input-meta-title']").val("Купить " + $(this).val() + " в интернет-магазине Румгипс, низкие цены");
+		$("[name*='category_description'][id*='input-meta-description']").val("Лучшие цены на " + $(this).val() + " в интернет-магазине РумГипс. Доставка по всей России. Оптовые и розничные продажи.");
+	});
+}
+
+document.addEventListener('keydown', function(event) {
+	if (event.code == 'KeyS' && (event.ctrlKey || event.metaKey)) {
+		event.preventDefault();
+		$("button.btn.btn-primary").click();
+	}
+});
+
 //--></script>
 </div>
 {{ footer }}
