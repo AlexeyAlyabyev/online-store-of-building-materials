@@ -154,6 +154,15 @@ $(document).ready(function() {
 			$element.popover('destroy');
 		});
 	});
+
+	if ($("button.btn.btn-primary").length) {
+		document.addEventListener('keydown', function(event) {
+			if (event.code == 'KeyS' && (event.ctrlKey || event.metaKey)) {
+				event.preventDefault();
+				$("button.btn.btn-primary").eq(0).click();
+			}
+		});
+	}
 });
 
 // Autocomplete */
