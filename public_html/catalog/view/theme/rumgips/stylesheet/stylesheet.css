@@ -365,7 +365,7 @@ header .body .logo img {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
     border-right: 1px solid #e6ebf0;
     padding: 18px 0;
   }
@@ -374,9 +374,9 @@ header .body .logo img {
   }
   header .body .order_call a {
     display: block;
-    border: 1px solid #e6ebf0;
+    /* border: 1px solid #e6ebf0; */
     border-radius: 120px;
-    padding: 12px 20px;
+    padding: 5px 10px;
     font-size: 16px;
     font-weight: 600;
   }
@@ -384,6 +384,7 @@ header .body .logo img {
     display: block;
     font-size: 14px;
     text-align: left;
+		max-width: min-content;
   }
   header .body .order_call button:not(.btn-transparent):hover {
     color: #f32b37;
@@ -453,14 +454,19 @@ header .body .logo img {
   }
 }
 @media (min-width: 1230px) {
-  header .body .order_call a {
-    font-size: 20px;
-  }
-
   header .body .logo img {
     width: 244px;
   }
-
+	header .body .order_call button:not(.btn-transparent){
+		border: 1px solid rgba(230, 235, 240, 1);
+		padding: 12px 15px;
+		max-width: fit-content;
+	}
+	header .body .order_call button:not(.btn-transparent):hover{
+		border-color: #f32b37;
+		background-color: #f32b37;
+		color: #fff;
+	}
 }
 
 .mobile_menu {

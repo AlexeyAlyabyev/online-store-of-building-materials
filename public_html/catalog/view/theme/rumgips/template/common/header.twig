@@ -147,8 +147,11 @@
 
 		<div class="order_call">
 			<button class="btn-transparent" onclick="showModal()">Заказать звонок</button>
-			<a href="tel:{{ telephone }}" class="btn-transparent">{{ telephone }}</a>
-			<button class="btn-text" onclick="showModal()">Обратный<br>звонок</button>
+			<div class="phone_numbers">
+				<a href="tel:{{ telephone }}">{{ telephone }}</a>
+				<a href="tel:+7 (495) 023-72-00">+7 (495) 023-72-00</a>
+			</div>
+			<button class="btn-text" onclick="showModal()">Обратный звонок</button>
 		</div>
 
 		<a href="https://rumgips.ru/catalog_rumgips.pdf"  class="online_catalog" target="_blank">
