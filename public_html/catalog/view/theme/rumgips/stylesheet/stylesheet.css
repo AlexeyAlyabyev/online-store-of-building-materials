@@ -6759,3 +6759,29 @@ input[type='radio'].order-registration__free-shipping{
 	background-color: #f32b37;
 	color: #fff;
 }
+
+.admin_product_edit,
+.admin_product_edit:-webkit-any-link{
+	display: block;
+	position: fixed;
+	top: 50px;
+	left: 0;
+	padding: 10px 15px;
+	background-color: #1e91cf;
+	border: 1px solid #197bb0;
+	border-left: none;
+	border-radius: 0 5px 5px 0;
+	text-align: center;
+	color: #fff;
+	cursor: pointer;
+	z-index: 999999;
+	font-size: 16px;
+}
+.admin_product_edit:hover{
+	background-color: #fff;
+	color: #1e91cf;
+}
+.admin_product_edit:focus{
+	background-color: #1e91cf;
+	color: #fff;
+}

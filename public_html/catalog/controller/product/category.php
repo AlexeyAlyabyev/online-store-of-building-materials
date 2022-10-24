@@ -115,6 +115,10 @@ class ControllerProductCategory extends Controller {
 			$category_id = 0;
 		}
 
+		// Если был вход в админку, показывает на странице кноку редактирования
+		if (isset($this->session->data['user_token'])) {
+			$data["edit"] = "admin/index.php?route=catalog/category/edit&" . "user_token=" .  $this->session->data['user_token'] . "&category_id=" . $category_id;
+		}
 
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 		// print_r($category_info);

@@ -1,3 +1,6 @@
 {{ header }}
+{% if edit %}
+	<noindex><a class="admin_product_edit" target="_blank" href="{{ edit }} rel="nofollow"">Редактировать</a></noindex>
+{% endif %}
 {{ description }}
 {{ footer }}

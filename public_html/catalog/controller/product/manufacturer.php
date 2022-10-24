@@ -137,6 +137,11 @@ class ControllerProductManufacturer extends Controller {
 			'href' => $this->url->link('product/manufacturer')
 		);
 
+		// Если был вход в админку, показывает на странице кноку редактирования
+		if (isset($this->session->data['user_token'])) {
+			$data["edit"] = "admin/index.php?route=catalog/manufacturer/edit&" . "user_token=" .  $this->session->data['user_token'] . "&manufacturer_id=" . $manufacturer_id;
+		}
+
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 
 		if ($manufacturer_info) {

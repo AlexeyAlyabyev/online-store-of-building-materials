@@ -21,6 +21,11 @@ class ControllerInformationInformation extends Controller {
 			$information_id = 0;
 		}
 
+		// Если был вход в админку, показывает на странице кноку редактирования
+		if (isset($this->session->data['user_token'])) {
+			$data["edit"] = "admin/index.php?route=catalog/information/edit&" . "user_token=" .  $this->session->data['user_token'] . "&information_id=" . $information_id;
+		}
+
 		$information_info = $this->model_catalog_information->getInformation($information_id);
 
 		if ($information_info) {

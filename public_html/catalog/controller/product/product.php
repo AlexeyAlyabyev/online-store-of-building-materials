@@ -157,6 +157,11 @@ class ControllerProductProduct extends Controller {
 			$product_id = 0;
 		}
 
+		// Если был вход в админку, показывает на странице кноку редактирования
+		if (isset($this->session->data['user_token'])) {
+			$data["edit"] = "admin/index.php?route=catalog/product/edit&" . "user_token=" .  $this->session->data['user_token'] . "&product_id=" . $product_id;
+		}
+
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);

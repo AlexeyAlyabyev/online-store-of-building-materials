@@ -1,4 +1,7 @@
 {{ header }}
+{% if edit %}
+	<noindex><a class="admin_product_edit" target="_blank" href="{{ edit }} rel="nofollow"">Редактировать</a></noindex>
+{% endif %}
 <div class="product_card mb_adapt">
 	<div class="wrapper">
 		<ul class="breadcrumb">
