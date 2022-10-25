@@ -113,6 +113,9 @@ class ControllerCommonHeader extends Controller {
 		$data['cart'] = $this->load->controller('common/cart');
 		$data['menu'] = $this->load->controller('common/menu');
 
+		if (isset($this->session->data['user_token']))
+			$data['refresh'] = HTTPS_SERVER . "admin/index.php?route=marketplace/modification/refresh&user_token=" . $this->session->data['user_token'];
+
 		return $this->load->view('common/header', $data);
 	}
 }
