@@ -1395,11 +1395,11 @@ class ControllerCatalogProduct extends Controller {
 				foreach ($product_option['product_option_value'] as $product_option_value) {
 
 					$this->load->model('tool/image');
-					if (!empty($product_option_value) && is_file(DIR_IMAGE . $product_option_value['image'])) {
-						if (strpos($product_option_value['image'], ".webp") !== false || strpos($product_option_value['image'], ".avif") !== false)
-							$option_thumb = "/image/" . $product_option_value['image'];
+					if (!empty($product_option_value) && is_file(DIR_IMAGE . $product_option_value['product_option_value_image'])) {
+						if (strpos($product_option_value['product_option_value_image'], ".webp") !== false || strpos($product_option_value['product_option_value_image'], ".avif") !== false)
+							$option_thumb = "/image/" . $product_option_value['product_option_value_image'];
 						else
-							$option_thumb = $this->model_tool_image->resize($product_option_value['image'], 100, 100);
+							$option_thumb = $this->model_tool_image->resize($product_option_value['product_option_value_image'], 100, 100);
 					} else {
 						$option_thumb = $this->model_tool_image->resize('no_image.png', 100, 100);
 					}
@@ -1415,7 +1415,7 @@ class ControllerCatalogProduct extends Controller {
 						'points_prefix'           		=> $product_option_value['points_prefix'],
 						'weight'                  		=> $product_option_value['weight'],
 						'weight_prefix'           		=> $product_option_value['weight_prefix'],
-						'image'           						=> $product_option_value['image'],
+						'image'           						=> $product_option_value['product_option_value_image'],
 						'thumb'           						=> $option_thumb,
 						'product_option_value_1c_id'  => $product_option_value['product_option_value_1c_id'],
 						'product_option_sort_order'  	=> $product_option_value['product_option_sort_order']

@@ -646,7 +646,7 @@ class ModelCatalogProduct extends Model {
 					'points_prefix'           		=> $product_option_value['points_prefix'],
 					'weight'                  		=> $product_option_value['weight'],
 					'weight_prefix'           		=> $product_option_value['weight_prefix'],
-					'image'  											=> $product_option_value['product_option_value_image'],
+					'product_option_value_image'  => $product_option_value['product_option_value_image'],
 					'product_option_sort_order'  	=> $product_option_value['product_option_sort_order'],
 					'product_option_value_1c_id'  => $product_option_value['product_option_value_1c_id']
 				);
