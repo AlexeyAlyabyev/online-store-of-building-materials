@@ -167,7 +167,22 @@
 						{% for product in products %}
 							<div class="item">
 								<a href="{{ product.href }}" class="image">
-									<img class="main_img" src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" />
+									{% if product.images %}
+										<div class="images">
+											<img class="main_img" src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" />
+											{% for image in product.images %}
+												<img src="{{ image }}" alt="{{ product.name }}" title="{{ product.name }}" loading="lazy" />											
+											{% endfor %}
+											<div class="images_area" onmouseout="hideProductAdditionalImages(this)">
+												<div class="area_item" onmouseover="showProductAdditionalImage(this)"></div>		
+												{% for image in product.images %}
+													<div class="area_item" onmouseover="showProductAdditionalImage(this)"></div>								
+												{% endfor %}
+											</div>
+										</div>
+									{% else %}
+										<img class="main_img" src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" />
+									{% endif %}
 									{% if product.special and (product.hit == false) %}
 										<span>Скидка</span>
 									{% endif %}
