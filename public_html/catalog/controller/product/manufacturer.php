@@ -147,9 +147,9 @@ class ControllerProductManufacturer extends Controller {
 		if ($manufacturer_info) {
 
 			if ($manufacturer_info['meta_title']) {
-				$this->document->setTitle($manufacturer_info['meta_title']);
+				$title = $manufacturer_info['meta_title'];
 			} else {
-				$this->document->setTitle($manufacturer_info['name']);
+				$title = $manufacturer_info['name'];
 			}
 
 			if ($manufacturer_info['noindex'] <= 0 && $this->config->get('config_noindex_status')) {
@@ -161,6 +161,15 @@ class ControllerProductManufacturer extends Controller {
 			} else {
 				$data['heading_title'] = $manufacturer_info['name'];
 			}
+
+			if (isset($_GET['page']))  {
+				$manufacturer_info['meta_title'] .= " | Страница ".$_GET['page'];
+				$manufacturer_info['meta_description'] .= " | Страница ".$_GET['page'];
+				$data['heading_title'] .= " | Страница ".$_GET['page'];
+				$title .= " | Страница ".$_GET['page'];
+			}
+
+			$this->document->setTitle($title);
 
 			$this->document->setDescription($manufacturer_info['meta_description']);
 			$this->document->setKeywords($manufacturer_info['meta_keyword']);

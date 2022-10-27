@@ -260,10 +260,10 @@ class ControllerProductCategory extends Controller {
 					$special = false;
 				}
 
-				if (isset($result['manufacturer_image']))
+				if (isset($result['manufacturer_image']) && is_file(DIR_IMAGE . $result['manufacturer_image']))
 					$manufacturer_image = $result['manufacturer_image'];
 				else
-					$manufacturer_image = $this->model_catalog_product->getProduct($result['product_id'])['manufacturer_image'];
+					$manufacturer_image = "";
 
 				if (strpos($result['tag'], "хит")=== false)
 					$hit = false;
@@ -274,6 +274,13 @@ class ControllerProductCategory extends Controller {
 					$measure = $result['measure_class'];
 				else
 					$measure = "";
+
+				$product_images = "";
+				
+				$product_images = $this->model_catalog_product->getProductImages($result['product_id']);
+				foreach ($product_images as $key => $product_image){
+					$product_images[$key] = "/image/".$product_image['image'];
+				}
 
 				$data['products'][] = array(
 					'product_id'  				=> $result['product_id'],
@@ -286,7 +293,9 @@ class ControllerProductCategory extends Controller {
 					'minimum'     				=> $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'href'        				=> $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url),
 					'hit'									=> $hit,
-					'measure'							=> $measure
+					'measure'							=> $measure,
+					'images'							=> $product_images,
+					// 'option_images'				=> $product_option_images,
 				);
 			}
 

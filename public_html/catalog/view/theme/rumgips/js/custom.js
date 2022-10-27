@@ -37,21 +37,6 @@ $(function(){
 
 	resizeMobileCatalog();
 
-	// $(".desktop_menu .catalog").hover(showBlackout, hideBlackout);
-
-	// Расширение и фокус на поле поиска при наведении на его значок на ПК
-	// $(".desktop_menu .search_and_cart .search").hover(function(){
-	// 	$(".desktop_menu .menu").addClass("hidden");
-	// 	$(".desktop_menu .search_and_cart .search input").addClass("active");
-	// 	$(".desktop_menu .search_and_cart").addClass("active");
-	// 	$(".desktop_menu .search_and_cart .search input").focus();
-	// }, function(){
-	// 	$(".desktop_menu .search_and_cart").removeClass("active");
-	// 	$(".desktop_menu .search_and_cart .search input").removeClass("active");
-	// 	$(".desktop_menu .menu").removeClass("hidden");
-	// 	$(document).focus();
-	// });
-
   $(".desktop_menu .search_and_cart .search button").click(function(){
 		$(".desktop_menu .menu").toggleClass("hidden");
 		$(".desktop_menu .search_and_cart .search input").toggleClass("active");
@@ -92,15 +77,6 @@ $(function(){
 	$(".products_category .header .info >button").click(function(){
 		window.location = '/search/?description=true&search=' + $(this).prev().val();
 	});
-
-	// $(".product_card .info .price_and_controls .quantity_block .minus").click(function(){
-	// 	if (+$(this).siblings("input[name='quantity']").val() > 1)
-	// 		$(this).siblings("input[name='quantity']").val(+$(this).siblings("input[name='quantity']").val() - 1);
-	// });
-	// $(".product_card .info .price_and_controls .quantity_block .plus").click(function(){
-	// 	if (+$(this).siblings("input[name='quantity']").val() < 999)
-	// 		$(this).siblings("input[name='quantity']").val(+$(this).siblings("input[name='quantity']").val() + 1);
-	// });
 
   $('input[name^="quantity"]').on('input', function() {
     if ($(this).val() >=1 ) {
@@ -270,13 +246,6 @@ const brands_slider = new Swiper('.brands_slider .wrapper', {
 			spaceBetween: 10
 		},
 		992: {
-			// slidesPerView: 3,
-			// spaceBetween: 21,
-			// loop: false,
-			// grid: {
-			// 	rows: 2,
-			// 	fill: "row",
-			// },
       slidesPerView: 'auto',
       loop: true,
       speed: 5000,
@@ -683,7 +652,6 @@ buttonUp.addEventListener('click', backUp);
 
 // Слайдер "С этим товаром покупают"
 const recommended_products_swiper = new Swiper('.recommended-products-swiper', {
-	// loop: true,
 	slidesPerView: 'auto',
 	spaceBetween: 10,
 
@@ -695,7 +663,6 @@ const recommended_products_swiper = new Swiper('.recommended-products-swiper', {
 		992: {
 			slidesPerView: 4,
 			spaceBetween: 20,
-			// loop: false,
 		},
 	},
 
@@ -736,3 +703,12 @@ const productsHitSwiper = new Swiper('.products-hit-swiper', {
     prevEl: '.recommended-products-swiper-button-prev',
   },
 });
+
+function showProductAdditionalImage(area){
+	$(area).parents(".images").find("img").removeClass("active");
+	$(area).parents(".images").find("img").eq($(area).index()).addClass("active");
+}
+
+function hideProductAdditionalImages(all_areas){
+	$(all_areas).parents(".images").find("img").removeClass("active");
+}
