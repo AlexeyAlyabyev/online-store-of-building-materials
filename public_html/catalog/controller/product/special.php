@@ -141,6 +141,13 @@ class ControllerProductSpecial extends Controller {
 			else
 				$measure = "";
 
+			$product_images = "";
+			
+			$product_images = $this->model_catalog_product->getProductImages($result['product_id']);
+			foreach ($product_images as $key => $product_image){
+				$product_images[$key] = "/image/".$product_image['image'];
+			}
+
 			$data['products'][] = array(
 				'product_id'  => $result['product_id'],
 				'thumb'       => $image,
@@ -152,7 +159,8 @@ class ControllerProductSpecial extends Controller {
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 				'rating'      => $result['rating'],
 				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url),
-				'measure'							=> $measure
+				'measure'			=> $measure,
+				'images'			=> $product_images,
 			);
 		}
 

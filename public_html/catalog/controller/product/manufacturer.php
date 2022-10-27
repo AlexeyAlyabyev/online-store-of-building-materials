@@ -259,23 +259,15 @@ class ControllerProductManufacturer extends Controller {
 					$rating = false;
 				}
 
-
-    //     		// Слайдер производителей
-		// $data['manufacturers'] = array();
-		// $this->load->model('catalog/manufacturer');
-		// $manufacturers = $this->model_catalog_manufacturer->getManufacturers();
-		// foreach ($manufacturers as $manufacturer){
-		// 	$data['manufacturers'][] = array(
-		// 		'name' 		=> $manufacturer['name'],
-		// 		'image' 	=> "image/".$manufacturer['image'],
-		// 		'href' 		=> $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $manufacturer['manufacturer_id'])
-		// 	);
-		// }
-
 				if (isset($result['measure_class']))
 					$measure = $result['measure_class'];
 				else
 					$measure = "";
+
+				$product_images = $this->model_catalog_product->getProductImages($result['product_id']);
+				foreach ($product_images as $key => $product_image){
+					$product_images[$key] = "/image/".$product_image['image'];
+				}
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
@@ -288,7 +280,8 @@ class ControllerProductManufacturer extends Controller {
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $result['rating'],
 					'href'        => $this->url->link('product/product', 'manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url),
-					'measure'			=> $measure
+					'measure'			=> $measure,
+					'images'			=> $product_images,
 				);
 			}
 

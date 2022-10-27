@@ -295,7 +295,6 @@ class ControllerProductCategory extends Controller {
 					'hit'									=> $hit,
 					'measure'							=> $measure,
 					'images'							=> $product_images,
-					// 'option_images'				=> $product_option_images,
 				);
 			}
 
