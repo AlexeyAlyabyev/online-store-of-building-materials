@@ -712,3 +712,65 @@ function showProductAdditionalImage(area){
 function hideProductAdditionalImages(all_areas){
 	$(all_areas).parents(".images").find("img").removeClass("active");
 }
+
+// Зум фото в карточке товара
+var zoomSwiper;
+
+function zoomIn(img){
+	$(".zoom .swiper").remove();
+	$("<div class='swiper'><div class='swiper-wrapper'></div></div>").appendTo(".zoom");
+	$(".product_card .header .product_images_slider .thumbnail:not(.swiper-slide-duplicate)").clone().appendTo(".zoom .swiper .swiper-wrapper");
+	
+	$(".zoom .swiper .zoom_pagination, .zoom .swiper .prev, .zoom .swiper .next").remove();
+	$("<div class='zoom_pagination'></div>").appendTo(".zoom .swiper");
+	$("<div class='prev'></div>").appendTo(".zoom .swiper");
+	$("<div class='next'></div>").appendTo(".zoom .swiper");
+
+	zoomSwiper = new Swiper('.zoom .swiper', {
+		loop: true,
+
+		pagination: {
+			el: '.zoom .swiper .zoom_pagination',
+			clickable: true,
+		},
+	
+		navigation: {
+			nextEl: '.zoom .swiper .next',
+			prevEl: '.zoom .swiper .prev',
+		},
+	});
+
+	if (window.innerWidth >= 992) {
+		let window_min_side = window.innerHeight < window.innerWidth ? window.innerHeight : window.innerWidth;
+		window_min_side -= 120;
+		$(".product_card .header .zoom .swiper .swiper-wrapper img").css("width", window_min_side + "px");
+	}
+	zoomSwiper.slideTo(+$(img).attr("data-swiper-slide-index") + 1, 0);
+
+	$(".product_card .header .zoom").addClass("active");
+	$(".product_card .header .zoom").addClass("visible");
+	$("body").addClass("no_scroll");
+}
+
+function zoomOut(){
+	$(".product_card .header .zoom").removeClass("visible");
+	setTimeout(function(){
+		$(".product_card .header .zoom").removeClass("active");
+		$("body").removeClass("no_scroll");
+	}, 300);
+}
+
+$(".product_card .header .product_images_slider .thumbnail").click(function(){
+	zoomIn(this);
+});
+$(".product_card .header .zoom").click(function(e){
+	e.target == $(".product_card .header .zoom")[0] ? zoomOut() : "";
+});
+$(document).keydown(function(e){
+	if (e.key == "Escape") zoomOut();
+	if ($(".product_card .header .zoom").hasClass("visible")){
+		if (e.key == "ArrowRight") zoomSwiper.slideNext();
+		if (e.key == "ArrowLeft") zoomSwiper.slidePrev();
+	}
+});
+$(".product_card .header .zoom button.close").click(zoomOut);

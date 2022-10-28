@@ -19,20 +19,21 @@
 
 		<div class="product_card_container">
 			<div class="header">
+				{% if special or hit %}
+					<div class="product_card_discount">
+						{% if special and (hit == false) %}
+							<span>Скидка</span>
+						{% endif %}
 
-			<div class="product_card_discount">
-				{% if special and (hit == false) %}
-					<span>Скидка</span>
-				{% endif %}
+						{% if (special == false) and hit %}
+							<span class="hit">Хит</span>
+						{% endif %}
 
-				{% if (special == false) and hit %}
-					<span class="hit">Хит</span>
+						{% if special and hit %}
+							<span class="hit">Хит</span>
+						{% endif %}
+					</div>
 				{% endif %}
-
-				{% if special and hit %}
-					<span class="hit">Хит</span>
-				{% endif %}
-			</div>
 
 				<div class="product_images_slider swiper">
 					<div class="swiper-wrapper thumbnails">
@@ -62,27 +63,37 @@
 				</div>
 
         {% if images or url_video %}
-				<div class="product_images_slider_thumbs swiper product_images_slider_thumbs--active">
-					<div class="swiper-wrapper thumbnails">
-						<img class="swiper-slide" src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
-						{% if images %}
-							{% for image in images %}
-								<img class="swiper-slide" src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
-							{% endfor %}
-						{% endif %}
-            {# {% if url_video %}
-            <div class="swiper-slide swiper-slide-video">
-              <img class="" width="100%" src="{{ url_video_preview }}" title="Превью видео ролика" alt="Превью видео ролика" />
-            </div>
-						{% endif %} #}
+					<div class="product_images_slider_thumbs swiper product_images_slider_thumbs--active">
+						<div class="swiper-wrapper thumbnails">
+							<img class="swiper-slide" src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+							{% if images %}
+								{% for image in images %}
+									<img class="swiper-slide" src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+								{% endfor %}
+							{% endif %}
+							{# {% if url_video %}
+							<div class="swiper-slide swiper-slide-video">
+								<img class="" width="100%" src="{{ url_video_preview }}" title="Превью видео ролика" alt="Превью видео ролика" />
+							</div>
+							{% endif %} #}
+						</div>
+						<div class="prev"></div>
+						<div class="next"></div>
 					</div>
-					<div class="prev"></div>
-					<div class="next"></div>
-				</div>
         {% endif %}
+				<div class="zoom">
+					<div class="swiper">
+						<div class="swiper-wrapper">
 
-
+						</div>
+						<div class="zoom_pagination"></div>
+						<div class="prev"></div>
+						<div class="next"></div>
+					</div>
+					<button class="close"></button>
+				</div>
 			</div>
+
 			<div class="product_card_main_info">
 				<div>
 					<h1>{{ heading_title }}</h1>
