@@ -2945,6 +2945,9 @@ footer .additional .site_development {
 	align-items: center;
 	justify-content: center;
 }
+.product_card .info .price_and_controls .order_buttons .cart_btn svg path{
+	transition: .3s;
+}
 
 @media (min-width: 768px) {
 	.product_card .info .price_and_controls .order_buttons .cart_btn {
