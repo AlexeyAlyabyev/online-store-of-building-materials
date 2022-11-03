@@ -2,6 +2,15 @@
 <div id="common-home" class="container">
   <div class="row">{{ column_left }}
     <div id="content" class="{{ class }}">
+			<div class="home_banner wrapper">
+				<a href="/denkirs">
+					<picture>
+						<source srcset="/catalog/view/theme/rumgips/image/home_page_banner/denkirs-banner.webp" media="(min-width: 992px)">
+						<source srcset="/catalog/view/theme/rumgips/image/home_page_banner/denkirs-banner-tablet.webp" media="(min-width: 640px)">
+						<img src="/catalog/view/theme/rumgips/image/home_page_banner/denkirs-banner-mobile.webp" alt="">
+					</picture>
+				</a>
+			</div>
       {{ content_top }}{{ content_bottom }}
     </div>
     {{ column_right }}

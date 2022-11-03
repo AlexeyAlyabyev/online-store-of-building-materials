@@ -716,7 +716,7 @@ header .body .logo img {
 		font-size: 16px;
 		position: relative;
 		background-color: #fff;
-		z-index: 3;
+		z-index: 15;
 	}
 	.desktop_menu .wrapper {
 		border-bottom: 1px solid #e6ebf0;
@@ -6971,5 +6971,33 @@ input[type='radio'].order-registration__free-shipping{
 	.product_card .header .zoom .swiper .next{
 		right: 40px;
 		transform: translateX(-10px) rotate(-45deg);
+	}
+}
+
+.home_banner{
+	line-height: 0;
+	margin: 0 0 20px 0;
+	padding: 0;
+}
+.home_banner picture{
+	display: flex;
+	justify-content: center;
+}
+.home_banner picture img{
+	width: 500px
+}
+@media (min-width: 480px){
+	.home_banner picture img{
+		width: 100%;
+	}
+}
+@media (min-width: 768px){
+	.home_banner{
+		margin: 0 0 30px 0;
+	}
+}
+@media (min-width: 992px){
+	.home_banner{
+		margin: 0 auto 40px auto;
 	}
 }
