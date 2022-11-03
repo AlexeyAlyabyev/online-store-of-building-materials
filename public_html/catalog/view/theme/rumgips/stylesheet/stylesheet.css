@@ -478,7 +478,7 @@ header .body .logo img {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	z-index: 10;
+	z-index: 11;
 }
 .mobile_menu .navigation {
 	padding: 0 15px;

@@ -337,18 +337,6 @@ class ControllerProductManufacturer extends Controller {
 				);
 			}
 
-			$data['sorts'][] = array(
-				'text'  => $this->language->get('text_model_asc'),
-				'value' => 'p.model-ASC',
-				'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.model&order=ASC' . $url)
-			);
-
-			$data['sorts'][] = array(
-				'text'  => $this->language->get('text_model_desc'),
-				'value' => 'p.model-DESC',
-				'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.model&order=DESC' . $url)
-			);
-
 			$url = '';
 
 			if (isset($this->request->get['sort'])) {
@@ -439,6 +427,13 @@ class ControllerProductManufacturer extends Controller {
             }
 
 			$data["total_products"] = $product_total;
+			// Правильные склонения для количества товаров
+			if (($data["total_products"] % 10) == 1 && ($data["total_products"] < 10 || $data["total_products"] > 20))
+				$data["total_products"] .= " товар";
+			else if ((($data["total_products"] % 10) >= 2 && ($data["total_products"] % 10) < 5) && ($data["total_products"] < 10 || $data["total_products"] > 20))
+				$data["total_products"] .= " товара";
+			else
+				$data["total_products"] .= " товаров";
 
 
 			$data['sort'] = $sort;
