@@ -1,0 +1,38 @@
+{{ header }}
+<div id="catalogs">
+	<div class="wrapper">
+		<ul class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+				{% if loop.index > 1 %}
+					<span> \ </span>
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% else %}
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+		<div class="manufacturers_catalogs mb_adapt">
+			{{ column_left }}
+			{{ content_top }}
+
+			<h1>{{ heading_title }}</h1>
+
+			<div class="body">
+				<div class="item">
+					<p>RUMGIPS:</p>
+					<a href="catalog_rumgips.pdf" download="catalog-rumgips">Скачать каталог</a>
+				</div>
+				{% for manufacturer in manufacturers %}
+					<div class="item">
+						<p>{{ manufacturer.name }}:</p>
+						<a href="{{ manufacturer.catalog_file }}" download="catalog-{{ manufacturer.name }}">Скачать каталог</a>
+					</div>
+				{% endfor %}
+			</div>
+
+			{{ content_bottom }}
+			{{ column_right }}
+		</div>
+	</div>
+</div>
+{{ footer }}

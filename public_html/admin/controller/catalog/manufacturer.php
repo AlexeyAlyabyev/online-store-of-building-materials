@@ -374,6 +374,14 @@ class ControllerCatalogManufacturer extends Controller {
 			$data['manufacturer_store'] = array(0);
 		}
 
+		if (isset($this->request->post['catalog_file'])) {
+			$data['catalog_file'] = $this->request->post['catalog_file'];
+		} elseif (!empty($manufacturer_info)) {
+			$data['catalog_file'] = $manufacturer_info['catalog_file'];
+		} else {
+			$data['catalog_file'] = '';
+		}
+
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
 		} elseif (!empty($manufacturer_info)) {

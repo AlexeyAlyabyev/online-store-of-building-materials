@@ -17,6 +17,10 @@ class ModelCatalogManufacturer extends Model {
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET image = '" . $this->db->escape($data['image']) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		}
+
+		if (isset($data['catalog_file'])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET catalog_file = '" . $this->db->escape($data['catalog_file']) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+		}
 		
 		foreach ($data['manufacturer_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer_description SET manufacturer_id = '" . (int)$manufacturer_id . "', language_id = '" . (int)$language_id . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
@@ -70,6 +74,10 @@ class ModelCatalogManufacturer extends Model {
 
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET image = '" . $this->db->escape($data['image']) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+		}
+
+		if (isset($data['catalog_file'])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET catalog_file = '" . $data['catalog_file'] . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		}
 		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_description WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");

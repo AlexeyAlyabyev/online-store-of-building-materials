@@ -435,6 +435,7 @@ class ControllerProductManufacturer extends Controller {
 			else
 				$data["total_products"] .= " товаров";
 
+			$data['catalog_file'] = $manufacturer_info['catalog_file'];
 
 			$data['sort'] = $sort;
 			$data['order'] = $order;

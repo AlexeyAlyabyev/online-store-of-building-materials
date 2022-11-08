@@ -220,11 +220,6 @@ header .body .contact_icons {
 	gap: 10px;
 	flex-direction: row-reverse;
 }
-@media (min-width: 992px) {
-	header .body .contact_icons {
-		flex-direction: row;
-	}
-}
 header .body .contact_icons a {
 	width: 40px;
 }
@@ -244,6 +239,7 @@ footer .body .item.contacts .socials a svg path {
 header .body .telegram,
 header .body .order_call,
 header .body .online_catalog,
+header .body .all_catalogs,
 header .body .main_cart {
 	display: none;
 }
@@ -304,15 +300,16 @@ header .body .logo img {
 }
 @media (min-width: 992px) {
 	header .body .logo {
-		width: calc(100% / 1200 * 280);
+		width: calc(100% / 1200 * 270);
 		justify-content: flex-start;
 	}
 	header .body .logo img {
 		width: 210px;
 	}
 	header .body .contact_icons {
-		width: calc(100% / 1200 * 250);
+		width: calc(100% / 1200 * 160);
 		gap: 0;
+		flex-direction: row;
 	}
 	header .body .contact_icons a {
 		display: flex;
@@ -327,23 +324,18 @@ header .body .logo img {
 		display: none;
 	}
 	header .body .contact_icons .telegram {
-		width: 32%;
+		width: 50%;
 		border-right: 1px solid #e6ebf0;
 		height: 100%;
 	}
 	header .body .contact_icons .telegram:hover svg path[fill='white'] {
 		fill: #039be5;
 	}
-	header
-		.body
-		.contact_icons
-		.telegram:hover
-		svg
-		path[fill='#039BE5']:not(:first-child) {
+	header .body .contact_icons .telegram:hover svg path[fill='#039BE5']:not(:first-child) {
 		fill: #fff;
 	}
 	header .body .contact_icons .whatsapp {
-		width: 68%;
+		width: 50%;
 		gap: 10px;
 		height: 100%;
 	}
@@ -366,7 +358,7 @@ header .body .logo img {
 		fill: #fff;
 	}
 	header .body .order_call {
-		width: calc(100% / 1200 * 332);
+		width: calc(100% / 1200 * 330);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -395,6 +387,7 @@ header .body .logo img {
 		color: #f32b37;
 	}
 	header .body .online_catalog,
+	header .body .all_catalogs,
 	header .body .main_cart {
 		display: flex;
 		gap: 10px;
@@ -402,17 +395,23 @@ header .body .logo img {
 		justify-content: center;
 	}
 	header .body .online_catalog {
-		width: calc(100% / 1200 * 160);
+		width: calc(100% / 1200 * 150);
+		border-right: 1px solid #e6ebf0;
+	}
+	header .body .all_catalogs {
+		width: calc(100% / 1200 * 155);
 		border-right: 1px solid #e6ebf0;
 	}
 	header .body .main_cart {
-		width: calc(100% / 1200 * 178);
+		width: calc(100% / 1200 * 135);
 	}
 	header .body .online_catalog img,
+	header .body .all_catalogs img,
 	header .body .main_cart img {
 		width: 20px;
 	}
 	header .body .online_catalog picture,
+	header .body .all_catalogs picture,
 	header .body .main_cart picture {
 		width: 50px;
 		height: 50px;
@@ -421,14 +420,15 @@ header .body .logo img {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: 0.3s;
 	}
 	header .body .online_catalog p,
+	header .body .all_catalogs p,
 	header .body .main_cart p {
 		font-size: 14px;
 	}
-	header .body .online_catalog svg,
-	header .body .main_cart svg rect {
+	header .body svg rect, 
+	header .body svg path,
+	header .body svg circle {
 		transition: 0.3s;
 	}
 	header .body .online_catalog:hover p {
@@ -454,7 +454,12 @@ header .body .logo img {
 		fill: #f32b37;
 	}
 	header .body .main_cart:hover path {
-		/* transition: 0.3s; */
+		fill: #f32b37;
+	}
+	header .body .all_catalogs:hover path[fill="#0F111D"] {
+		fill: #ffffff;
+	}
+	header .body .all_catalogs:hover svg circle[fill="#FAFAFC"] {
 		fill: #f32b37;
 	}
 }
@@ -723,7 +728,7 @@ header .body .logo img {
 		display: flex;
 	}
 	.desktop_menu .catalog {
-		width: calc(100% / 1200 * 280);
+		width: calc(100% / 1200 * 270);
 		border-right: 1px solid #e6ebf0;
 		display: flex;
 		align-items: center;
@@ -807,7 +812,7 @@ header .body .logo img {
 		display: flex;
 		align-items: center;
 		gap: 10px;
-		width: calc(100% / 1200 * 800);
+		width: calc(100% / 1200 * 810);
 		justify-content: space-around;
 		transform-origin: left;
 		transform: scaleX(1);
@@ -2169,6 +2174,32 @@ footer .additional .site_development {
 .products_category .wrapper >.sucategories_list{
 	display: none;
 }
+.products_category .headline{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 40px;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0 0 10px 0;
+}
+.products_category .headline h1{
+	margin: 0;
+}
+.products_category .headline a{
+	display: flex;
+	gap: 10px;
+	font-size: 16px;
+	align-items: center;
+	font-weight: 500;
+}
+.products_category .headline a:hover circle[fill="#FAFAFC"]{
+	fill: #F32B37;
+	transition: .3s;
+}
+.products_category .headline a:hover path[fill="#0F111D"]{
+	fill: #ffffff;
+	transition: .3s;
+}
 @media (min-width: 768px) {
 	.products_category .header {
 		display: flex;
@@ -2190,7 +2221,6 @@ footer .additional .site_development {
 	}
 	.products_category .header .sort_block {
 		order: -1;
-		margin: 0 0 20px 0;
 	}
 	.products_category.search_page .header .sort_block {
 		margin: 0;
@@ -6999,5 +7029,38 @@ input[type='radio'].order-registration__free-shipping{
 @media (min-width: 992px){
 	.home_banner{
 		margin: 0 auto 40px auto;
+	}
+}
+
+.manufacturers_catalogs{
+	padding: 10px 0;
+}
+.manufacturers_catalogs h1{
+	font-size: 32px;
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+.manufacturers_catalogs .body{
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+.manufacturers_catalogs .body .item{
+	font-size: 20px;
+	font-weight: 500;
+	display: flex;
+	gap: 10px;
+}
+.manufacturers_catalogs .body .item a{
+	text-decoration: underline;
+}
+@media (min-width: 768px){
+	.manufacturers_catalogs{
+		padding: 20px 0 0 0;
+	}
+}
+@media (min-width: 992px){
+	.manufacturers_catalogs{
+		padding: 0;
 	}
 }
