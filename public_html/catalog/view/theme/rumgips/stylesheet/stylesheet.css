@@ -2192,14 +2192,6 @@ footer .additional .site_development {
 	align-items: center;
 	font-weight: 500;
 }
-.products_category .headline a:hover circle[fill="#FAFAFC"]{
-	fill: #F32B37;
-	transition: .3s;
-}
-.products_category .headline a:hover path[fill="#0F111D"]{
-	fill: #ffffff;
-	transition: .3s;
-}
 @media (min-width: 768px) {
 	.products_category .header {
 		display: flex;
