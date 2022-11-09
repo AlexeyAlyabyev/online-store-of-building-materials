@@ -6851,10 +6851,11 @@ input[type='radio'].order-registration__free-shipping{
 }
 
 .admin_product_edit,
-.admin_product_edit:-webkit-any-link{
+.admin_product_edit:-webkit-any-link,
+.admin_prod_orig_img,
+.admin_prod_orig_img:-webkit-any-link{
 	display: block;
 	position: fixed;
-	top: 50px;
 	left: 0;
 	padding: 10px 15px;
 	background-color: #1e91cf;
@@ -6866,14 +6867,23 @@ input[type='radio'].order-registration__free-shipping{
 	cursor: pointer;
 	z-index: 999999;
 	font-size: 16px;
+	width: 150px;
 }
-.admin_product_edit:hover{
+.admin_product_edit:hover,
+.admin_prod_orig_img:hover{
 	background-color: #fff;
 	color: #1e91cf;
 }
-.admin_product_edit:focus{
+.admin_product_edit:focus,
+.admin_prod_orig_img:focus{
 	background-color: #1e91cf;
 	color: #fff;
+}
+.admin_product_edit{
+	top: 50px;
+}
+.admin_prod_orig_img{
+	top: 100px;
 }
 
 .product_card .header .zoom{

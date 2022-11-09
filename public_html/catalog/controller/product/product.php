@@ -327,6 +327,7 @@ class ControllerProductProduct extends Controller {
           // $data['thumb'] = "/image/".$product_info['image'];
 					$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_height'));
 				}
+				$data['original_img'] = "/image/".$product_info['image'];
 			} else {
 				$data['thumb'] = '';
 			}
