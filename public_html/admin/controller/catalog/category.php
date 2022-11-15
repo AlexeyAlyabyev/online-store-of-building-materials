@@ -436,6 +436,14 @@ class ControllerCatalogCategory extends Controller {
 			$data['top'] = 0;
 		}
 
+		if (isset($this->request->post['show_as_subcategory'])) {
+			$data['show_as_subcategory'] = $this->request->post['show_as_subcategory'];
+		} elseif (!empty($category_info)) {
+			$data['show_as_subcategory'] = $category_info['show_as_subcategory'];
+		} else {
+			$data['show_as_subcategory'] = 0;
+		}
+
 		if (isset($this->request->post['column'])) {
 			$data['column'] = $this->request->post['column'];
 		} elseif (!empty($category_info)) {

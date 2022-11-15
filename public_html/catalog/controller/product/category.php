@@ -185,7 +185,7 @@ class ControllerProductCategory extends Controller {
 			$data['categories'] = array();
 
 			$results = $this->model_catalog_category->getCategories($category_id);
-			// print_r($results);
+			
 			foreach ($results as $result) {
 				$filter_data = array(
 					'filter_category_id'  => $result['category_id'],
@@ -197,7 +197,7 @@ class ControllerProductCategory extends Controller {
 				// 	'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
 				// );
 
-        if ($this->model_catalog_product->getTotalProducts($filter_data) > 0) {
+        if ($this->model_catalog_product->getTotalProducts($filter_data) > 0 && $result['show_as_subcategory']) {
 					if ($result['image'] && is_file(DIR_IMAGE . $result['image'])) {
 						if (strpos($result['image'], ".webp") !== false || strpos($result['image'], ".avif") !== false)
 							$image = "/image/".$result['image'];
