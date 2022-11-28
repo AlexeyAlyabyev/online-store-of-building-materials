@@ -104,7 +104,7 @@ class ControllerProductManufacturer extends Controller {
                 $this->document->setRobots('noindex,follow');
             }
 		} else {
-			$order = 'ASC';
+			$order = 'DESC';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -295,8 +295,8 @@ class ControllerProductManufacturer extends Controller {
 
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_default'),
-				'value' => 'p.sort_order-ASC',
-				'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.sort_order&order=ASC' . $url)
+				'value' => 'p.sort_order-DESC',
+				'href'  => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.sort_order&order=DESC' . $url)
 			);
 
 			$data['sorts'][] = array(

@@ -53,7 +53,7 @@ class ControllerProductSearch extends Controller {
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
-			$order = 'ASC';
+			$order = 'DESC';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -240,8 +240,8 @@ class ControllerProductSearch extends Controller {
 
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_default'),
-				'value' => 'p.sort_order-ASC',
-				'href'  => $this->url->link('product/search', 'sort=p.sort_order&order=ASC' . $url)
+				'value' => 'p.sort_order-DESC',
+				'href'  => $this->url->link('product/search', 'sort=p.sort_order&order=DESC' . $url)
 			);
 
 			$data['sorts'][] = array(

@@ -29,7 +29,7 @@ class ControllerProductSpecial extends Controller {
                 $this->document->setRobots('noindex,follow');
             }
 		} else {
-			$order = 'ASC';
+			$order = 'DESC';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -174,8 +174,8 @@ class ControllerProductSpecial extends Controller {
 
 		$data['sorts'][] = array(
 			'text'  => $this->language->get('text_default'),
-			'value' => 'p.sort_order-ASC',
-			'href'  => $this->url->link('product/special', 'sort=p.sort_order&order=ASC' . $url)
+			'value' => 'p.sort_order-DESC',
+			'href'  => $this->url->link('product/special', 'sort=p.sort_order&order=DESC' . $url)
 		);
 
 		$data['sorts'][] = array(
