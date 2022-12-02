@@ -1008,6 +1008,14 @@ class ControllerCatalogProduct extends Controller {
 			$data['model'] = '';
 		}
 
+		if (isset($this->request->post['phonetic_сode'])) {
+			$data['phonetic_сode'] = $this->request->post['phonetic_сode'];
+		} elseif (!empty($product_info)) {
+			$data['phonetic_сode'] = $product_info['phonetic_сode'];
+		} else {
+			$data['phonetic_сode'] = '';
+		}
+
 		if (isset($this->request->post['sku'])) {
 			$data['sku'] = $this->request->post['sku'];
 		} elseif (!empty($product_info)) {
@@ -1509,8 +1517,10 @@ class ControllerCatalogProduct extends Controller {
     // id товара
 		if (isset($this->request->post['product_id'])) {
 			$data['product_id'] = $this->request->post['product_id'];
-		} else {
+		} elseif (isset($product_info)) {
 			$data['product_id'] = $product_info['product_id'];
+		} else {
+			$data['product_id'] = 0;
 		}
 
 		$this->load->model('tool/image');
@@ -1733,51 +1743,52 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	public function enable() {
-        $this->load->language('catalog/product');
-        $this->document->setTitle($this->language->get('heading_title'));
-        $this->load->model('catalog/product');
-        if (isset($this->request->post['selected']) && $this->validateEnable()) {
-            foreach ($this->request->post['selected'] as $product_id) {
-                $this->model_catalog_product->editProductStatus($product_id, 1);
-            }
-            $this->session->data['success'] = $this->language->get('text_success');
-            $url = '';
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
-            }
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
-            }
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
-            }
-            $this->response->redirect($this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url, true));
-        }
-        $this->getList();
-    }
-    public function disable() {
-        $this->load->language('catalog/product');
-        $this->document->setTitle($this->language->get('heading_title'));
-        $this->load->model('catalog/product');
-        if (isset($this->request->post['selected']) && $this->validateDisable()) {
-            foreach ($this->request->post['selected'] as $product_id) {
-                $this->model_catalog_product->editProductStatus($product_id, 0);
-            }
-            $this->session->data['success'] = $this->language->get('text_success');
-            $url = '';
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
-            }
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
-            }
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
-            }
-            $this->response->redirect($this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url, true));
-        }
-        $this->getList();
-    }
+		$this->load->language('catalog/product');
+		$this->document->setTitle($this->language->get('heading_title'));
+		$this->load->model('catalog/product');
+		if (isset($this->request->post['selected']) && $this->validateEnable()) {
+				foreach ($this->request->post['selected'] as $product_id) {
+						$this->model_catalog_product->editProductStatus($product_id, 1);
+				}
+				$this->session->data['success'] = $this->language->get('text_success');
+				$url = '';
+				if (isset($this->request->get['page'])) {
+						$url .= '&page=' . $this->request->get['page'];
+				}
+				if (isset($this->request->get['sort'])) {
+						$url .= '&sort=' . $this->request->get['sort'];
+				}
+				if (isset($this->request->get['order'])) {
+						$url .= '&order=' . $this->request->get['order'];
+				}
+				$this->response->redirect($this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url, true));
+		}
+		$this->getList();
+	}
+
+	public function disable() {
+		$this->load->language('catalog/product');
+		$this->document->setTitle($this->language->get('heading_title'));
+		$this->load->model('catalog/product');
+		if (isset($this->request->post['selected']) && $this->validateDisable()) {
+				foreach ($this->request->post['selected'] as $product_id) {
+						$this->model_catalog_product->editProductStatus($product_id, 0);
+				}
+				$this->session->data['success'] = $this->language->get('text_success');
+				$url = '';
+				if (isset($this->request->get['page'])) {
+						$url .= '&page=' . $this->request->get['page'];
+				}
+				if (isset($this->request->get['sort'])) {
+						$url .= '&sort=' . $this->request->get['sort'];
+				}
+				if (isset($this->request->get['order'])) {
+						$url .= '&order=' . $this->request->get['order'];
+				}
+				$this->response->redirect($this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			}
+		$this->getList();
+	}
 
 	protected function validateEnable() {
 		if (!$this->user->hasPermission('modify', 'catalog/product')) {
@@ -1894,5 +1905,33 @@ class ControllerCatalogProduct extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function getPhoneticCodeFromName(){
+		$this->load->model('catalog/phonetic_search');
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($this->model_catalog_phonetic_search->dmstring($this->request->post['product_name'])));
+	}
+
+	public function updatePhoneticCodeForAllProducts(){
+		$this->load->model('catalog/product');
+
+		$products = $this->model_catalog_product->getProducts();
+
+		$this->load->model('catalog/phonetic_search');
+
+		foreach($products as $product){
+			$phonetic_сode_arr = $this->model_catalog_phonetic_search->dmstring($product['name']);
+
+			if ($phonetic_сode_arr) {
+				$phonetic_сode = "";
+				foreach ($phonetic_сode_arr as $code){
+					$phonetic_сode .= $code . " ";
+				}
+				$phonetic_сode = trim($phonetic_сode);
+				$this->model_catalog_product->setPhoneticCodeForProduct($product['product_id'], $phonetic_сode);
+			}
+		}
 	}
 }

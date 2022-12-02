@@ -12,6 +12,8 @@ class ControllerProductSearch extends Controller {
 
 		$this->load->model('tool/image');
 
+		$this->load->model('catalog/phonetic_search');
+
 		if (isset($this->request->get['search'])) {
 			$search = $this->request->get['search'];
 		} else {
@@ -151,6 +153,26 @@ class ControllerProductSearch extends Controller {
 
 			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
+			if (!$product_total) {
+				$phonetic_сode_arr = $this->model_catalog_phonetic_search->dmstring($search);
+				$phonetic_сode = "";
+				if ($phonetic_сode_arr) {
+					foreach($phonetic_сode_arr as $code){
+						$phonetic_сode .= $code . " ";
+					}
+					$phonetic_сode = trim($phonetic_сode);
+					$phonetic_total = $this->model_catalog_product->getTotalProductsByPhoneticCode($phonetic_сode);
+				}
+			}
+
+			if (isset($phonetic_total)){
+				$filter_data['phonetic_сode'] = $phonetic_сode;
+				$product_total = $phonetic_total;
+				$results = $this->model_catalog_product->getProductsByPhonetics($filter_data);
+			} else {
+				$results = $this->model_catalog_product->getProducts($filter_data);
+			}
+
 			$data["total_products"] = $product_total;
 			// Правильные склонения для количества товаров
 			if (($data["total_products"] % 10) == 1 && ($data["total_products"] < 10 || $data["total_products"] > 20))
@@ -159,8 +181,6 @@ class ControllerProductSearch extends Controller {
 				$data["total_products"] .= " товара";
 			else
 				$data["total_products"] .= " товаров";
-
-			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
 				if ($result['image']) {
@@ -393,7 +413,7 @@ class ControllerProductSearch extends Controller {
 		$data['order'] = $order;
 		$data['limit'] = $limit;
 
-		$data['column_left'] = $this->load->controller('common/column_left');
+		if (!isset($phonetic_total)) $data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');

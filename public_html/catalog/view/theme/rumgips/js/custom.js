@@ -143,7 +143,7 @@ if ($(".pagination").length){
 	$('<button class="show_more">Показать еще</button>').insertBefore(".pagination");
 
 	$(document).scroll(function(){
-		if ($(".show_more").position().top - window.scrollY < window.innerHeight/2 && !query_in_process && sessionStorage.getItem("dynamic_loading")) {
+		if ($(".show_more").length && $(".show_more").position().top - window.scrollY < window.innerHeight/2 && !query_in_process && sessionStorage.getItem("dynamic_loading")) {
 			loadNextPage();
 		}
 	});

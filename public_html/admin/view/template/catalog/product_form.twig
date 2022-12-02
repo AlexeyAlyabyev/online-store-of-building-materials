@@ -51,21 +51,22 @@
                     <label class="col-sm-2 control-label" for="input-name{{ language.language_id }}">{{ entry_name }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control" />
+                      <input type="hidden" name="product_description[{{ language.language_id }}][phonetic_сode]" value="{{ phonetic_сode }}" />
                       {% if error_name[language.language_id] %}
                       <div class="text-danger">{{ error_name[language.language_id] }}</div>
                       {% endif %} </div>
                   </div>
-				  <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-meta-h1{{ language.language_id }}">{{ entry_meta_h1 }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="product_description[{{ language.language_id }}][meta_h1]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_h1 }}" placeholder="{{ entry_meta_h1 }}" id="input-meta-h1{{ language.language_id }}" class="form-control" />
-					</div>
-				  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-meta-title{{ language.language_id }}">{{ entry_meta_title }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
-					</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="input-meta-h1{{ language.language_id }}">{{ entry_meta_h1 }}</label>
+										<div class="col-sm-10">
+											<input type="text" name="product_description[{{ language.language_id }}][meta_h1]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_h1 }}" placeholder="{{ entry_meta_h1 }}" id="input-meta-h1{{ language.language_id }}" class="form-control" />
+									</div>
+									</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label" for="input-meta-title{{ language.language_id }}">{{ entry_meta_title }}</label>
+											<div class="col-sm-10">
+												<input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
+									</div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-meta-description{{ language.language_id }}">{{ entry_meta_description }}</label>
@@ -1252,6 +1253,33 @@
 		  $('input[name=\'manufacturer_id\']').val(item['value']);
 	  }
   });
+
+	let disabled_form = true;
+	$("#form-product").submit(function(e){
+		let self = this;
+
+		if (disabled_form) e.preventDefault();
+
+		let ajax_data = {product_name: $("input[id^='input-name']").val()};
+
+		$.ajax({
+			url: 'index.php?route=catalog/product/getphoneticcodefromname&user_token={{ user_token }}',
+			method: 'post',
+			data: ajax_data,
+			success: function(json) {
+				let phonetic_сode = "";
+				json.forEach(function(item){
+					phonetic_сode += item + " ";
+				});
+				phonetic_сode = phonetic_сode.trim();
+
+				$('input[name*="phonetic_сode"]').val(phonetic_сode);
+
+				disabled_form = false;
+				self.submit();
+			}
+		});
+});
 
   // Category
   $('input[name=\'category\']').autocomplete({

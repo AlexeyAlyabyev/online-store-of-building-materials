@@ -79,7 +79,7 @@
 		</div>
 
 		<div class="body mb_adapt">
-			{% if products %}
+			{% if products and column_left %}
 			<div class="column_left">
 				{{ column_left }}
 			</div>
@@ -92,6 +92,10 @@
 			{% else %}
 			{% set class = 'col-sm-12' %}
 			{% endif %} #}
+				{% set class = 'full' %}
+			{% if not column_left %}
+			
+			{% endif %}
 			<div class="products_wrap {{ class }}">
 				{{ content_top }}
 
