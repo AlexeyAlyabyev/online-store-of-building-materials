@@ -2359,12 +2359,20 @@ footer .additional .site_development {
 		background-color: #fafafc;
 		border-radius: 3px;
 		width: calc((100% - 60px) / 5);
+		position: relative;
+		padding: 45px 0 0 0;
 	}
 	.products_category .wrapper >.sucategories_list a img{
 		max-width: 100%;
 	}
 	.products_category .wrapper >.sucategories_list p{
-		padding: 10px 15px;
+		padding: 20px 10px;
+		position: absolute;
+		width: 100%;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		text-align: center;
 	}
 
 	.products_category .body .products_wrap.full .products_list .item{
@@ -2397,10 +2405,7 @@ footer .additional .site_development {
 }
 @media (min-width: 1230px){
 	.products_category .wrapper >.sucategories_list a {
-		font-size: 16px;
-		background-color: #fafafc;
-		border-radius: 3px;
-		width: calc((100% - 90px) / 7);
+		font-size: 18px;
 	}
 }
 
