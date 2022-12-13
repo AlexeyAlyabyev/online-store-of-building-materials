@@ -114,8 +114,13 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-catalog-file">Ссылка на каталог</label>
-                <div class="col-sm-10">
+                <div class="col-sm-10 file_include_block">
                   <input type="text" name="catalog_file" value="{{ catalog_file }}" placeholder="files/denkirs/denkirs-catalog.pdf" id="input-catalog-file" class="form-control" />
+									<label>
+										<input type="file" name="catalog_file_add">
+										<span type="button" data-toggle="tooltip" class="btn btn-primary" data-original-title="Выбрать файл"><i class="fa fa-file"></i></ы>
+									</label>
+									<a href="../{{ catalog_file }}" target="_blank" class="btn btn-success"><i class="fa fa-eye"></i></a>
                 </div>
               </div>
             </div>
@@ -292,6 +297,11 @@ document.addEventListener('keydown', function(event) {
 		event.preventDefault();
 		$("button.btn.btn-primary").click();
 	}
+});
+
+$("input[name='catalog_file_add']").change(function(){
+	let file_path = "files/" + $("[name='name']").val() + "/" + $(this)[0]['files'][0]['name'];
+	$("input[name='catalog_file']").val(file_path);
 });
 //--></script>
 </div>

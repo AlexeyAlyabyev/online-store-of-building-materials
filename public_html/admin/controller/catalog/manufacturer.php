@@ -25,6 +25,13 @@ class ControllerCatalogManufacturer extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_manufacturer->addManufacturer($this->request->post);
 
+			$uploadfile = $_SERVER['DOCUMENT_ROOT'] . "/" . $this->request->post['catalog_file'];
+			$directory = $_SERVER['DOCUMENT_ROOT'] . "/files/" . $this->request->post['name'];
+			if (!file_exists($directory)){
+				mkdir($directory, 0777, false);
+			}
+			move_uploaded_file($_FILES['catalog_file_add']['tmp_name'], $uploadfile);
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
@@ -56,6 +63,13 @@ class ControllerCatalogManufacturer extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
+
+			$uploadfile = $_SERVER['DOCUMENT_ROOT'] . "/" . $this->request->post['catalog_file'];
+			$directory = $_SERVER['DOCUMENT_ROOT'] . "/files/" . $this->request->post['name'];
+			if (!file_exists($directory)){
+				mkdir($directory, 0777, false);
+			}
+			move_uploaded_file($_FILES['catalog_file_add']['tmp_name'], $uploadfile);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

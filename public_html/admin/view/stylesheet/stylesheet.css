@@ -1197,3 +1197,14 @@ select, input[type="text"], input[type="password"], input[type="datetime"], inpu
 .navbar-header img{
 	max-height: 32px;
 }
+input[name='catalog_file_add']{
+	display: none;
+}
+.file_include_block{
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.file_include_block label{
+	margin: 0;
+}
