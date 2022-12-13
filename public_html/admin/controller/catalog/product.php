@@ -1506,14 +1506,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['image'] = '';
 		}
 
-    if (isset($this->request->post['video'])) {
-			$data['video'] = $this->request->post['video'];
-		} elseif (!empty($product_info)) {
-			$data['video'] = $product_info['video'];
-		} else {
-			$data['video'] = '';
-		}
-
     // id товара
 		if (isset($this->request->post['product_id'])) {
 			$data['product_id'] = $this->request->post['product_id'];
@@ -1575,6 +1567,24 @@ class ControllerCatalogProduct extends Controller {
 				'image'      => $image,
 				'thumb'      => $thumb,
 				'sort_order' => $product_image['sort_order']
+			);
+		}
+
+		// Videos
+		if (isset($this->request->post['product_video'])) {
+			$product_videos = $this->request->post['product_video'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$product_videos = $this->model_catalog_product->getProductVideos($this->request->get['product_id']);
+		} else {
+			$product_videos = array();
+		}
+
+		$data['product_videos'] = array();
+
+		foreach ($product_videos as $product_video) {
+			$data['product_videos'][] = array(
+				'video'      => $product_video['video'],
+				'sort_order' => $product_video['sort_order']
 			);
 		}
 

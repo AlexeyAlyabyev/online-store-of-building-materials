@@ -1082,19 +1082,33 @@
 
 
              <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
+                <table id="videos" class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_video }}</td>
+											<td class="text-right">{{ entry_sort_order }}</td>
+                      <td></td>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-left">
-                      <input type="text" name="video" value="{{ video }}" id="video" class="form-control" placeholder="Введите адрес видео - ролика, например: https://www.youtube.com/watch?v=pnYLXzqcckA"/>
-                      </td>
-                    </tr>
+										{% set video_row = 0 %}
+											{% for product_video in product_videos %}
+												<tr id="video-row{{ video_row }}">
+													<td class="text-left">
+														<input type="text" name="product_video[{{ video_row }}][video]" value="{{ product_video.video }}"  class="form-control" placeholder="Идентификатор видео, например: fSqGsNXPSoU"/>
+													</td>
+													<td class="text-right"><input type="text" name="product_video[{{ video_row }}][sort_order]" value="{{ product_video.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+													<td class="text-left"><button type="button" onclick="$('#video-row{{ video_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+												</tr>
+											{% set video_row = video_row + 1 %}
+                    {% endfor %}
                   </tbody>
+									<tfoot>
+                    <tr>
+                      <td colspan="2"></td>
+											<td class="text-left"><button type="button" onclick="addVideo();" data-toggle="tooltip" title="Добавить видео" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
             </div>
@@ -1746,6 +1760,22 @@ $('#article-related').delegate('.fa-minus-circle', 'click', function() {
 	  $('#images tbody').append(html);
 
 	  image_row++;
+  }
+
+  //--></script>
+  <script type="text/javascript"><!--
+  var video_row = {{ video_row }};
+
+  function addVideo() {
+	  html = '<tr id="video-row' + video_row + '">';
+	  html += '  <td class="text-left"><input type="text" name="product_video[' + video_row + '][video]" value="{{ product_video.video }}"  class="form-control" placeholder="Идентификатор видео, например: fSqGsNXPSoU"/></td>';
+	  html += '  <td class="text-right"><input type="text" name="product_video[' + video_row + '][sort_order]" value="{{ product_video.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>';
+	  html += '  <td class="text-left"><button type="button" onclick="$(\'#video-row' + video_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	  html += '</tr>';
+
+	  $('#videos tbody').append(html);
+
+	  video_row++;
   }
 
   //--></script>

@@ -3017,13 +3017,23 @@ footer .additional .site_development {
 	background-color: rgba(0,0,0,0.1);
 	padding: 40px 0;
 	margin: 0 0 20px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 20px;
 }
 .product_card__video iframe{
-	max-width: 560px;
+	max-width: 550px;
 }
 @media (min-width: 992px){
 	.product_card__video {
 		margin: 0 0 40px 0;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+	.product_card__video iframe{
+		width: calc((100% - 20px) / 2);
 	}
 }
 

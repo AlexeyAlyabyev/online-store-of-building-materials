@@ -52,20 +52,15 @@
               </div>
               {% endfor %}
             {% endif %}
-
-            {# {% if url_video %}
-              <iframe class="thumbnail swiper-slide" src="{{ url_video }}" width="100%" height="45%" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" >
-              </iframe>
-            {% endif %} #}
 					</div>
 
-					{% if images or url_video  %}
+					{% if images %}
 						<div class="prev"></div>
 						<div class="next"></div>
 					{% endif %}
 				</div>
 
-        {% if images or url_video %}
+        {% if images %}
 					<div class="product_images_slider_thumbs swiper product_images_slider_thumbs--active">
 						<div class="swiper-wrapper thumbnails">
 							<img class="swiper-slide" src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
@@ -74,11 +69,6 @@
 									<img class="swiper-slide" src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
 								{% endfor %}
 							{% endif %}
-							{# {% if url_video %}
-							<div class="swiper-slide swiper-slide-video">
-								<img class="" width="100%" src="{{ url_video_preview }}" title="Превью видео ролика" alt="Превью видео ролика" />
-							</div>
-							{% endif %} #}
 						</div>
 						<div class="prev"></div>
 						<div class="next"></div>
@@ -291,12 +281,13 @@
 			</div>
 		</div>
 
-
-    {% if url_video %}
-    <div class="product_card__video">
-      <iframe class="" src="{{ url_video }}" width="100%" height="320px" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
-    </div>
-    {% endif %}
+		{% if videos %}
+			<div class="product_card__video">
+				{% for video in videos %}
+					<iframe class="" src="https://www.youtube.com/embed/{{ video.url }}" width="100%" height="320px" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+				{% endfor %}
+			</div>
+		{% endif %}
 
     <p class="product_card__description">{{ description }}</p>
 

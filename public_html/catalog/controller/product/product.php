@@ -306,18 +306,15 @@ class ControllerProductProduct extends Controller {
 			// 	$data['popup'] = '';
 			// }
 
-      // URL видео и превью видео
-      if ($product_info['video']) {
+			$data['videos'] = array();
 
-        $url_video = $product_info['video'];
-        preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url_video, $match);
-        $youtube_id = $match[1];
+			$results = $this->model_catalog_product->getProductVideos($this->request->get['product_id']);
 
-        $url_video_preview = 'https://img.youtube.com/vi/' . $youtube_id . '/mqdefault.jpg';
-
-        $data['url_video'] ='https://www.youtube.com/embed/' . $youtube_id;
-        $data['url_video_preview'] = $url_video_preview;
-      }
+			foreach ($results as $result) {
+				$data['videos'][] = array(
+					'url' => $result['video']
+				);
+			}
 
 			if ($product_info['image']) {
 				if (strpos($product_info['image'], ".webp") !== false || strpos($product_info['image'], ".avif") !== false) {
