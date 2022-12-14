@@ -24,7 +24,7 @@ class ControllerProductCatalogs extends Controller {
 
 		foreach ($results as $result) {
 			if ($result['catalog_file']){
-				if ($result['catalog_image'])
+				if (isset($result['catalog_image']) && $result['catalog_image'])
 					$thumb = "/image/" . $result['catalog_image'];
 				else
 					$thumb = "/image/" . $result['image'];
