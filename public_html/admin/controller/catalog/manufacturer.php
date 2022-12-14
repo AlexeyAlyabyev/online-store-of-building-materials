@@ -404,6 +404,14 @@ class ControllerCatalogManufacturer extends Controller {
 			$data['image'] = '';
 		}
 
+		if (isset($this->request->post['catalog_image'])) {
+			$data['catalog_image'] = $this->request->post['catalog_image'];
+		} elseif (!empty($manufacturer_info)) {
+			$data['catalog_image'] = $manufacturer_info['catalog_image'];
+		} else {
+			$data['catalog_image'] = '';
+		}
+
 		$this->load->model('tool/image');
 
 		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
@@ -412,6 +420,17 @@ class ControllerCatalogManufacturer extends Controller {
 			$data['thumb'] = $this->model_tool_image->resize($manufacturer_info['image'], 100, 100);
 		} else {
 			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		}
+
+		if (isset($this->request->post['catalog_image']) && is_file(DIR_IMAGE . $this->request->post['catalog_image'])) {
+			$data['catalog_thumb'] = $this->model_tool_image->resize($this->request->post['catalog_image'], 100, 100);
+		} elseif (!empty($manufacturer_info) && is_file(DIR_IMAGE . $manufacturer_info['catalog_image'])) {
+			if (strpos($manufacturer_info['catalog_image'], ".webp") !== false)
+				$data['catalog_thumb'] = "/image/" . $manufacturer_info['catalog_image'];
+			else
+				$data['catalog_thumb'] = $this->model_tool_image->resize($manufacturer_info['catalog_image'], 100, 100);
+		} else {
+			$data['catalog_thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);

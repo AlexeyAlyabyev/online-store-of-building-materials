@@ -19,12 +19,14 @@
 
 			<div class="body">
 				<div class="item">
-					<p>RUMGIPS:</p>
+					<a href="catalog_rumgips.pdf" target="_blank"><img src="image/manufacturers_catalogs/rumgips-catalog.jpg" alt="Каталог RUMGIPS"></a>
+					<p>Каталог RUMGIPS</p>
 					<a href="catalog_rumgips.pdf" download="catalog-rumgips">Скачать каталог</a>
 				</div>
 				{% for manufacturer in manufacturers %}
 					<div class="item">
-						<p>{{ manufacturer.name }}:</p>
+						<a href="{{ manufacturer.catalog_file }}" target="_blank"><img src="{{ manufacturer.catalog_image }}" alt="Каталог {{ manufacturer.name }}"></a>
+						<p>Каталог {{ manufacturer.name }}</p>
 						<a href="{{ manufacturer.catalog_file }}" download="catalog-{{ manufacturer.name }}">Скачать каталог</a>
 					</div>
 				{% endfor %}

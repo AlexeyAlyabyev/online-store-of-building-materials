@@ -1208,3 +1208,7 @@ input[name='catalog_file_add']{
 .file_include_block label{
 	margin: 0;
 }
+.img_100{
+	max-width: 100px;
+	max-height: 100px;
+}

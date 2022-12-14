@@ -18,6 +18,10 @@ class ModelCatalogManufacturer extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET image = '" . $this->db->escape($data['image']) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		}
 
+		if (isset($data['catalog_image'])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET catalog_image = '" . $this->db->escape($data['catalog_image']) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+		}
+
 		if (isset($data['catalog_file'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET catalog_file = '" . $this->db->escape($data['catalog_file']) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		}
@@ -74,6 +78,10 @@ class ModelCatalogManufacturer extends Model {
 
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET image = '" . $this->db->escape($data['image']) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+		}
+
+		if (isset($data['catalog_image'])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET catalog_image = '" . $this->db->escape($data['catalog_image']) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		}
 
 		if (isset($data['catalog_file'])) {
