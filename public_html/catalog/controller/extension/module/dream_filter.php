@@ -69,7 +69,7 @@ class ControllerExtensionModuleDreamFilter extends Controller {
 		}
 
 		$popper_action = $this->url->link('extension/module/dream_filter/' . ((isset($this->request->get['route']) && $this->request->get['route'] == 'product/special') ? 'countspecial' : 'count'), '', (bool)$this->request->server['HTTPS']);
-		$popper_action .= (strpos($popper_action, '?') !== false ? '&' : '?' ). $this->parseArguments($this->request->get, ['path' => 'rdrf_path']);
+		$popper_action .= (strpos($popper_action, '?') !== false ? '&' : '?' ). $this->parseArguments($this->request->get, ['path' => 'rdrf_path', 'manufacturer_id' => 'filter_manufacturer_id']);
 
 		$data['popper'] = array(
 			'enable' => $popper,
