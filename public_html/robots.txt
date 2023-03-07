@@ -35,6 +35,7 @@ Disallow: /*&tag=*
 Disallow: /*?tag=*
 Disallow: *rdrf*
 Disallow: /compare-products*
+Disallow: *etext*
 Allow: *.css
 Allow: *.js
 Allow: *.jpg
@@ -46,6 +47,8 @@ Allow: *.webp
 Allow: *.ttf
 Allow: *.woff
 Allow: *.woff2
+
+Clean-param: source&context&cm_id&type1&mobile&none&index.php&route&product&path&product_id&lang&block&etext&y&deal_id
 
 # При включенном SeoPro, раскомментировать строку Sitemap и подставить Ваш адрес сайта
 # Sitemap: https://site.com/sitemap.xml
